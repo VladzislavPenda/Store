@@ -1,3 +1,4 @@
+using Contracts;
 using Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Repositories;
 using Store.Extensions;
 using System;
 using System.Collections.Generic;
@@ -29,6 +31,8 @@ namespace Store
             services.AddDbContext<RepositoryContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MyDbContext"), b =>
             b.MigrationsAssembly("Store")));
+
+            services.AddScoped<IRepositoryManager, RepositoryManager>();
 
             services.AddControllersWithViews();
             // services.ConfigureSqlContext(Configuration);
