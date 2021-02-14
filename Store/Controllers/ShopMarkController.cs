@@ -20,10 +20,27 @@ namespace Store.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetCompanies()
+        public IActionResult GetMarks()
         {
-            var companies = _repository.ShopMark.GetAllMarks(trackChanges: false);
+            var marks = _repository.ShopMark.GetAllMarks(trackChanges: false);
+            var companies = _repository.ShopModel.GetAllShopModels(trackChanges: false);
             return Ok(companies);   
+        }
+
+        //var companies = _repository.ShopModel.GetAllShopModels(trackChanges: false);
+        //var marks = _repository.ShopMark.GetAllMarks(trackChanges: false);
+        //var result = companies.Select(c => c.ShopMark.country);
+        //companies.Join(marks, a => a.ShopMark.country, b => b.id, (a, b) => new {ModelId = a.id, num = b.id});
+        
+        [HttpGet("{id}")]
+        public IActionResult GetMark(int id)
+        {
+            var mark = _repository.ShopMark.GetMark(id, trackChanges: false);
+            if (mark == null)
+            {
+                return NotFound();
+            }
+            return Ok(mark);
         }
 
     }

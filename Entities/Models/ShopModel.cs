@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Entities.Models
@@ -22,6 +23,9 @@ namespace Entities.Models
         public int price { get; set; }
 
         public int mileage { get; set; }
+
+        [ForeignKey(nameof(ShopMark))]
+        public int MarkId { get; set; }
 
         public ShopCarcaseType ShopCarcaseType { get; set; }
 

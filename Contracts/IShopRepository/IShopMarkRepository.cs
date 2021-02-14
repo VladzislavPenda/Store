@@ -8,5 +8,6 @@ namespace Contracts
     public interface IShopMarkRepository
     {
         IEnumerable<ShopMark> GetAllMarks(bool trackChanges);
+        ShopMark GetMark(int markId, bool trackChanges);
     }
 }

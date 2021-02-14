@@ -15,12 +15,17 @@ namespace Repositories
         {
 
         }
-
         public IEnumerable<ShopMark> GetAllMarks(bool trackChanges)
         {
             return FindAll(trackChanges)
             .OrderBy(c => c.markNum)
             .ToList();
+        }
+
+        public ShopMark GetMark(int markId, bool trackChanges)
+        {
+            return FindByCondition(c => c.id.Equals(markId), trackChanges)
+                .SingleOrDefault();
         }
     }
 }

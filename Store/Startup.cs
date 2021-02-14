@@ -35,9 +35,17 @@ namespace Store
             services.AddScoped<IRepositoryManager, RepositoryManager>();
 
             services.AddControllersWithViews();
+            
+
+            services.AddControllers(config =>
+            {
+                config.RespectBrowserAcceptHeader = true;
+                config.ReturnHttpNotAcceptable = true;
+            }).AddXmlDataContractSerializerFormatters();
+            
             // services.ConfigureSqlContext(Configuration);
 
-            
+
 
         }
 
