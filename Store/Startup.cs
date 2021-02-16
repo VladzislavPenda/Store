@@ -37,12 +37,12 @@ namespace Store
             services.AddControllersWithViews();
             
 
-            services.AddControllers(config =>
+            /*services.AddControllers(config =>
             {
                 config.RespectBrowserAcceptHeader = true;
                 config.ReturnHttpNotAcceptable = true;
             }).AddXmlDataContractSerializerFormatters();
-            
+            */
             // services.ConfigureSqlContext(Configuration);
 
 

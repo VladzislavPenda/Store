@@ -25,8 +25,19 @@ namespace Entities.Models
         public int mileage { get; set; }
 
         [ForeignKey(nameof(ShopMark))]
-        public int MarkId { get; set; }
+        public int markId { get; set; }
 
+        [ForeignKey(nameof(ShopTransmissionType))]
+        public int transmissionId { get; set; }
+
+        [ForeignKey(nameof(ShopCarcaseType))]
+        public int carcaseTypeId { get; set; }
+
+        [ForeignKey(nameof(ShopEngineType))]
+        public int engineTypeId { get; set; }
+
+        [ForeignKey(nameof(ShopDriveType))]
+        public int driveTypeId { get; set; }
         public ShopCarcaseType ShopCarcaseType { get; set; }
 
         public ShopEngineType ShopEngineType { get; set; }

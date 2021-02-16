@@ -8,7 +8,7 @@ namespace Entities.Models
 {
     public class ShopMark
     {
-        [Column("MarkId")]
+        [Column("markId")]
         public int id { get; set; }
 
         [StringLength(100, ErrorMessage = "Слишком длинное название марки авто(максимальная длина 100 символов).")]
