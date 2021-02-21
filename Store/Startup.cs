@@ -33,7 +33,7 @@ namespace Store
             b.MigrationsAssembly("Store")));
 
             services.AddScoped<IRepositoryManager, RepositoryManager>();
-
+            services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
             
 

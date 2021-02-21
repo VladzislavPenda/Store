@@ -1,4 +1,6 @@
-﻿using Contracts;
+﻿using AutoMapper;
+using Contracts;
+using Entities.DataTransferObjects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,19 +15,35 @@ namespace Store.Controllers
     public class ShopMarkController : ControllerBase
     {
         private readonly IRepositoryManager _repository;
+        private readonly IMapper _mapper;
 
-        public ShopMarkController(IRepositoryManager repository)
+        public ShopMarkController(IRepositoryManager repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult GetMarks()
         {
             var marks = _repository.ShopMark.GetAllMarks(trackChanges: false);
-            var companies = _repository.ShopModel.GetAllShopModels(trackChanges: false);
-
-            return Ok(companies);   
+            var models = _repository.ShopModel.GetAllShopModels(trackChanges: false);
+            var modelsDTO = models.Select(c => new modelDTO
+            {
+                id = c.id,
+                year = (int)c.year,
+                transmissionId = c.transmissionId,
+                driveTypeId = c.driveTypeId,
+                carcaseTypeId = c.carcaseTypeId,
+                engineTypeId = c.engineTypeId,
+                markId = c.markId,
+                horse_Power = (int)c.horse_power,
+                mileAge = c.mileage,
+                model = c.model,
+                price = c.price
+            }).ToList();
+            //var modelsDTO = _mapper.Map<IEnumerable<modelDTO>>(models);
+            return Ok(modelsDTO);   
         }
 
         //var companies = _repository.ShopModel.GetAllShopModels(trackChanges: false);
