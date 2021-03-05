@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.DataTransferObjects;
-using Microsoft.AspNetCore.Http;
+using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Store.Controllers
 {
@@ -23,44 +20,54 @@ namespace Store.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public IActionResult GetMarks()
+        [HttpGet("{id}" , Name = "MarkById")]
+        public IActionResult GetMarkForModel(int id)
         {
-            var marks = _repository.ShopMark.GetAllMarks(trackChanges: false);
-            var models = _repository.ShopModel.GetAllShopModels(trackChanges: false);
-            var modelsDTO = models.Select(c => new modelDTO
-            {
-                id = c.id,
-                year = (int)c.year,
-                transmissionId = c.transmissionId,
-                driveTypeId = c.driveTypeId,
-                carcaseTypeId = c.carcaseTypeId,
-                engineTypeId = c.engineTypeId,
-                markId = c.markId,
-                horse_Power = (int)c.horse_power,
-                mileAge = c.mileage,
-                model = c.model,
-                price = c.price
-            }).ToList();
-            //var modelsDTO = _mapper.Map<IEnumerable<modelDTO>>(models);
-            return Ok(modelsDTO);   
-        }
-
-        //var companies = _repository.ShopModel.GetAllShopModels(trackChanges: false);
-        //var marks = _repository.ShopMark.GetAllMarks(trackChanges: false);
-        //var result = companies.Select(c => c.ShopMark.country);
-        //_ = companies.Join(marks, a => a.MarkId, b => b.id, (a, b) => new { ModelId = a.id, num = b.id });
-
-        [HttpGet("{id}")]
-        public IActionResult GetMark(int id)
-        {
-            var mark = _repository.ShopMark.GetMark(id, trackChanges: false);
-            if (mark == null)
+            var model = _repository.ShopModel.GetModel(id, trackChanges: false);
+            if (model == null)
             {
                 return NotFound();
             }
-            return Ok(mark);
+            var mark = _repository.ShopMark.GetMark(model.markId, trackChanges: false);
+            var markDTO = _mapper.Map<MarkDTO>(mark);
+            return Ok(markDTO);
         }
+
+        [HttpPost]
+        public IActionResult CreateMark([FromBody]MarkForCreationDTO mark)
+        {
+            if (mark == null)
+            {
+                return BadRequest("MarkForCreationDTO object send from client is null.");
+            }
+
+            var markEntity = _mapper.Map<ShopMark>(mark);
+            _repository.ShopMark.CreateMark(markEntity);
+            _repository.Save();
+
+            var MarkToReturn = _mapper.Map<MarkDTO>(markEntity);
+            return CreatedAtRoute("MarkById", new { id = MarkToReturn.id }, MarkToReturn);
+        }
+
+        //[HttpGet]
+        //public IActionResult GetMarks()
+        //{
+        //    var marks = _repository.ShopMark.GetAllMarks(trackChanges: false);
+        //    var marksDTO = _mapper.Map<IEnumerable<MarkDTO>>(marks);
+        //    return Ok(marksDTO);   
+        //}
+
+        //[HttpGet("{id}")]
+        //public IActionResult GetMark(int id)
+        //{
+        //    var mark = _repository.ShopMark.GetMark(id, trackChanges: false);
+        //    if (mark == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    var markDTO = _mapper.Map<MarkDTO>(mark);
+        //    return Ok(markDTO);
+        //}
 
     }
 }

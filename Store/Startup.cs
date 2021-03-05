@@ -1,5 +1,7 @@
+using AutoMapper;
 using Contracts;
 using Entities;
+using Entities.AutoMappers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,9 +33,24 @@ namespace Store
             services.AddDbContext<RepositoryContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MyDbContext"), b =>
             b.MigrationsAssembly("Store")));
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                    builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             services.AddScoped<IRepositoryManager, RepositoryManager>();
-            services.AddAutoMapper(typeof(Startup));
+            //services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
             
 
@@ -64,11 +81,11 @@ namespace Store
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseCors("CorsPolicy");
+    
             app.UseRouting();
 
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

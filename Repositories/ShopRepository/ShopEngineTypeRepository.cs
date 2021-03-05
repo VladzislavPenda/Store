@@ -3,6 +3,7 @@ using Entities;
 using Entities.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Repositories
@@ -14,5 +15,17 @@ namespace Repositories
         {
 
         }
+
+        public IEnumerable<ShopEngineType> GetAllEngineTypes(bool trackChanges)
+        {
+            return FindAll(trackChanges).ToList();
+        }
+
+        public ShopEngineType GetEngineType(int engineId, bool trackChanges)
+        {
+            return FindByCondition(c => c.id.Equals(engineId), trackChanges).SingleOrDefault();
+        }
+
+        public void CreateEngineType(ShopEngineType engineType) => Create(engineType);
     }
 }

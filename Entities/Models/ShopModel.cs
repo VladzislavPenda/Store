@@ -17,12 +17,12 @@ namespace Entities.Models
         [Range(1900, 2021, ErrorMessage = "Недопустимая дата выпуска авто.")]
         public int? year { get; set; }
 
-        public int? horse_power { get; set; }
+        public int? horsePower { get; set; }
 
         [Required]
         public int price { get; set; }
 
-        public int mileage { get; set; }
+        public int mileAge { get; set; }
 
         [ForeignKey(nameof(ShopMark))]
         public int markId { get; set; }

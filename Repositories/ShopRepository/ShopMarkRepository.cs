@@ -27,5 +27,8 @@ namespace Repositories
             return FindByCondition(c => c.id.Equals(markId), trackChanges)
                 .SingleOrDefault();
         }
+
+        public void CreateMark(ShopMark shopMark) => Create(shopMark);
+
     }
 }
