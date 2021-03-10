@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Entities.DataTransferObjects;
+using Entities.DataTransferObjects.CarcaseDTO;
+using Entities.DataTransferObjects.DriveDTO;
 using Entities.DataTransferObjects.EngineDTO;
+using Entities.DataTransferObjects.TransmissionDTO;
 using Entities.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Entities.AutoMappers
 {
@@ -17,9 +17,21 @@ namespace Entities.AutoMappers
             //    .ForMember(c => c.horsePower, opt => opt.MapFrom(x => (int)x.horsePower));
 
             CreateMap<ShopModel, ModelDTO>();
+
             CreateMap<ShopMark, MarkDTO>();
             CreateMap<MarkForCreationDTO, ShopMark>();
+
             CreateMap<ShopEngineType, EngineDTO>();
+            CreateMap<EngineForCreationDTO, ShopEngineType>();
+
+            CreateMap<ShopDriveType, DriveDTO>();
+            CreateMap<DriveForCreationDTO, ShopDriveType>();
+
+            CreateMap<ShopCarcaseType, CarcaseDTO>();
+            CreateMap<CarcaseForCreationDTO, ShopCarcaseType>();
+
+            CreateMap<ShopTransmissionType, TransmissionDTO>();
+            CreateMap<TransmissionForCreationDTO, ShopTransmissionType>();
         }
     }
 }

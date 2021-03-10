@@ -1,10 +1,8 @@
 ﻿using Contracts;
 using Entities;
 using Entities.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Repositories
 {
@@ -24,9 +22,9 @@ namespace Repositories
             .ToList();
         }
 
-        public ShopModel GetModel(int id, bool trackchanges)
+        public ShopModel GetModel(int id, bool trackChanges)
         {
-            return FindByCondition(c => c.id.Equals(id), trackchanges)
+            return FindByCondition(c => c.id.Equals(id), trackChanges)
                 .SingleOrDefault();
         }
     }

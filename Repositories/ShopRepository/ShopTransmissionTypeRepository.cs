@@ -1,9 +1,8 @@
 ﻿using Contracts;
 using Entities;
 using Entities.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace Repositories
 {
@@ -14,5 +13,17 @@ namespace Repositories
         {
 
         }
+
+        public IEnumerable<ShopTransmissionType> GetAllTransmissionTypes(bool trackChanges)
+        {
+            return FindAll(trackChanges).ToList();
+        }
+
+        public ShopTransmissionType GetTransmissionType(int driveTypeId, bool trackChanges)
+        {
+            return FindByCondition(c => c.id.Equals(driveTypeId), trackChanges).SingleOrDefault();
+        }
+
+        public void CreateTransmissionType(ShopTransmissionType shopTransmissionType) => Create(shopTransmissionType);
     }
 }

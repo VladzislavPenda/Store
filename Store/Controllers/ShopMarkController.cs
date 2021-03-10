@@ -49,13 +49,13 @@ namespace Store.Controllers
             return CreatedAtRoute("MarkById", new { id = MarkToReturn.id }, MarkToReturn);
         }
 
-        //[HttpGet]
-        //public IActionResult GetMarks()
-        //{
-        //    var marks = _repository.ShopMark.GetAllMarks(trackChanges: false);
-        //    var marksDTO = _mapper.Map<IEnumerable<MarkDTO>>(marks);
-        //    return Ok(marksDTO);   
-        //}
+        [HttpGet]
+        public IActionResult GetMarks()
+        {
+            var marks = _repository.ShopMark.GetAllMarks(trackChanges: false);
+            var marksDTO = _mapper.Map<IEnumerable<MarkDTO>>(marks);
+            return Ok(marksDTO);
+        }
 
         //[HttpGet("{id}")]
         //public IActionResult GetMark(int id)

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.DataTransferObjects.EngineDTO;
+using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Repositories;
 using System;
@@ -24,7 +25,15 @@ namespace Store.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
+        public IActionResult GetEngineTypes()
+        {
+            var engineTypes = _repository.ShopEngineType.GetAllEngineTypes(trackChanges: false);
+            var engineTypesDTO = _mapper.Map<IEnumerable<EngineDTO>>(engineTypes);
+            return Ok(engineTypesDTO);
+        }
+
+        [HttpGet("{id}" , Name = "EngineById")]
         public IActionResult GetEngineForModel(int id)
         {
             var model = _repository.ShopModel.GetModel(id, trackChanges: false);
@@ -33,9 +42,25 @@ namespace Store.Controllers
                 return NotFound(); 
             }
 
-            var engineType = _repository.ShopEngineType.GetEngineType(model.id, trackChanges: false);
+            var engineType = _repository.ShopEngineType.GetEngineType(model.engineTypeId, trackChanges: false);
             var engineTypeDTO = _mapper.Map<EngineDTO>(engineType);
             return Ok(engineTypeDTO);
+        }
+
+        [HttpPost]
+        public IActionResult CreateEngine([FromBody]EngineForCreationDTO engine)
+        {
+            if (engine == null)
+            {
+                return BadRequest("EngineForCreationDTO object send from client is null");
+            }
+
+            var engineEntity = _mapper.Map<ShopEngineType>(engine);
+            _repository.ShopEngineType.CreateEngineType(engineEntity);
+            _repository.Save();
+
+            var engineTypeToReturn = _mapper.Map<EngineDTO>(engineEntity);
+            return CreatedAtRoute("EngineById", new { id = engineTypeToReturn.id }, engineTypeToReturn);
         }
     }
 }

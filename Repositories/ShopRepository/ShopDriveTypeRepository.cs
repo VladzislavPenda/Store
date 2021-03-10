@@ -1,9 +1,8 @@
 ﻿using Contracts;
 using Entities;
 using Entities.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace Repositories
 {
@@ -13,5 +12,17 @@ namespace Repositories
             : base(repositoryContext)
         {
         }
+
+        public IEnumerable<ShopDriveType> GetAllDriveTypes(bool trackchanges)
+        {
+            return FindAll(trackchanges).ToList();
+        }
+
+        public ShopDriveType GetDriveType(int driveTypeId, bool trackchanges)
+        {
+            return FindByCondition(c => c.id.Equals(driveTypeId), trackchanges).SingleOrDefault();
+        }
+
+        public void CreateDriveType(ShopDriveType shopDriveType) => Create(shopDriveType);
     }
 }
