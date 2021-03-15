@@ -3,10 +3,9 @@ using Contracts;
 using Entities.DataTransferObjects.DriveDTO;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Store.ModelBinders;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Store.Controllers
 {
@@ -42,6 +41,46 @@ namespace Store.Controllers
             var driveEntity = _repository.ShopDriveType.GetDriveType(model.driveTypeId, trackChanges: false);
             var driveDTO = _mapper.Map<DriveDTO>(driveEntity);
             return Ok(driveDTO);
+        }
+
+        [HttpGet("collection/({ids})", Name = "DriveCollection")]
+        public IActionResult GetDriveCollection([ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<int> ids)
+        {
+            if (ids == null)
+            {
+                return BadRequest("ids parameter was null");
+            }
+
+            var driveEntities = _repository.ShopDriveType.GetByIds(ids, trackChanges: false);
+
+            if (ids.Count() != driveEntities.Count())
+            {
+                return NotFound();
+            }
+
+            var driveToReturn = _mapper.Map<IEnumerable<DriveDTO>>(driveEntities);
+            return Ok(driveToReturn);
+        }
+
+        [HttpPost("collection")]
+        public IActionResult CreateDriveCollection([FromBody] IEnumerable<DriveDTO> driveCollection)
+        {
+            if (driveCollection == null)
+            {
+                return BadRequest("driveCollection parameter was null");
+            }
+
+            var driveEntities = _mapper.Map<IEnumerable<ShopDriveType>>(driveCollection);
+            foreach (var drive in driveEntities)
+            {
+                _repository.ShopDriveType.CreateDriveType(drive);
+            }
+
+            _repository.Save();
+            var driveCollectionToReturn = _mapper.Map<IEnumerable<DriveDTO>>(driveEntities);
+            var ids = string.Join(",", driveCollectionToReturn.Select(c => c.id));
+
+            return CreatedAtRoute("DriveCollection", new { ids }, driveCollectionToReturn);
         }
 
         [HttpPost]

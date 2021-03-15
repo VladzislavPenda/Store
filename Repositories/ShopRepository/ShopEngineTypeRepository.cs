@@ -27,5 +27,11 @@ namespace Repositories
         }
 
         public void CreateEngineType(ShopEngineType engineType) => Create(engineType);
+
+        public IEnumerable<ShopEngineType> GetByIds(IEnumerable<int> ids, bool trackChanges)
+        {
+            return FindByCondition(x => ids.Contains(x.id), trackChanges)
+                .ToList();
+        }
     }
 }

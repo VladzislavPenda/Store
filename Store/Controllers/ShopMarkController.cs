@@ -3,7 +3,9 @@ using Contracts;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
+using Store.ModelBinders;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Store.Controllers
 {
@@ -33,6 +35,46 @@ namespace Store.Controllers
             return Ok(markDTO);
         }
 
+        [HttpGet("collection/({ids})", Name ="MarkCollection")]
+        public IActionResult GetMarkCollection([ModelBinder(BinderType = typeof(ArrayModelBinder))]IEnumerable<int> ids)
+        {
+            if (ids == null)
+            {
+                return BadRequest("ids parameter was null");
+            }
+
+            var markEntities = _repository.ShopMark.GetByIds(ids, trackChanges: false);
+
+            if (ids.Count() != markEntities.Count())
+            {
+                return NotFound();
+            }
+
+            var marksToReturn = _mapper.Map<IEnumerable<MarkDTO>>(markEntities);
+            return Ok(marksToReturn);
+        }
+
+        [HttpPost("collection")]
+        public IActionResult CreateMerkCollection([FromBody]IEnumerable<MarkDTO> markCollection)
+        {
+            if (markCollection == null)
+            {
+                return BadRequest("markCollection parameter was null");
+            }
+
+            var markEntities = _mapper.Map<IEnumerable<ShopMark>>(markCollection);
+            foreach (var mark in markEntities)
+            {
+                _repository.ShopMark.CreateMark(mark);
+            }
+
+            _repository.Save();
+            var marksCollectionToReturn = _mapper.Map<IEnumerable<MarkDTO>>(markEntities);
+            var ids = string.Join(",", marksCollectionToReturn.Select(c => c.id));
+
+            return CreatedAtRoute("MarkCollection", new { ids }, marksCollectionToReturn);
+        }
+
         [HttpPost]
         public IActionResult CreateMark([FromBody]MarkForCreationDTO mark)
         {
@@ -56,18 +98,5 @@ namespace Store.Controllers
             var marksDTO = _mapper.Map<IEnumerable<MarkDTO>>(marks);
             return Ok(marksDTO);
         }
-
-        //[HttpGet("{id}")]
-        //public IActionResult GetMark(int id)
-        //{
-        //    var mark = _repository.ShopMark.GetMark(id, trackChanges: false);
-        //    if (mark == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    var markDTO = _mapper.Map<MarkDTO>(mark);
-        //    return Ok(markDTO);
-        //}
-
     }
 }

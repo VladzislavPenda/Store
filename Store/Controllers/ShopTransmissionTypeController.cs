@@ -3,6 +3,7 @@ using Contracts;
 using Entities.DataTransferObjects.TransmissionDTO;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
+using Store.ModelBinders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +44,46 @@ namespace Store.Controllers
             var transmissionType = _repository.ShopTransmissionType.GetTransmissionType(model.transmissionId, trackChanges: false);
             var transmissionTypeDTO = _mapper.Map<TransmissionDTO>(transmissionType);
             return Ok(transmissionTypeDTO);
+        }
+
+        [HttpGet("collection/({ids})", Name = "TransmissionCollection")]
+        public IActionResult GetTransmissionCollection([ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<int> ids)
+        {
+            if (ids == null)
+            {
+                return BadRequest("ids parameter was null");
+            }
+
+            var transmissionEntities = _repository.ShopTransmissionType.GetByIds(ids, trackChanges: false);
+
+            if (ids.Count() != transmissionEntities.Count())
+            {
+                return NotFound();
+            }
+
+            var transmissionToReturn = _mapper.Map<IEnumerable<TransmissionDTO>>(transmissionEntities);
+            return Ok(transmissionToReturn);
+        }
+
+        [HttpPost("collection")]
+        public IActionResult CreateTransmissionCollection([FromBody] IEnumerable<TransmissionDTO> transmissionCollection)
+        {
+            if (transmissionCollection == null)
+            {
+                return BadRequest("transmissionCollection parameter was null");
+            }
+
+            var transmissionEntities = _mapper.Map<IEnumerable<ShopTransmissionType>>(transmissionCollection);
+            foreach (var transmission in transmissionEntities)
+            {
+                _repository.ShopTransmissionType.CreateTransmissionType(transmission);
+            }
+
+            _repository.Save();
+            var transmissionCollectionToReturn = _mapper.Map<IEnumerable<TransmissionDTO>>(transmissionEntities);
+            var ids = string.Join(",", transmissionCollectionToReturn.Select(c => c.id));
+
+            return CreatedAtRoute("TransmissionCollection", new { ids }, transmissionCollectionToReturn);
         }
 
         [HttpPost]

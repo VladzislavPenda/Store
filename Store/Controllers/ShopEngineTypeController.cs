@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Contracts;
+using Entities.DataTransferObjects;
 using Entities.DataTransferObjects.EngineDTO;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Repositories;
+using Store.ModelBinders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +49,45 @@ namespace Store.Controllers
             return Ok(engineTypeDTO);
         }
 
+        [HttpGet("collection/({ids})", Name = "EngineCollection")]
+        public IActionResult GetEngineCollection([ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<int> ids)
+        {
+            if (ids == null)
+            {
+                return BadRequest("ids parameter was null");
+            }
+
+            var engineEntities = _repository.ShopEngineType.GetByIds(ids, trackChanges: false);
+
+            if (ids.Count() != engineEntities.Count())
+            {
+                return NotFound();
+            }
+
+            var engineToReturn = _mapper.Map<IEnumerable<EngineDTO>>(engineEntities);
+            return Ok(engineToReturn);
+        }
+
+        [HttpPost("collection")]
+        public IActionResult CreateEngineCollection([FromBody] IEnumerable<EngineDTO> engineCollection)
+        {
+            if (engineCollection == null)
+            {
+                return BadRequest("engineCollection parameter was null");
+            }
+
+            var engineEntities = _mapper.Map<IEnumerable<ShopEngineType>>(engineCollection);
+            foreach (var engine in engineEntities)
+            {
+                _repository.ShopEngineType.CreateEngineType(engine);
+            }
+            
+            _repository.Save();
+            var engineCollectionToReturn = _mapper.Map<IEnumerable<EngineDTO>>(engineEntities);
+            var ids = string.Join(",", engineCollectionToReturn.Select(c => c.id));
+
+            return CreatedAtRoute("EngineCollection", new { ids }, engineCollectionToReturn);
+        }
         [HttpPost]
         public IActionResult CreateEngine([FromBody]EngineForCreationDTO engine)
         {

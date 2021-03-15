@@ -24,5 +24,11 @@ namespace Repositories
         }
 
         public void CreateDriveType(ShopDriveType shopDriveType) => Create(shopDriveType);
+
+        public IEnumerable<ShopDriveType> GetByIds(IEnumerable<int> ids, bool trackChanges)
+        {
+            return FindByCondition(x => ids.Contains(x.id), trackChanges)
+                .ToList();
+        }
     }
 }

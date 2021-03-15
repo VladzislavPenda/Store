@@ -25,5 +25,11 @@ namespace Repositories
         }
 
         public void CreateTransmissionType(ShopTransmissionType shopTransmissionType) => Create(shopTransmissionType);
+
+        public IEnumerable<ShopTransmissionType> GetByIds(IEnumerable<int> ids, bool trackChanges)
+        {
+            return FindByCondition(x => ids.Contains(x.id), trackChanges)
+                .ToList();
+        }
     }
 }

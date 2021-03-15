@@ -17,21 +17,29 @@ namespace Entities.AutoMappers
             //    .ForMember(c => c.horsePower, opt => opt.MapFrom(x => (int)x.horsePower));
 
             CreateMap<ShopModel, ModelDTO>();
+            CreateMap<ModelForCreationDTO, ShopModel>();
 
             CreateMap<ShopMark, MarkDTO>();
+            CreateMap<MarkDTO, ShopMark>();
             CreateMap<MarkForCreationDTO, ShopMark>();
 
             CreateMap<ShopEngineType, EngineDTO>();
+            CreateMap<EngineDTO, ShopEngineType>();
             CreateMap<EngineForCreationDTO, ShopEngineType>();
 
             CreateMap<ShopDriveType, DriveDTO>();
+            CreateMap<DriveDTO, ShopDriveType>();
             CreateMap<DriveForCreationDTO, ShopDriveType>();
 
             CreateMap<ShopCarcaseType, CarcaseDTO>();
+            CreateMap<CarcaseDTO, ShopCarcaseType>();
             CreateMap<CarcaseForCreationDTO, ShopCarcaseType>();
 
             CreateMap<ShopTransmissionType, TransmissionDTO>();
+            CreateMap<TransmissionDTO, ShopTransmissionType>();
             CreateMap<TransmissionForCreationDTO, ShopTransmissionType>();
+
+            
         }
     }
 }

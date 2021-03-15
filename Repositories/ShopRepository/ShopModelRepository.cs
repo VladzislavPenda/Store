@@ -27,5 +27,15 @@ namespace Repositories
             return FindByCondition(c => c.id.Equals(id), trackChanges)
                 .SingleOrDefault();
         }
+
+        public void CreateModel(int markId, int engineId, int carcaseId, int driveId, int transmissionId, ShopModel shopModel)
+        {
+            shopModel.engineTypeId = engineId;
+            shopModel.driveTypeId = driveId;
+            shopModel.carcaseTypeId = carcaseId;
+            shopModel.markId = markId;
+            shopModel.transmissionId = transmissionId;
+            Create(shopModel);
+        }
     }
 }

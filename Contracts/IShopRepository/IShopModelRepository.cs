@@ -9,5 +9,7 @@ namespace Contracts
     {
         IEnumerable<ShopModel> GetAllShopModels(bool trackChanges);
         ShopModel GetModel(int id, bool trackChanges);
+        void CreateModel(int markId, int engineId, int carcaseId, int driveId, int transmissionId, ShopModel shopModel);
+        //void DeleteModel(ShopModel shopModel);
     }
 }

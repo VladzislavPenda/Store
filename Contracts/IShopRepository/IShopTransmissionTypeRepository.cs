@@ -8,5 +8,6 @@ namespace Contracts
         IEnumerable<ShopTransmissionType> GetAllTransmissionTypes(bool trackChanges);
         ShopTransmissionType GetTransmissionType(int driveTypeId, bool trackChanges);
         void CreateTransmissionType(ShopTransmissionType shopTransmissionType);
+        IEnumerable<ShopTransmissionType> GetByIds(IEnumerable<int> ids, bool trackChanges);
     }
 }

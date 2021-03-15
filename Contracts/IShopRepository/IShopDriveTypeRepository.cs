@@ -10,6 +10,7 @@ namespace Contracts
         IEnumerable<ShopDriveType> GetAllDriveTypes(bool trackChanges);
         ShopDriveType GetDriveType(int driveTypeId, bool trackChanges);
         void CreateDriveType(ShopDriveType shopDriveType);
+        IEnumerable<ShopDriveType> GetByIds(IEnumerable<int> ids, bool trackChanges);
 
     }
 }

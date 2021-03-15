@@ -10,5 +10,6 @@ namespace Contracts
         IEnumerable<ShopCarcaseType> GetAllCarcaseTypes(bool trackChanges);
         ShopCarcaseType GetCarcaseType(int id, bool trackChanges);
         void CreateCarcaseType(ShopCarcaseType shopCarcaseType);
+        IEnumerable<ShopCarcaseType> GetByIds(IEnumerable<int> ids, bool trackChanges);
     }
 }

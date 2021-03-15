@@ -30,5 +30,11 @@ namespace Repositories
 
         public void CreateMark(ShopMark shopMark) => Create(shopMark);
 
+        public IEnumerable<ShopMark> GetByIds(IEnumerable<int> ids, bool trackChanges)
+        {
+            return FindByCondition(x => ids.Contains(x.id), trackChanges)
+                .ToList();
+        }
+
     }
 }

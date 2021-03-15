@@ -26,5 +26,11 @@ namespace Repositories
         }
 
         public void CreateCarcaseType(ShopCarcaseType shopCarcaseType) => Create(shopCarcaseType);
+
+        public IEnumerable<ShopCarcaseType> GetByIds(IEnumerable<int> ids, bool trackChanges)
+        {
+            return FindByCondition(x => ids.Contains(x.id), trackChanges)
+                .ToList();
+        }
     }
 }
