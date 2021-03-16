@@ -18,6 +18,7 @@ namespace Entities.AutoMappers
 
             CreateMap<ShopModel, ModelDTO>();
             CreateMap<ModelForCreationDTO, ShopModel>();
+            CreateMap<ModelForUpdatingDTO, ShopModel>();
 
             CreateMap<ShopMark, MarkDTO>();
             CreateMap<MarkDTO, ShopMark>();

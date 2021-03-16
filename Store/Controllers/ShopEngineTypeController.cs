@@ -103,5 +103,20 @@ namespace Store.Controllers
             var engineTypeToReturn = _mapper.Map<EngineDTO>(engineEntity);
             return CreatedAtRoute("EngineById", new { id = engineTypeToReturn.id }, engineTypeToReturn);
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteEngine(int id)
+        {
+            var engine = _repository.ShopEngineType.GetEngineType(id, trackChanges: false);
+            if (engine == null)
+            {
+                return NotFound();
+            }
+
+            _repository.ShopEngineType.DeleteEngineType(engine);
+            _repository.Save();
+
+            return NoContent();
+        }
     }
 }

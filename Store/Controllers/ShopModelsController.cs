@@ -4,6 +4,8 @@ using Contracts;
 using AutoMapper;
 using Entities.DataTransferObjects;
 using Entities.Models;
+using System.Linq;
+using System;
 
 namespace Store.Controllers
 {
@@ -23,8 +25,11 @@ namespace Store.Controllers
         [HttpGet]
         public IActionResult GetModels()
         {
-            var models = _repository.ShopModel.GetAllShopModels(trackChanges: false);
+            //var models = _repository.ShopModel.GetAllShopModels(trackChanges: false);
+            var models = _repository.ShopModel.GetAllIncludes(trackChanges: false);
             var modelsDTO = _mapper.Map<IEnumerable<ModelDTO>>(models);
+            
+            
             return Ok(modelsDTO);
         }
 
@@ -41,7 +46,7 @@ namespace Store.Controllers
         }
         // Не уверен что так оно должно быть, тут надо еще подумать...
         [HttpPost("shopMark/{markId}/shopEngine/{engineId}/shopCarcaseType/{carcaseId}/shopDriveType/{driveId}/shopTransmission/{transmissionId}/models")]
-        public IActionResult CreateModel(int markId, int engineId, int carcaseId, int driveId, int transmissionId, [FromBody]ModelForCreationDTO model)
+        public IActionResult CreateModel(int markId, int engineId, int carcaseId, int driveId, int transmissionId, [FromBody] ModelForCreationDTO model)
         {
             if (model == null)
             {
@@ -67,6 +72,41 @@ namespace Store.Controllers
             var modelToReturn = _mapper.Map<ModelDTO>(modelEntity);
             return CreatedAtRoute("ModelById",
                 new { markId, engineId, carcaseId, driveId, transmissionId, modelEntity, id = modelToReturn.id }, modelToReturn);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteModel(int id)
+        {
+            var model = _repository.ShopModel.GetModel(id, trackChanges: false);
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            _repository.ShopModel.DeleteModel(model);
+            _repository.Save();
+
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateModel(int id, [FromBody]ModelForUpdatingDTO model)
+        {
+            if (model == null)
+            {
+                return BadRequest("model object is null");
+            }
+
+            var modelEntity = _repository.ShopModel.GetModel(id, trackChanges: true);
+            if (modelEntity == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(model, modelEntity);
+            _repository.Save();
+
+            return NoContent();
         }
     }
 }

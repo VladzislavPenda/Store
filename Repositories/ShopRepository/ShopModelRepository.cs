@@ -1,6 +1,9 @@
-﻿using Contracts;
+﻿using AutoMapper;
+using Contracts;
 using Entities;
+using Entities.DataTransferObjects;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,6 +17,27 @@ namespace Repositories
         {
             _context = repositoryContext;
         }
+
+        public IEnumerable<ShopModel> GetAllIncludes(bool trackChanges)
+        {
+            //return _context.Set<ShopModel>()
+            
+            IEnumerable<ShopModel> shopModels = _context.ShopModels
+                //.Include(c => c.ShopMark)
+                .ToList();
+                //.Include(d => d.ShopEngineType)
+                //.Include(e => e.ShopCarcaseType)
+                //.Include(f => f.ShopMark)
+                //.Include(g => g.ShopTransmissionType);
+
+
+            return shopModels;
+        }
+
+        //public IEnumerable<ShopModel> Get(bool trackChanges, IEnumerable<ModelDTO> models)
+        //{
+        //    IEnumerable<ShopModel> shopModels = _context.Set<ModelDTO>().Include(c => c.)
+        //}
         
         public IEnumerable<ShopModel> GetAllShopModels(bool trackChanges)
         {
@@ -36,6 +60,11 @@ namespace Repositories
             shopModel.markId = markId;
             shopModel.transmissionId = transmissionId;
             Create(shopModel);
+        }
+
+        public void DeleteModel(ShopModel shopModel)
+        {
+            Delete(shopModel);
         }
     }
 }

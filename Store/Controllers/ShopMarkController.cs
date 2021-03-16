@@ -98,5 +98,20 @@ namespace Store.Controllers
             var marksDTO = _mapper.Map<IEnumerable<MarkDTO>>(marks);
             return Ok(marksDTO);
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteMark(int id)
+        {
+            var mark = _repository.ShopMark.GetMark(id, trackChanges: false);
+            if (mark == null)
+            {
+                return NotFound();
+            }
+
+            _repository.ShopMark.DeleteMark(mark);
+            _repository.Save();
+
+            return NoContent();
+        }
     }
 }

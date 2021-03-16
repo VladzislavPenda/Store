@@ -36,5 +36,9 @@ namespace Repositories
                 .ToList();
         }
 
+        public void DeleteMark(ShopMark shopMark)
+        {
+            Delete(shopMark);
+        }
     }
 }

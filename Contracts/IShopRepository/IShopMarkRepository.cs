@@ -10,7 +10,7 @@ namespace Contracts
         IEnumerable<ShopMark> GetAllMarks(bool trackChanges);
         ShopMark GetMark(int markId, bool trackChanges);
         void CreateMark(ShopMark shopMark);
-
-        IEnumerable<ShopMark> GetByIds(IEnumerable<int> ids, bool trackChanges); 
+        IEnumerable<ShopMark> GetByIds(IEnumerable<int> ids, bool trackChanges);
+        void DeleteMark(ShopMark shopMark);
     }
 }

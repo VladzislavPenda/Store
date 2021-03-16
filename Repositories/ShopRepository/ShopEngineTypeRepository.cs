@@ -33,5 +33,9 @@ namespace Repositories
             return FindByCondition(x => ids.Contains(x.id), trackChanges)
                 .ToList();
         }
+        public void DeleteEngineType(ShopEngineType shopEngineType)
+        {
+            Delete(shopEngineType);
+        }
     }
 }

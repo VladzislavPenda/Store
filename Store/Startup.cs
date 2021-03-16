@@ -49,6 +49,11 @@ namespace Store
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
 
+            services.AddControllersWithViews()
+            .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
             services.AddScoped<IRepositoryManager, RepositoryManager>();
             //services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();

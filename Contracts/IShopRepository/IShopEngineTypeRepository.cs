@@ -9,5 +9,6 @@ namespace Contracts
         ShopEngineType GetEngineType(int engineId, bool trackChanges);
         void CreateEngineType(ShopEngineType engineType);
         IEnumerable<ShopEngineType> GetByIds(IEnumerable<int> ids, bool trackChanges);
+        void DeleteEngineType(ShopEngineType shopEngineType);
     }
 }
