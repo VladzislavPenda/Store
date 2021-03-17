@@ -23,12 +23,13 @@ namespace Repositories
             //return _context.Set<ShopModel>()
             
             IEnumerable<ShopModel> shopModels = _context.ShopModels
-                //.Include(c => c.ShopMark)
+                .Include(c => c.ShopMark)
+                .Include(d => d.ShopEngineType)
+                .Include(e => e.ShopCarcaseType)
+                .Include(f => f.ShopMark)
+                .Include(g => g.ShopTransmissionType)
                 .ToList();
-                //.Include(d => d.ShopEngineType)
-                //.Include(e => e.ShopCarcaseType)
-                //.Include(f => f.ShopMark)
-                //.Include(g => g.ShopTransmissionType);
+                
 
 
             return shopModels;

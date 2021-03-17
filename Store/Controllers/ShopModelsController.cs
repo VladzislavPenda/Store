@@ -27,10 +27,10 @@ namespace Store.Controllers
         {
             //var models = _repository.ShopModel.GetAllShopModels(trackChanges: false);
             var models = _repository.ShopModel.GetAllIncludes(trackChanges: false);
-            var modelsDTO = _mapper.Map<IEnumerable<ModelDTO>>(models);
+            //var modelsDTO = _mapper.Map<IEnumerable<ModelDTO>>(models);
             
             
-            return Ok(modelsDTO);
+            return Ok(models);
         }
 
         [HttpGet("{id}", Name = "ModelById")]

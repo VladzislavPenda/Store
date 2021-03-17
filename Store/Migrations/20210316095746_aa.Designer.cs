@@ -4,14 +4,16 @@ using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Store.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20210316095746_aa")]
+    partial class aa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,19 +101,7 @@ namespace Store.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("ShopCarcaseTypeid")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ShopDriveTypeid")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ShopEngineTypeid")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ShopMarkid")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ShopTransmissionTypeid")
                         .HasColumnType("int");
 
                     b.Property<int>("carcaseTypeId")
@@ -148,15 +138,15 @@ namespace Store.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("ShopCarcaseTypeid");
-
                     b.HasIndex("ShopDriveTypeid");
 
-                    b.HasIndex("ShopEngineTypeid");
+                    b.HasIndex("carcaseTypeId");
 
-                    b.HasIndex("ShopMarkid");
+                    b.HasIndex("engineTypeId");
 
-                    b.HasIndex("ShopTransmissionTypeid");
+                    b.HasIndex("markId");
+
+                    b.HasIndex("transmissionId");
 
                     b.ToTable("ShopModels");
                 });
@@ -180,25 +170,33 @@ namespace Store.Migrations
 
             modelBuilder.Entity("Entities.Models.ShopModel", b =>
                 {
-                    b.HasOne("Entities.Models.ShopCarcaseType", "ShopCarcaseType")
-                        .WithMany("ShopModels")
-                        .HasForeignKey("ShopCarcaseTypeid");
-
                     b.HasOne("Entities.Models.ShopDriveType", "ShopDriveType")
                         .WithMany("ShopModels")
                         .HasForeignKey("ShopDriveTypeid");
 
+                    b.HasOne("Entities.Models.ShopCarcaseType", "ShopCarcaseType")
+                        .WithMany("ShopModels")
+                        .HasForeignKey("carcaseTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Entities.Models.ShopEngineType", "ShopEngineType")
                         .WithMany("ShopModels")
-                        .HasForeignKey("ShopEngineTypeid");
+                        .HasForeignKey("engineTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Entities.Models.ShopMark", "ShopMark")
                         .WithMany("ShopModels")
-                        .HasForeignKey("ShopMarkid");
+                        .HasForeignKey("markId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Entities.Models.ShopTransmissionType", "ShopTransmissionType")
                         .WithMany("ShopModels")
-                        .HasForeignKey("ShopTransmissionTypeid");
+                        .HasForeignKey("transmissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ShopCarcaseType");
 
