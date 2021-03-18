@@ -96,6 +96,11 @@ namespace Store.Controllers
                 return BadRequest("EngineForCreationDTO object send from client is null");
             }
 
+            if (!ModelState.IsValid)
+            {
+                return UnprocessableEntity(ModelState);
+            }
+
             var engineEntity = _mapper.Map<ShopEngineType>(engine);
             _repository.ShopEngineType.CreateEngineType(engineEntity);
             _repository.Save();

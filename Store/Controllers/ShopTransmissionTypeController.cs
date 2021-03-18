@@ -94,6 +94,11 @@ namespace Store.Controllers
                 return BadRequest("TransmissionForCreationDTO object send from client is null");
             }
 
+            if (!ModelState.IsValid)
+            {
+                return UnprocessableEntity(ModelState);
+            }
+
             var transmissionEntity = _mapper.Map<ShopTransmissionType>(transmission);
             _repository.ShopTransmissionType.CreateTransmissionType(transmissionEntity);
             _repository.Save();

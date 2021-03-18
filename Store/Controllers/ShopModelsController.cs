@@ -53,6 +53,11 @@ namespace Store.Controllers
                 return BadRequest("modelForCreationDTO object was null");
             }
 
+            if (!ModelState.IsValid)
+            {
+                return UnprocessableEntity(ModelState);
+            }
+
             var mark = _repository.ShopMark.GetMark(markId, trackChanges: false);
             var engine = _repository.ShopEngineType.GetEngineType(engineId, trackChanges: false);
             var carcase = _repository.ShopCarcaseType.GetCarcaseType(carcaseId, trackChanges: false);
@@ -95,6 +100,11 @@ namespace Store.Controllers
             if (model == null)
             {
                 return BadRequest("model object is null");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return UnprocessableEntity(ModelState);
             }
 
             var modelEntity = _repository.ShopModel.GetModel(id, trackChanges: true);

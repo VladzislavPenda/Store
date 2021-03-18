@@ -11,7 +11,7 @@ namespace Entities.Models
         [Column("transmissionId")]
         public int id { get; set; }
 
-        [StringLength(100, ErrorMessage = "Слишком длинное название типа трансиссии(максимальная длина 100 символов).")]
+        [StringLength(100, ErrorMessage = "Transmission type name is too long (maximum length 100 characters).")]
         public string type { get; set; }
 
         public ICollection<ShopModel> ShopModels { get; set; }

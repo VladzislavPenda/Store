@@ -11,7 +11,7 @@ namespace Entities.Models
         [Column("engineTypeId")]
         public int id { get; set; }
 
-        [StringLength(100, ErrorMessage = "Слишком длинное название для типа двигателя(максимальная длина 100 символов).")]
+        [StringLength(100, ErrorMessage = "The name for the engine type is too long (maximum length 100 characters).")]
         public string type { get; set; }
 
         public ICollection<ShopModel> ShopModels { get; set; }

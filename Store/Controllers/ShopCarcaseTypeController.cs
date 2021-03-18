@@ -91,6 +91,11 @@ namespace Store.Controllers
                 return BadRequest("CarcaseForCreationDTO object send from the client was null");
             }
 
+            if (!ModelState.IsValid)
+            {
+                return UnprocessableEntity(ModelState);
+            }
+
             var carcaseEntity = _mapper.Map<ShopCarcaseType>(carcaseType);
             _repository.ShopCarcaseType.CreateCarcaseType(carcaseEntity);
             _repository.Save();

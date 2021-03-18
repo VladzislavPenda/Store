@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.DataTransferObjects;
+using Entities.DataTransferObjects.MarkDTO;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Store.ModelBinders;
@@ -68,6 +69,7 @@ namespace Store.Controllers
                 _repository.ShopMark.CreateMark(mark);
             }
 
+
             _repository.Save();
             var marksCollectionToReturn = _mapper.Map<IEnumerable<MarkDTO>>(markEntities);
             var ids = string.Join(",", marksCollectionToReturn.Select(c => c.id));
@@ -81,6 +83,11 @@ namespace Store.Controllers
             if (mark == null)
             {
                 return BadRequest("MarkForCreationDTO object send from client is null.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return UnprocessableEntity(ModelState);
             }
 
             var markEntity = _mapper.Map<ShopMark>(mark);

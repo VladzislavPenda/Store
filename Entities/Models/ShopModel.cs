@@ -10,18 +10,18 @@ namespace Entities.Models
     {
         public int id { get; set; }
 
-        [Required(ErrorMessage = "Не указано название модели.")]
-        [StringLength(100, MinimumLength = 3, ErrorMessage = "Недопустимая длина названия модели.")]
+        [Required(ErrorMessage = "Please, specify model name.")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "Model name is to long. Max length is 100 symbols")]
         public string model { get; set; }
 
-        [Range(1900, 2021, ErrorMessage = "Недопустимая дата выпуска авто.")]
+        [Range(1900, 2021, ErrorMessage = "Incorrect year of car production. Your car should be created after 1900 and before 2021")]
         public int? year { get; set; }
-
+        [Required(ErrorMessage = "Please, indicate horsepower.")]
         public int? horsePower { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Please, indicate price.")]
         public int price { get; set; }
-
+        [Required(ErrorMessage = "Please, specify the mileage.")]
         public int mileAge { get; set; }
 
         [ForeignKey(nameof(ShopMark))]

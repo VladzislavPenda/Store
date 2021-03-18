@@ -91,6 +91,11 @@ namespace Store.Controllers
                 return BadRequest("driveForCreationDTO object send was null");
             }
 
+            if (!ModelState.IsValid)
+            {
+                return UnprocessableEntity(ModelState);
+            }
+
             var driveEntity = _mapper.Map<ShopDriveType>(driveType);
             _repository.ShopDriveType.CreateDriveType(driveEntity);
             _repository.Save();

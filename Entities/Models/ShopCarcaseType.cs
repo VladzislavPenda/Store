@@ -12,7 +12,7 @@ namespace Entities.Models
         public int id { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "Слишком длинное название(максимум 100 символов).")]
+        [StringLength(100, ErrorMessage = "The name is too long (maximum 100 characters).")]
         public string type { get; set; }
 
         public ICollection<ShopModel> ShopModels { get; set; }

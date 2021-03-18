@@ -11,10 +11,10 @@ namespace Entities.Models
         [Column("markId")]
         public int id { get; set; }
 
-        [StringLength(100, ErrorMessage = "Слишком длинное название марки авто(максимальная длина 100 символов).")]
+        [StringLength(100, ErrorMessage = "The name of the car brand is too long (maximum length 100 characters).")]
         public string markNum { get; set; }
 
-        [StringLength(100, ErrorMessage = "Слишком длинное название страны производителя(максимальная длина 100 символов).")]
+        [StringLength(100, ErrorMessage = "Manufacturer country name too long (maximum length 100 characters).")]
         public string country { get; set; }
 
         public ICollection<ShopModel> ShopModels { get; set; }

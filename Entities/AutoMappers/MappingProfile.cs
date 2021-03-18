@@ -3,6 +3,7 @@ using Entities.DataTransferObjects;
 using Entities.DataTransferObjects.CarcaseDTO;
 using Entities.DataTransferObjects.DriveDTO;
 using Entities.DataTransferObjects.EngineDTO;
+using Entities.DataTransferObjects.MarkDTO;
 using Entities.DataTransferObjects.TransmissionDTO;
 using Entities.Models;
 
