@@ -1,16 +1,15 @@
 ﻿using Entities.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Contracts
 {
     public interface IShopMarkRepository
     {
-        IEnumerable<ShopMark> GetAllMarks(bool trackChanges);
-        ShopMark GetMark(int markId, bool trackChanges);
+        Task<IEnumerable<ShopMark>> GetAllMarks(bool trackChanges);
+        Task<ShopMark> GetMark(int markId, bool trackChanges);
         void CreateMark(ShopMark shopMark);
-        IEnumerable<ShopMark> GetByIds(IEnumerable<int> ids, bool trackChanges);
+        Task<IEnumerable<ShopMark>> GetByIds(IEnumerable<int> ids, bool trackChanges);
         void DeleteMark(ShopMark shopMark);
     }
 }

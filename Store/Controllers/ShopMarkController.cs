@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Store.ModelBinders;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Store.Controllers
 {
@@ -23,28 +24,36 @@ namespace Store.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{id}" , Name = "MarkById")]
-        public IActionResult GetMarkForModel(int id)
+        [HttpGet]
+        public async Task<IActionResult> GetMarks()
         {
-            var model = _repository.ShopModel.GetModel(id, trackChanges: false);
+            var marks = await _repository.ShopMark.GetAllMarks(trackChanges: false);
+            var marksDTO = _mapper.Map<IEnumerable<MarkDTO>>(marks);
+            return Ok(marksDTO);
+        }
+
+        [HttpGet("{id}" , Name = "MarkById")]
+        public async Task<IActionResult> GetMarkForModel(int id)
+        {
+            var model = await _repository.ShopModel.GetModel(id, trackChanges: false);
             if (model == null)
             {
                 return NotFound();
             }
-            var mark = _repository.ShopMark.GetMark(model.markId, trackChanges: false);
+            var mark = await _repository.ShopMark.GetMark(model.markId, trackChanges: false);
             var markDTO = _mapper.Map<MarkDTO>(mark);
             return Ok(markDTO);
         }
 
         [HttpGet("collection/({ids})", Name ="MarkCollection")]
-        public IActionResult GetMarkCollection([ModelBinder(BinderType = typeof(ArrayModelBinder))]IEnumerable<int> ids)
+        public async Task<IActionResult> GetMarkCollection([ModelBinder(BinderType = typeof(ArrayModelBinder))]IEnumerable<int> ids)
         {
             if (ids == null)
             {
                 return BadRequest("ids parameter was null");
             }
 
-            var markEntities = _repository.ShopMark.GetByIds(ids, trackChanges: false);
+            var markEntities = await _repository.ShopMark.GetByIds(ids, trackChanges: false);
 
             if (ids.Count() != markEntities.Count())
             {
@@ -56,7 +65,7 @@ namespace Store.Controllers
         }
 
         [HttpPost("collection")]
-        public IActionResult CreateMerkCollection([FromBody]IEnumerable<MarkDTO> markCollection)
+        public async Task<IActionResult> CreateMerkCollection([FromBody]IEnumerable<MarkDTO> markCollection)
         {
             if (markCollection == null)
             {
@@ -70,7 +79,7 @@ namespace Store.Controllers
             }
 
 
-            _repository.Save();
+            await _repository.SaveAsync();
             var marksCollectionToReturn = _mapper.Map<IEnumerable<MarkDTO>>(markEntities);
             var ids = string.Join(",", marksCollectionToReturn.Select(c => c.id));
 
@@ -78,7 +87,7 @@ namespace Store.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateMark([FromBody]MarkForCreationDTO mark)
+        public async Task<IActionResult> CreateMark([FromBody]MarkForCreationDTO mark)
         {
             if (mark == null)
             {
@@ -92,31 +101,23 @@ namespace Store.Controllers
 
             var markEntity = _mapper.Map<ShopMark>(mark);
             _repository.ShopMark.CreateMark(markEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
 
             var MarkToReturn = _mapper.Map<MarkDTO>(markEntity);
             return CreatedAtRoute("MarkById", new { id = MarkToReturn.id }, MarkToReturn);
         }
 
-        [HttpGet]
-        public IActionResult GetMarks()
-        {
-            var marks = _repository.ShopMark.GetAllMarks(trackChanges: false);
-            var marksDTO = _mapper.Map<IEnumerable<MarkDTO>>(marks);
-            return Ok(marksDTO);
-        }
-
         [HttpDelete("{id}")]
-        public IActionResult DeleteMark(int id)
+        public async Task<IActionResult> DeleteMark(int id)
         {
-            var mark = _repository.ShopMark.GetMark(id, trackChanges: false);
+            var mark = await _repository.ShopMark.GetMark(id, trackChanges: false);
             if (mark == null)
             {
                 return NotFound();
             }
 
             _repository.ShopMark.DeleteMark(mark);
-            _repository.Save();
+            await _repository.SaveAsync();
 
             return NoContent();
         }

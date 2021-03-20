@@ -6,6 +6,7 @@ using Entities.DataTransferObjects;
 using Entities.Models;
 using System.Linq;
 using System;
+using System.Threading.Tasks;
 
 namespace Store.Controllers
 {
@@ -23,20 +24,20 @@ namespace Store.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetModels()
+        public async Task<IActionResult> GetModels()
         {
-            //var models = _repository.ShopModel.GetAllShopModels(trackChanges: false);
-            var models = _repository.ShopModel.GetAllIncludes(trackChanges: false);
-            //var modelsDTO = _mapper.Map<IEnumerable<ModelDTO>>(models);
+            var models = await _repository.ShopModel.GetAllShopModels(trackChanges: false);
+            //var models = _repository.ShopModel.GetAllIncludes(trackChanges: false);
+            var modelsDTO = _mapper.Map<IEnumerable<ModelDTO>>(models);
             
             
-            return Ok(models);
+            return Ok(modelsDTO);
         }
 
         [HttpGet("{id}", Name = "ModelById")]
-        public IActionResult GetModel(int id)
+        public async Task<IActionResult> GetModel(int id)
         {
-            var model = _repository.ShopModel.GetModel(id, trackChanges: false);
+            var model = await _repository.ShopModel.GetModel(id, trackChanges: false);
             if (model == null)
             {
                 return NotFound();
@@ -46,7 +47,7 @@ namespace Store.Controllers
         }
         // Не уверен что так оно должно быть, тут надо еще подумать...
         [HttpPost("shopMark/{markId}/shopEngine/{engineId}/shopCarcaseType/{carcaseId}/shopDriveType/{driveId}/shopTransmission/{transmissionId}/models")]
-        public IActionResult CreateModel(int markId, int engineId, int carcaseId, int driveId, int transmissionId, [FromBody] ModelForCreationDTO model)
+        public async Task<IActionResult> CreateModel(int markId, int engineId, int carcaseId, int driveId, int transmissionId, [FromBody] ModelForCreationDTO model)
         {
             if (model == null)
             {
@@ -58,11 +59,11 @@ namespace Store.Controllers
                 return UnprocessableEntity(ModelState);
             }
 
-            var mark = _repository.ShopMark.GetMark(markId, trackChanges: false);
-            var engine = _repository.ShopEngineType.GetEngineType(engineId, trackChanges: false);
-            var carcase = _repository.ShopCarcaseType.GetCarcaseType(carcaseId, trackChanges: false);
-            var drive = _repository.ShopDriveType.GetDriveType(driveId, trackChanges: false);
-            var transmission = _repository.ShopTransmissionType.GetTransmissionType(transmissionId, trackChanges: false);
+            var mark = await _repository.ShopMark.GetMark(markId, trackChanges: false);
+            var engine = await _repository.ShopEngineType.GetEngineType(engineId, trackChanges: false);
+            var carcase = await _repository.ShopCarcaseType.GetCarcaseType(carcaseId, trackChanges: false);
+            var drive = await _repository.ShopDriveType.GetDriveType(driveId, trackChanges: false);
+            var transmission = await _repository.ShopTransmissionType.GetTransmissionType(transmissionId, trackChanges: false);
 
             if (mark == null || engine == null || carcase == null || drive == null || transmission == null)
             {
@@ -72,7 +73,7 @@ namespace Store.Controllers
             var modelEntity = _mapper.Map<ShopModel>(model);
 
             _repository.ShopModel.CreateModel(markId, engineId, carcaseId, driveId, transmissionId, modelEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
 
             var modelToReturn = _mapper.Map<ModelDTO>(modelEntity);
             return CreatedAtRoute("ModelById",
@@ -80,22 +81,22 @@ namespace Store.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteModel(int id)
+        public async Task<IActionResult> DeleteModel(int id)
         {
-            var model = _repository.ShopModel.GetModel(id, trackChanges: false);
+            var model = await _repository.ShopModel.GetModel(id, trackChanges: false);
             if (model == null)
             {
                 return NotFound();
             }
 
             _repository.ShopModel.DeleteModel(model);
-            _repository.Save();
+            await _repository.SaveAsync();
 
             return NoContent();
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateModel(int id, [FromBody]ModelForUpdatingDTO model)
+        public async Task<IActionResult> UpdateModel(int id, [FromBody]ModelForUpdatingDTO model)
         {
             if (model == null)
             {
@@ -107,14 +108,14 @@ namespace Store.Controllers
                 return UnprocessableEntity(ModelState);
             }
 
-            var modelEntity = _repository.ShopModel.GetModel(id, trackChanges: true);
+            var modelEntity = await _repository.ShopModel.GetModel(id, trackChanges: true);
             if (modelEntity == null)
             {
                 return NotFound();
             }
 
             _mapper.Map(model, modelEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
 
             return NoContent();
         }

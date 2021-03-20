@@ -1,10 +1,12 @@
 ﻿using Contracts;
 using Entities;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Repositories
 {
@@ -15,22 +17,24 @@ namespace Repositories
         {
         }
 
-        public IEnumerable<ShopCarcaseType> GetAllCarcaseTypes(bool trackChanges)
+        public async Task<IEnumerable<ShopCarcaseType>> GetAllCarcaseTypes(bool trackChanges)
         {
-            return FindAll(trackChanges).ToList();
+            return await FindAll(trackChanges).ToListAsync();
         }
 
-        public ShopCarcaseType GetCarcaseType(int id, bool trackChanges)
+        public async Task<ShopCarcaseType> GetCarcaseType(int id, bool trackChanges)
         {
-            return FindByCondition(c => c.id.Equals(id), trackChanges).SingleOrDefault();
+            return await FindByCondition(c => c.id.Equals(id), trackChanges).SingleOrDefaultAsync();
         }
 
         public void CreateCarcaseType(ShopCarcaseType shopCarcaseType) => Create(shopCarcaseType);
 
-        public IEnumerable<ShopCarcaseType> GetByIds(IEnumerable<int> ids, bool trackChanges)
+        public async Task<IEnumerable<ShopCarcaseType>> GetByIds(IEnumerable<int> ids, bool trackChanges)
         {
-            return FindByCondition(x => ids.Contains(x.id), trackChanges)
-                .ToList();
+            return await FindByCondition(x => ids.Contains(x.id), trackChanges)
+                .ToListAsync();
         }
+
+        public void DeleteCarcaseType(ShopCarcaseType shopCarcaseType) => Delete(shopCarcaseType);
     }
 }

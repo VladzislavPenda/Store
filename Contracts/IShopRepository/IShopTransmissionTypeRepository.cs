@@ -1,13 +1,15 @@
 ﻿using Entities.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Contracts
 {
     public interface IShopTransmissionTypeRepository
     {
-        IEnumerable<ShopTransmissionType> GetAllTransmissionTypes(bool trackChanges);
-        ShopTransmissionType GetTransmissionType(int driveTypeId, bool trackChanges);
+        Task<IEnumerable<ShopTransmissionType>> GetAllTransmissionTypes(bool trackChanges);
+        Task<ShopTransmissionType> GetTransmissionType(int driveTypeId, bool trackChanges);
         void CreateTransmissionType(ShopTransmissionType shopTransmissionType);
-        IEnumerable<ShopTransmissionType> GetByIds(IEnumerable<int> ids, bool trackChanges);
+        Task<IEnumerable<ShopTransmissionType>> GetByIds(IEnumerable<int> ids, bool trackChanges);
+        void DeleteTransmissionType(ShopTransmissionType shopTransmissionType);
     }
 }

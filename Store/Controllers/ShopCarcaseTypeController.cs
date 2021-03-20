@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Store.ModelBinders;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Store.Controllers
 {
@@ -22,36 +23,36 @@ namespace Store.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetCarcaseTypes()
+        public async Task<IActionResult> GetCarcaseTypes()
         {
-            var carcases = _repository.ShopCarcaseType.GetAllCarcaseTypes(trackChanges: false);
+            var carcases = await _repository.ShopCarcaseType.GetAllCarcaseTypes(trackChanges: false);
             var carcasesDTO = _mapper.Map<CarcaseDTO>(carcases);
             return Ok(carcasesDTO);
         }
 
         [HttpGet("{id}", Name = "CarcaseTypeById")]
-        public IActionResult GetCarcase(int id)
+        public async Task<IActionResult> GetCarcase(int id)
         {
-            var model = _repository.ShopModel.GetModel(id, trackChanges: false);
+            var model = await _repository.ShopModel.GetModel(id, trackChanges: false);
             if (model == null)
             {
                 return NotFound();
             }
 
-            var carcase = _repository.ShopCarcaseType.GetCarcaseType(model.carcaseTypeId, trackChanges: false);
+            var carcase = await _repository.ShopCarcaseType.GetCarcaseType(model.carcaseTypeId, trackChanges: false);
             var carcaseDTO = _mapper.Map<CarcaseDTO>(carcase);
             return Ok(carcaseDTO);
         }
 
         [HttpGet("collection/({ids})", Name = "CarcaseCollection")]
-        public IActionResult GetCarcaseCollection([ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<int> ids)
+        public async Task<IActionResult> GetCarcaseCollection([ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<int> ids)
         {
             if (ids == null)
             {
                 return BadRequest("ids parameter was null");
             }
 
-            var carcaseEntities = _repository.ShopCarcaseType.GetByIds(ids, trackChanges: false);
+            var carcaseEntities = await _repository.ShopCarcaseType.GetByIds(ids, trackChanges: false);
 
             if (ids.Count() != carcaseEntities.Count())
             {
@@ -63,7 +64,7 @@ namespace Store.Controllers
         }
 
         [HttpPost("collection")]
-        public IActionResult CreateDriveCollection([FromBody] IEnumerable<CarcaseDTO> carcaseCollection)
+        public async Task<IActionResult> CreateDriveCollection([FromBody] IEnumerable<CarcaseDTO> carcaseCollection)
         {
             if (carcaseCollection == null)
             {
@@ -76,7 +77,7 @@ namespace Store.Controllers
                 _repository.ShopCarcaseType.CreateCarcaseType(carcase);
             }
 
-            _repository.Save();
+            await _repository.SaveAsync();
             var carcaseCollectionToReturn = _mapper.Map<IEnumerable<CarcaseDTO>>(carcaseEntities);
             var ids = string.Join(",", carcaseCollectionToReturn.Select(c => c.id));
 
@@ -84,7 +85,7 @@ namespace Store.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateCarcase([FromBody]CarcaseForCreationDTO carcaseType)
+        public async Task<IActionResult> CreateCarcase([FromBody]CarcaseForCreationDTO carcaseType)
         {
             if (carcaseType == null)
             {
@@ -98,7 +99,7 @@ namespace Store.Controllers
 
             var carcaseEntity = _mapper.Map<ShopCarcaseType>(carcaseType);
             _repository.ShopCarcaseType.CreateCarcaseType(carcaseEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
 
             var carcaseTypeToReturn = _mapper.Map<CarcaseDTO>(carcaseEntity);
             return CreatedAtRoute("CarcaseTypeById", new { id = carcaseTypeToReturn.id }, carcaseTypeToReturn);

@@ -1,10 +1,12 @@
 ﻿using Contracts;
 using Entities;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Repositories
 {
@@ -16,22 +18,22 @@ namespace Repositories
 
         }
 
-        public IEnumerable<ShopEngineType> GetAllEngineTypes(bool trackChanges)
+        public async Task<IEnumerable<ShopEngineType>> GetAllEngineTypes(bool trackChanges)
         {
-            return FindAll(trackChanges).ToList();
+            return await FindAll(trackChanges).ToListAsync();
         }
 
-        public ShopEngineType GetEngineType(int engineId, bool trackChanges)
+        public async Task<ShopEngineType> GetEngineType(int engineId, bool trackChanges)
         {
-            return FindByCondition(c => c.id.Equals(engineId), trackChanges).SingleOrDefault();
+            return await FindByCondition(c => c.id.Equals(engineId), trackChanges).SingleOrDefaultAsync();
         }
 
         public void CreateEngineType(ShopEngineType engineType) => Create(engineType);
 
-        public IEnumerable<ShopEngineType> GetByIds(IEnumerable<int> ids, bool trackChanges)
+        public async Task<IEnumerable<ShopEngineType>> GetByIds(IEnumerable<int> ids, bool trackChanges)
         {
-            return FindByCondition(x => ids.Contains(x.id), trackChanges)
-                .ToList();
+            return await FindByCondition(x => ids.Contains(x.id), trackChanges)
+                .ToListAsync();
         }
         public void DeleteEngineType(ShopEngineType shopEngineType)
         {

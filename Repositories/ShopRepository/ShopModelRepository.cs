@@ -6,6 +6,7 @@ using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Repositories
 {
@@ -40,17 +41,17 @@ namespace Repositories
         //    IEnumerable<ShopModel> shopModels = _context.Set<ModelDTO>().Include(c => c.)
         //}
         
-        public IEnumerable<ShopModel> GetAllShopModels(bool trackChanges)
+        public async Task<IEnumerable<ShopModel>> GetAllShopModels(bool trackChanges)
         {
-            return FindAll(trackChanges)
+            return await FindAll(trackChanges)
             .OrderBy(c => c.year)
-            .ToList();
+            .ToListAsync();
         }
 
-        public ShopModel GetModel(int id, bool trackChanges)
+        public async Task<ShopModel> GetModel(int id, bool trackChanges)
         {
-            return FindByCondition(c => c.id.Equals(id), trackChanges)
-                .SingleOrDefault();
+            return await FindByCondition(c => c.id.Equals(id), trackChanges)
+                .SingleOrDefaultAsync();
         }
 
         public void CreateModel(int markId, int engineId, int carcaseId, int driveId, int transmissionId, ShopModel shopModel)

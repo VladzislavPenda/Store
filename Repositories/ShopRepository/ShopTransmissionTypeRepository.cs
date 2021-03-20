@@ -1,8 +1,10 @@
 ﻿using Contracts;
 using Entities;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Repositories
 {
@@ -14,22 +16,24 @@ namespace Repositories
 
         }
 
-        public IEnumerable<ShopTransmissionType> GetAllTransmissionTypes(bool trackChanges)
+        public async Task<IEnumerable<ShopTransmissionType>> GetAllTransmissionTypes(bool trackChanges)
         {
-            return FindAll(trackChanges).ToList();
+            return await FindAll(trackChanges).ToListAsync();
         }
 
-        public ShopTransmissionType GetTransmissionType(int driveTypeId, bool trackChanges)
+        public async Task<ShopTransmissionType> GetTransmissionType(int driveTypeId, bool trackChanges)
         {
-            return FindByCondition(c => c.id.Equals(driveTypeId), trackChanges).SingleOrDefault();
+            return await FindByCondition(c => c.id.Equals(driveTypeId), trackChanges).SingleOrDefaultAsync();
         }
 
         public void CreateTransmissionType(ShopTransmissionType shopTransmissionType) => Create(shopTransmissionType);
 
-        public IEnumerable<ShopTransmissionType> GetByIds(IEnumerable<int> ids, bool trackChanges)
+        public async Task<IEnumerable<ShopTransmissionType>> GetByIds(IEnumerable<int> ids, bool trackChanges)
         {
-            return FindByCondition(x => ids.Contains(x.id), trackChanges)
-                .ToList();
+            return await FindByCondition(x => ids.Contains(x.id), trackChanges)
+                .ToListAsync();
         }
+
+        public void DeleteTransmissionType(ShopTransmissionType shopTransmissionType) => Delete(shopTransmissionType);
     }
 }

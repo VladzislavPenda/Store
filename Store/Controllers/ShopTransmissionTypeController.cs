@@ -25,36 +25,36 @@ namespace Store.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetTransmissionTypes()
+        public async Task<IActionResult> GetTransmissionTypes()
         {
-            var transmissionTypes = _repository.ShopTransmissionType.GetAllTransmissionTypes(trackChanges: false);
+            var transmissionTypes = await _repository.ShopTransmissionType.GetAllTransmissionTypes(trackChanges: false);
             var transmissionTypesDTO = _mapper.Map<IEnumerable<TransmissionDTO>>(transmissionTypes);
             return Ok(transmissionTypesDTO);
         }
 
         [HttpGet("{id}", Name = "TransmissionById")]
-        public IActionResult GetTransmissionForModel(int id)
+        public async Task<IActionResult> GetTransmissionForModel(int id)
         {
-            var model = _repository.ShopModel.GetModel(id, trackChanges: false);
+            var model = await _repository.ShopModel.GetModel(id, trackChanges: false);
             if (model == null)
             {
                 return NotFound();
             }
 
-            var transmissionType = _repository.ShopTransmissionType.GetTransmissionType(model.transmissionId, trackChanges: false);
+            var transmissionType = await _repository.ShopTransmissionType.GetTransmissionType(model.transmissionId, trackChanges: false);
             var transmissionTypeDTO = _mapper.Map<TransmissionDTO>(transmissionType);
             return Ok(transmissionTypeDTO);
         }
 
         [HttpGet("collection/({ids})", Name = "TransmissionCollection")]
-        public IActionResult GetTransmissionCollection([ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<int> ids)
+        public async Task<IActionResult> GetTransmissionCollection([ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<int> ids)
         {
             if (ids == null)
             {
                 return BadRequest("ids parameter was null");
             }
 
-            var transmissionEntities = _repository.ShopTransmissionType.GetByIds(ids, trackChanges: false);
+            var transmissionEntities = await _repository.ShopTransmissionType.GetByIds(ids, trackChanges: false);
 
             if (ids.Count() != transmissionEntities.Count())
             {
@@ -66,7 +66,7 @@ namespace Store.Controllers
         }
 
         [HttpPost("collection")]
-        public IActionResult CreateTransmissionCollection([FromBody] IEnumerable<TransmissionDTO> transmissionCollection)
+        public async Task<IActionResult> CreateTransmissionCollection([FromBody] IEnumerable<TransmissionDTO> transmissionCollection)
         {
             if (transmissionCollection == null)
             {
@@ -79,7 +79,7 @@ namespace Store.Controllers
                 _repository.ShopTransmissionType.CreateTransmissionType(transmission);
             }
 
-            _repository.Save();
+            await _repository.SaveAsync();
             var transmissionCollectionToReturn = _mapper.Map<IEnumerable<TransmissionDTO>>(transmissionEntities);
             var ids = string.Join(",", transmissionCollectionToReturn.Select(c => c.id));
 
@@ -87,7 +87,7 @@ namespace Store.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateTransmission([FromBody]TransmissionForCreationDTO transmission)
+        public async Task<IActionResult> CreateTransmission([FromBody]TransmissionForCreationDTO transmission)
         {
             if (transmission == null)
             {
@@ -101,7 +101,7 @@ namespace Store.Controllers
 
             var transmissionEntity = _mapper.Map<ShopTransmissionType>(transmission);
             _repository.ShopTransmissionType.CreateTransmissionType(transmissionEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
 
             var transmissionTypeToReturn = _mapper.Map<TransmissionDTO>(transmissionEntity);
             return CreatedAtRoute("TransmissionById", new { id = transmissionTypeToReturn.id }, transmissionTypeToReturn);

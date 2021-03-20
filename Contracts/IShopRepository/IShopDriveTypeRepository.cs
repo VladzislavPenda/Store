@@ -2,15 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Contracts
 {
     public interface IShopDriveTypeRepository
     {
-        IEnumerable<ShopDriveType> GetAllDriveTypes(bool trackChanges);
-        ShopDriveType GetDriveType(int driveTypeId, bool trackChanges);
+        Task<IEnumerable<ShopDriveType>> GetAllDriveTypes(bool trackChanges);
+        Task<ShopDriveType> GetDriveType(int driveTypeId, bool trackChanges);
         void CreateDriveType(ShopDriveType shopDriveType);
-        IEnumerable<ShopDriveType> GetByIds(IEnumerable<int> ids, bool trackChanges);
+        Task<IEnumerable<ShopDriveType>> GetByIds(IEnumerable<int> ids, bool trackChanges);
+        void DeleteDriveType(ShopDriveType shopDriveType);
 
     }
 }

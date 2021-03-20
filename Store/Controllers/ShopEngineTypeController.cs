@@ -28,36 +28,36 @@ namespace Store.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetEngineTypes()
+        public async Task<IActionResult> GetEngineTypes()
         {
-            var engineTypes = _repository.ShopEngineType.GetAllEngineTypes(trackChanges: false);
+            var engineTypes = await _repository.ShopEngineType.GetAllEngineTypes(trackChanges: false);
             var engineTypesDTO = _mapper.Map<IEnumerable<EngineDTO>>(engineTypes);
             return Ok(engineTypesDTO);
         }
 
         [HttpGet("{id}" , Name = "EngineById")]
-        public IActionResult GetEngineForModel(int id)
+        public async Task<IActionResult> GetEngineForModel(int id)
         {
-            var model = _repository.ShopModel.GetModel(id, trackChanges: false);
+            var model = await _repository.ShopModel.GetModel(id, trackChanges: false);
             if (model == null) 
             {
                 return NotFound(); 
             }
 
-            var engineType = _repository.ShopEngineType.GetEngineType(model.engineTypeId, trackChanges: false);
+            var engineType = await _repository.ShopEngineType.GetEngineType(model.engineTypeId, trackChanges: false);
             var engineTypeDTO = _mapper.Map<EngineDTO>(engineType);
             return Ok(engineTypeDTO);
         }
 
         [HttpGet("collection/({ids})", Name = "EngineCollection")]
-        public IActionResult GetEngineCollection([ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<int> ids)
+        public async Task<IActionResult> GetEngineCollection([ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<int> ids)
         {
             if (ids == null)
             {
                 return BadRequest("ids parameter was null");
             }
 
-            var engineEntities = _repository.ShopEngineType.GetByIds(ids, trackChanges: false);
+            var engineEntities = await _repository.ShopEngineType.GetByIds(ids, trackChanges: false);
 
             if (ids.Count() != engineEntities.Count())
             {
@@ -69,7 +69,7 @@ namespace Store.Controllers
         }
 
         [HttpPost("collection")]
-        public IActionResult CreateEngineCollection([FromBody] IEnumerable<EngineDTO> engineCollection)
+        public async Task<IActionResult> CreateEngineCollection([FromBody] IEnumerable<EngineDTO> engineCollection)
         {
             if (engineCollection == null)
             {
@@ -82,14 +82,14 @@ namespace Store.Controllers
                 _repository.ShopEngineType.CreateEngineType(engine);
             }
             
-            _repository.Save();
+            await _repository.SaveAsync();
             var engineCollectionToReturn = _mapper.Map<IEnumerable<EngineDTO>>(engineEntities);
             var ids = string.Join(",", engineCollectionToReturn.Select(c => c.id));
 
             return CreatedAtRoute("EngineCollection", new { ids }, engineCollectionToReturn);
         }
         [HttpPost]
-        public IActionResult CreateEngine([FromBody]EngineForCreationDTO engine)
+        public async Task<IActionResult> CreateEngine([FromBody]EngineForCreationDTO engine)
         {
             if (engine == null)
             {
@@ -103,23 +103,23 @@ namespace Store.Controllers
 
             var engineEntity = _mapper.Map<ShopEngineType>(engine);
             _repository.ShopEngineType.CreateEngineType(engineEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
 
             var engineTypeToReturn = _mapper.Map<EngineDTO>(engineEntity);
             return CreatedAtRoute("EngineById", new { id = engineTypeToReturn.id }, engineTypeToReturn);
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteEngine(int id)
+        public async Task<IActionResult> DeleteEngine(int id)
         {
-            var engine = _repository.ShopEngineType.GetEngineType(id, trackChanges: false);
+            var engine = await _repository.ShopEngineType.GetEngineType(id, trackChanges: false);
             if (engine == null)
             {
                 return NotFound();
             }
 
             _repository.ShopEngineType.DeleteEngineType(engine);
-            _repository.Save();
+            await _repository.SaveAsync();
 
             return NoContent();
         }

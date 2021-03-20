@@ -1,8 +1,10 @@
 ﻿using Contracts;
 using Entities;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Repositories
 {
@@ -13,22 +15,24 @@ namespace Repositories
         {
         }
 
-        public IEnumerable<ShopDriveType> GetAllDriveTypes(bool trackchanges)
+        public async Task<IEnumerable<ShopDriveType>> GetAllDriveTypes(bool trackChanges)
         {
-            return FindAll(trackchanges).ToList();
+            return await FindAll(trackChanges).ToListAsync();
         }
 
-        public ShopDriveType GetDriveType(int driveTypeId, bool trackchanges)
+        public async Task<ShopDriveType> GetDriveType(int driveTypeId, bool trackChanges)
         {
-            return FindByCondition(c => c.id.Equals(driveTypeId), trackchanges).SingleOrDefault();
+            return await FindByCondition(c => c.id.Equals(driveTypeId), trackChanges).SingleOrDefaultAsync();
         }
 
         public void CreateDriveType(ShopDriveType shopDriveType) => Create(shopDriveType);
 
-        public IEnumerable<ShopDriveType> GetByIds(IEnumerable<int> ids, bool trackChanges)
+        public async Task<IEnumerable<ShopDriveType>> GetByIds(IEnumerable<int> ids, bool trackChanges)
         {
-            return FindByCondition(x => ids.Contains(x.id), trackChanges)
-                .ToList();
+            return await FindByCondition(x => ids.Contains(x.id), trackChanges)
+                .ToListAsync();
         }
+
+        public void DeleteDriveType(ShopDriveType shopDriveType) => Delete(shopDriveType);
     }
 }

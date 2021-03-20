@@ -1,10 +1,12 @@
 ﻿using Contracts;
 using Entities;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Repositories
 {
@@ -15,25 +17,25 @@ namespace Repositories
         {
 
         }
-        public IEnumerable<ShopMark> GetAllMarks(bool trackChanges)
+        public async Task<IEnumerable<ShopMark>> GetAllMarks(bool trackChanges)
         {
-            return FindAll(trackChanges)
+            return await FindAll(trackChanges)
             .OrderBy(c => c.markNum)
-            .ToList();
+            .ToListAsync();
         }
 
-        public ShopMark GetMark(int markId, bool trackChanges)
+        public async Task<ShopMark> GetMark(int markId, bool trackChanges)
         {
-            return FindByCondition(c => c.id.Equals(markId), trackChanges)
-                .SingleOrDefault();
+            return await FindByCondition(c => c.id.Equals(markId), trackChanges)
+                .SingleOrDefaultAsync();
         }
 
         public void CreateMark(ShopMark shopMark) => Create(shopMark);
 
-        public IEnumerable<ShopMark> GetByIds(IEnumerable<int> ids, bool trackChanges)
+        public async Task<IEnumerable<ShopMark>> GetByIds(IEnumerable<int> ids, bool trackChanges)
         {
-            return FindByCondition(x => ids.Contains(x.id), trackChanges)
-                .ToList();
+            return await FindByCondition(x => ids.Contains(x.id), trackChanges)
+                .ToListAsync();
         }
 
         public void DeleteMark(ShopMark shopMark)
