@@ -3,6 +3,7 @@ using Contracts;
 using Entities.DataTransferObjects.TransmissionDTO;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
+using Store.ActionFilters;
 using Store.ModelBinders;
 using System;
 using System.Collections.Generic;
@@ -87,24 +88,30 @@ namespace Store.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateTransmission([FromBody]TransmissionForCreationDTO transmission)
         {
-            if (transmission == null)
-            {
-                return BadRequest("TransmissionForCreationDTO object send from client is null");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return UnprocessableEntity(ModelState);
-            }
-
             var transmissionEntity = _mapper.Map<ShopTransmissionType>(transmission);
             _repository.ShopTransmissionType.CreateTransmissionType(transmissionEntity);
             await _repository.SaveAsync();
 
             var transmissionTypeToReturn = _mapper.Map<TransmissionDTO>(transmissionEntity);
             return CreatedAtRoute("TransmissionById", new { id = transmissionTypeToReturn.id }, transmissionTypeToReturn);
+        }
+
+        [HttpPut("{id}")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> UpdateTransmission(int id, [FromBody] TransmissionForUpdatingDTO transmission)
+        {
+            var transmissionEntity = await _repository.ShopTransmissionType.GetTransmissionType(id, trackChanges: true);
+            if (transmissionEntity == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(transmission, transmissionEntity);
+            await _repository.SaveAsync();
+            return NoContent();
         }
     }
 }

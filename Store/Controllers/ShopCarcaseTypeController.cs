@@ -3,6 +3,7 @@ using Contracts;
 using Entities.DataTransferObjects.CarcaseDTO;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
+using Store.ActionFilters;
 using Store.ModelBinders;
 using System.Collections.Generic;
 using System.Linq;
@@ -85,24 +86,30 @@ namespace Store.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateCarcase([FromBody]CarcaseForCreationDTO carcaseType)
         {
-            if (carcaseType == null)
-            {
-                return BadRequest("CarcaseForCreationDTO object send from the client was null");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return UnprocessableEntity(ModelState);
-            }
-
             var carcaseEntity = _mapper.Map<ShopCarcaseType>(carcaseType);
             _repository.ShopCarcaseType.CreateCarcaseType(carcaseEntity);
             await _repository.SaveAsync();
 
             var carcaseTypeToReturn = _mapper.Map<CarcaseDTO>(carcaseEntity);
             return CreatedAtRoute("CarcaseTypeById", new { id = carcaseTypeToReturn.id }, carcaseTypeToReturn);
+        }
+
+        [HttpPut("{id}")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> UpdateCarcaseType(int id, [FromBody] CarcaseForUpdatingDTO carcase)
+        {
+            var carcaseEntity = await _repository.ShopCarcaseType.GetCarcaseType(id, trackChanges: true);
+            if (carcaseEntity == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(carcase, carcaseEntity);
+            await _repository.SaveAsync();
+            return NoContent();
         }
     }
 }

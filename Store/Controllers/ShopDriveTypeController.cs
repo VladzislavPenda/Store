@@ -3,6 +3,7 @@ using Contracts;
 using Entities.DataTransferObjects.DriveDTO;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
+using Store.ActionFilters;
 using Store.ModelBinders;
 using System.Collections.Generic;
 using System.Linq;
@@ -85,24 +86,30 @@ namespace Store.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateDriveType([FromBody]DriveForCreationDTO driveType)
         {
-            if (driveType == null)
-            {
-                return BadRequest("driveForCreationDTO object send was null");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return UnprocessableEntity(ModelState);
-            }
-
             var driveEntity = _mapper.Map<ShopDriveType>(driveType);
             _repository.ShopDriveType.CreateDriveType(driveEntity);
             await _repository.SaveAsync();
 
             var driveTypeToReturn = _mapper.Map<DriveDTO>(driveEntity);
             return CreatedAtRoute("DriveTypeById", new { id = driveTypeToReturn.id }, driveTypeToReturn);
+        }
+
+        [HttpPut("{id}")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> UpdateDriveType(int id, [FromBody] DriveForUpdatingDTO drive)
+        {
+            var driveEntity = await _repository.ShopDriveType.GetDriveType(id, trackChanges: true);
+            if (driveEntity == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(drive, driveEntity);
+            await _repository.SaveAsync();
+            return NoContent();
         }
     }
 }

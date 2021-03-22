@@ -5,6 +5,7 @@ using Entities.DataTransferObjects.EngineDTO;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Repositories;
+using Store.ActionFilters;
 using Store.ModelBinders;
 using System;
 using System.Collections.Generic;
@@ -89,18 +90,9 @@ namespace Store.Controllers
             return CreatedAtRoute("EngineCollection", new { ids }, engineCollectionToReturn);
         }
         [HttpPost]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateEngine([FromBody]EngineForCreationDTO engine)
         {
-            if (engine == null)
-            {
-                return BadRequest("EngineForCreationDTO object send from client is null");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return UnprocessableEntity(ModelState);
-            }
-
             var engineEntity = _mapper.Map<ShopEngineType>(engine);
             _repository.ShopEngineType.CreateEngineType(engineEntity);
             await _repository.SaveAsync();
@@ -121,6 +113,21 @@ namespace Store.Controllers
             _repository.ShopEngineType.DeleteEngineType(engine);
             await _repository.SaveAsync();
 
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> UpdateMark(int id, [FromBody] EngineForUpdatingDTO engine)
+        {
+            var engineEntity = await _repository.ShopEngineType.GetEngineType(id, trackChanges: true);
+            if (engineEntity == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(engine, engineEntity);
+            await _repository.SaveAsync();
             return NoContent();
         }
     }

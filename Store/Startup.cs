@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Repositories;
+using Store.ActionFilters;
 using Store.Extensions;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,7 @@ namespace Store
             services.AddDbContext<RepositoryContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MyDbContext"), b =>
             b.MigrationsAssembly("Store")));
+            services.AddScoped<ValidationFilterAttribute>();
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder =>

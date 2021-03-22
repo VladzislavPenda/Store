@@ -4,6 +4,7 @@ using Entities.DataTransferObjects;
 using Entities.DataTransferObjects.MarkDTO;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
+using Store.ActionFilters;
 using Store.ModelBinders;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,18 +88,9 @@ namespace Store.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateMark([FromBody]MarkForCreationDTO mark)
         {
-            if (mark == null)
-            {
-                return BadRequest("MarkForCreationDTO object send from client is null.");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return UnprocessableEntity(ModelState);
-            }
-
             var markEntity = _mapper.Map<ShopMark>(mark);
             _repository.ShopMark.CreateMark(markEntity);
             await _repository.SaveAsync();
@@ -119,6 +111,21 @@ namespace Store.Controllers
             _repository.ShopMark.DeleteMark(mark);
             await _repository.SaveAsync();
 
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> UpdateMark(int id, [FromBody] MarkForUpdatingDTO mark)
+        {
+            var markEntity = await _repository.ShopMark.GetMark(id, trackChanges: true);
+            if (markEntity == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(mark, markEntity);
+            await _repository.SaveAsync();
             return NoContent();
         }
     }

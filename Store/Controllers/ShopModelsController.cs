@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
 using Contracts;
-using AutoMapper;
 using Entities.DataTransferObjects;
 using Entities.Models;
-using System.Linq;
-using System;
+using Microsoft.AspNetCore.Mvc;
+using Store.ActionFilters;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Store.Controllers
@@ -47,18 +46,9 @@ namespace Store.Controllers
         }
         // Не уверен что так оно должно быть, тут надо еще подумать...
         [HttpPost("shopMark/{markId}/shopEngine/{engineId}/shopCarcaseType/{carcaseId}/shopDriveType/{driveId}/shopTransmission/{transmissionId}/models")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateModel(int markId, int engineId, int carcaseId, int driveId, int transmissionId, [FromBody] ModelForCreationDTO model)
         {
-            if (model == null)
-            {
-                return BadRequest("modelForCreationDTO object was null");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return UnprocessableEntity(ModelState);
-            }
-
             var mark = await _repository.ShopMark.GetMark(markId, trackChanges: false);
             var engine = await _repository.ShopEngineType.GetEngineType(engineId, trackChanges: false);
             var carcase = await _repository.ShopCarcaseType.GetCarcaseType(carcaseId, trackChanges: false);
@@ -96,18 +86,9 @@ namespace Store.Controllers
         }
 
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> UpdateModel(int id, [FromBody]ModelForUpdatingDTO model)
         {
-            if (model == null)
-            {
-                return BadRequest("model object is null");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return UnprocessableEntity(ModelState);
-            }
-
             var modelEntity = await _repository.ShopModel.GetModel(id, trackChanges: true);
             if (modelEntity == null)
             {

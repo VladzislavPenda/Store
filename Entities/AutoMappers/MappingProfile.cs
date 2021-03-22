@@ -24,22 +24,27 @@ namespace Entities.AutoMappers
             CreateMap<ShopMark, MarkDTO>();
             CreateMap<MarkDTO, ShopMark>();
             CreateMap<MarkForCreationDTO, ShopMark>();
+            CreateMap<MarkForUpdatingDTO, ShopMark>();
 
             CreateMap<ShopEngineType, EngineDTO>();
             CreateMap<EngineDTO, ShopEngineType>();
             CreateMap<EngineForCreationDTO, ShopEngineType>();
+            CreateMap<EngineForUpdatingDTO, ShopEngineType>();
 
             CreateMap<ShopDriveType, DriveDTO>();
             CreateMap<DriveDTO, ShopDriveType>();
             CreateMap<DriveForCreationDTO, ShopDriveType>();
+            CreateMap<DriveForUpdatingDTO, ShopDriveType>();
 
             CreateMap<ShopCarcaseType, CarcaseDTO>();
             CreateMap<CarcaseDTO, ShopCarcaseType>();
             CreateMap<CarcaseForCreationDTO, ShopCarcaseType>();
+            CreateMap<CarcaseForUpdatingDTO, ShopCarcaseType>();
 
             CreateMap<ShopTransmissionType, TransmissionDTO>();
             CreateMap<TransmissionDTO, ShopTransmissionType>();
             CreateMap<TransmissionForCreationDTO, ShopTransmissionType>();
+            CreateMap<TransmissionForUpdatingDTO, ShopTransmissionType>();
 
             
         }
