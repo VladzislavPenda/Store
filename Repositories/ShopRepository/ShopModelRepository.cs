@@ -3,6 +3,7 @@ using Contracts;
 using Entities;
 using Entities.DataTransferObjects;
 using Entities.Models;
+using Entities.RequestFeatures;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,17 @@ namespace Repositories
     {
         private readonly RepositoryContext _context;
         public ShopModelRepository(RepositoryContext repositoryContext)
-            : base (repositoryContext)
+            : base(repositoryContext)
         {
             _context = repositoryContext;
+        }
+
+        public async Task<PagedList<ShopModel>> GetModelsAsync(ModelsParameters modelsParametres, bool trackChanges)
+        {
+            var model = await FindAll(trackChanges)
+                .ToListAsync();
+            return PagedList<ShopModel>
+                .ToPagedList(model, modelsParametres.PageNumber, modelsParametres.PageSize);
         }
 
         public IEnumerable<ShopModel> GetAllIncludes(bool trackChanges)

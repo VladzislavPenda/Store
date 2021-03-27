@@ -2,7 +2,9 @@
 using Contracts;
 using Entities.DataTransferObjects;
 using Entities.Models;
+using Entities.RequestFeatures;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Store.ActionFilters;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -23,10 +25,13 @@ namespace Store.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetModels()
+        public async Task<IActionResult> GetModels([FromQuery] ModelsParameters modelsParameters)
         {
-            var models = await _repository.ShopModel.GetAllShopModels(trackChanges: false);
+            var models = await _repository.ShopModel.GetModelsAsync(modelsParameters, trackChanges: false);
             //var models = _repository.ShopModel.GetAllIncludes(trackChanges: false);
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(models.MetaData);
+
             var modelsDTO = _mapper.Map<IEnumerable<ModelDTO>>(models);
             
             

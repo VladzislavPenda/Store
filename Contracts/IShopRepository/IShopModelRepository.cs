@@ -1,14 +1,13 @@
 ﻿using Entities.Models;
-using System;
+using Entities.RequestFeatures;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Contracts
 {
     public interface IShopModelRepository
     {
+        Task<PagedList<ShopModel>> GetModelsAsync(ModelsParameters modelsParametres, bool trackChanges);
         Task<IEnumerable<ShopModel>> GetAllShopModels(bool trackChanges);
         IEnumerable<ShopModel> GetAllIncludes(bool trackChanges);
         Task<ShopModel> GetModel(int id, bool trackChanges);
