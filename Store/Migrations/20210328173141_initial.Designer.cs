@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Store.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20210216083657_dele")]
-    partial class dele
+    [Migration("20210328173141_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,6 +26,7 @@ namespace Store.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasColumnName("carcaseTypeId")
                         .UseIdentityColumn();
 
                     b.Property<string>("type")
@@ -43,6 +44,7 @@ namespace Store.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasColumnName("driveTypeId")
                         .UseIdentityColumn();
 
                     b.Property<string>("type")
@@ -59,6 +61,7 @@ namespace Store.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasColumnName("engineTypeId")
                         .UseIdentityColumn();
 
                     b.Property<string>("type")
@@ -75,7 +78,7 @@ namespace Store.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("MarkId")
+                        .HasColumnName("markId")
                         .UseIdentityColumn();
 
                     b.Property<string>("country")
@@ -98,25 +101,23 @@ namespace Store.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("MarkId")
+                    b.Property<int>("carcaseTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ShopCarcaseTypeid")
+                    b.Property<int>("driveTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ShopDriveTypeid")
+                    b.Property<int>("engineTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ShopEngineTypeid")
+                    b.Property<int?>("horsePower")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int?>("ShopTransmissionTypeid")
+                    b.Property<int>("markId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("horse_power")
-                        .HasColumnType("int");
-
-                    b.Property<int>("mileage")
+                    b.Property<int>("mileAge")
                         .HasColumnType("int");
 
                     b.Property<string>("model")
@@ -127,20 +128,23 @@ namespace Store.Migrations
                     b.Property<int>("price")
                         .HasColumnType("int");
 
+                    b.Property<int>("transmissionId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("year")
                         .HasColumnType("int");
 
                     b.HasKey("id");
 
-                    b.HasIndex("MarkId");
+                    b.HasIndex("carcaseTypeId");
 
-                    b.HasIndex("ShopCarcaseTypeid");
+                    b.HasIndex("driveTypeId");
 
-                    b.HasIndex("ShopDriveTypeid");
+                    b.HasIndex("engineTypeId");
 
-                    b.HasIndex("ShopEngineTypeid");
+                    b.HasIndex("markId");
 
-                    b.HasIndex("ShopTransmissionTypeid");
+                    b.HasIndex("transmissionId");
 
                     b.ToTable("ShopModels");
                 });
@@ -150,6 +154,7 @@ namespace Store.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasColumnName("transmissionId")
                         .UseIdentityColumn();
 
                     b.Property<string>("type")
@@ -163,27 +168,35 @@ namespace Store.Migrations
 
             modelBuilder.Entity("Entities.Models.ShopModel", b =>
                 {
-                    b.HasOne("Entities.Models.ShopMark", "ShopMark")
+                    b.HasOne("Entities.Models.ShopCarcaseType", "ShopCarcaseType")
                         .WithMany("ShopModels")
-                        .HasForeignKey("MarkId")
+                        .HasForeignKey("carcaseTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.Models.ShopCarcaseType", "ShopCarcaseType")
-                        .WithMany("ShopModels")
-                        .HasForeignKey("ShopCarcaseTypeid");
-
                     b.HasOne("Entities.Models.ShopDriveType", "ShopDriveType")
                         .WithMany("ShopModels")
-                        .HasForeignKey("ShopDriveTypeid");
+                        .HasForeignKey("driveTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Entities.Models.ShopEngineType", "ShopEngineType")
                         .WithMany("ShopModels")
-                        .HasForeignKey("ShopEngineTypeid");
+                        .HasForeignKey("engineTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Models.ShopMark", "ShopMark")
+                        .WithMany("ShopModels")
+                        .HasForeignKey("markId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Entities.Models.ShopTransmissionType", "ShopTransmissionType")
                         .WithMany("ShopModels")
-                        .HasForeignKey("ShopTransmissionTypeid");
+                        .HasForeignKey("transmissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ShopCarcaseType");
 

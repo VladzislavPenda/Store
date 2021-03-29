@@ -26,26 +26,22 @@ namespace Entities.Models
 
         [ForeignKey(nameof(ShopMark))]
         public int markId { get; set; }
+        public ShopMark ShopMark { get; set; }
 
         [ForeignKey(nameof(ShopTransmissionType))]
         public int transmissionId { get; set; }
+        public ShopTransmissionType ShopTransmissionType { get; set; }
 
         [ForeignKey(nameof(ShopCarcaseType))]
         public int carcaseTypeId { get; set; }
+        public ShopCarcaseType ShopCarcaseType { get; set; }
 
         [ForeignKey(nameof(ShopEngineType))]
         public int engineTypeId { get; set; }
+        public ShopEngineType ShopEngineType { get; set; }
 
         [ForeignKey(nameof(ShopDriveType))]
         public int driveTypeId { get; set; }
-        public ShopCarcaseType ShopCarcaseType { get; set; }
-
-        public ShopEngineType ShopEngineType { get; set; }
-
-        public ShopTransmissionType ShopTransmissionType { get; set; }
-
-        public ShopDriveType ShopDriveType { get; set; }
-
-        public ShopMark ShopMark { get; set; }
+        public ShopDriveType ShopDriveType { get; set; }        
     }
 }

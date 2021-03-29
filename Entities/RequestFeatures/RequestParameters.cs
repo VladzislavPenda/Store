@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Entities.RequestFeatures
+﻿namespace Entities.RequestFeatures
 {
     public abstract class RequestParameters
     {
@@ -26,6 +20,9 @@ namespace Entities.RequestFeatures
 
     public class ModelsParameters : RequestParameters
     {
-
+        public uint MinPrice { get; set; }
+        public uint MaxPrice { get; set; } = uint.MaxValue;
+        public bool ValidRange => MaxPrice > MinPrice;
+        public string SearchTerm { get; set; }
     }
 }

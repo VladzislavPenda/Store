@@ -2,9 +2,11 @@
 using Contracts;
 using Entities;
 using Entities.DataTransferObjects;
+using Entities.DataTransferObjects.IncludeDTO;
 using Entities.Models;
 using Entities.RequestFeatures;
 using Microsoft.EntityFrameworkCore;
+using Repositories.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,21 +30,42 @@ namespace Repositories
                 .ToPagedList(model, modelsParametres.PageNumber, modelsParametres.PageSize);
         }
 
-        public IEnumerable<ShopModel> GetAllIncludes(bool trackChanges)
+        //public IEnumerable<object> GetAllIncludes(bool trackChanges)
+        public async Task<PagedList<ModelFullInfo>> GetAllIncludes(ModelsParameters modelsParametres, bool trackChanges)
         {
             //return _context.Set<ShopModel>()
-            
-            IEnumerable<ShopModel> shopModels = _context.ShopModels
+
+            //var shopModels = await _context.ShopModels
+            var shopModels = await FindAll(trackChanges)
+                //.FilterModels()
                 .Include(c => c.ShopMark)
                 .Include(d => d.ShopEngineType)
+                .Include(f => f.ShopDriveType)
                 .Include(e => e.ShopCarcaseType)
-                .Include(f => f.ShopMark)
-                .Include(g => g.ShopTransmissionType)
-                .ToList();
-                
+                .Include(t => t.ShopTransmissionType)
+                .Select(c => new ModelFullInfo
+                {
+                    modelId = c.id,
+                    model = c.model,
+                    price = c.price,
+                    mileAge = c.mileAge,
+                    horsePower = c.horsePower,
+                    country = c.ShopMark.country,
+                    engineType = c.ShopEngineType.type,
+                    carcaseType = c.ShopCarcaseType.type,
+                    driveType = c.ShopDriveType.type,
+                    transmission = c.ShopTransmissionType.type,
+                    markName = c.ShopMark.markNum
+                })
+                .FilterModels(modelsParametres.MinPrice, modelsParametres.MaxPrice)
+                .Search(modelsParametres.SearchTerm)
+                .ToListAsync();
 
+            
+            return PagedList<ModelFullInfo>
+                .ToPagedList(shopModels, modelsParametres.PageNumber, modelsParametres.PageSize);
 
-            return shopModels;
+            //return shopModels;
         }
 
         //public IEnumerable<ShopModel> Get(bool trackChanges, IEnumerable<ModelDTO> models)

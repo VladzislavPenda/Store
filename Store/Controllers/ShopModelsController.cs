@@ -27,15 +27,17 @@ namespace Store.Controllers
         [HttpGet]
         public async Task<IActionResult> GetModels([FromQuery] ModelsParameters modelsParameters)
         {
-            var models = await _repository.ShopModel.GetModelsAsync(modelsParameters, trackChanges: false);
-            //var models = _repository.ShopModel.GetAllIncludes(trackChanges: false);
+            if (!modelsParameters.ValidRange)
+                return BadRequest("Max price can't be less than min price.");
+            //var models = await _repository.ShopModel.GetModelsAsync(modelsParameters, trackChanges: false);
+            var models = await _repository.ShopModel.GetAllIncludes(modelsParameters, trackChanges: false);
 
-            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(models.MetaData);
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(models.MetaData));
 
-            var modelsDTO = _mapper.Map<IEnumerable<ModelDTO>>(models);
-            
-            
-            return Ok(modelsDTO);
+            //var modelsDTO = _mapper.Map<IEnumerable<ModelDTO>>(models);
+
+
+            return Ok(models);
         }
 
         [HttpGet("{id}", Name = "ModelById")]
