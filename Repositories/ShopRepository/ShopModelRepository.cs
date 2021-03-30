@@ -1,7 +1,5 @@
-﻿using AutoMapper;
-using Contracts;
+﻿using Contracts;
 using Entities;
-using Entities.DataTransferObjects;
 using Entities.DataTransferObjects.IncludeDTO;
 using Entities.Models;
 using Entities.RequestFeatures;
@@ -59,6 +57,7 @@ namespace Repositories
                 })
                 .FilterModels(modelsParametres.MinPrice, modelsParametres.MaxPrice)
                 .Search(modelsParametres.SearchTerm)
+                .Sort(modelsParametres.OrderBy)
                 .ToListAsync();
 
             

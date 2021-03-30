@@ -1,7 +1,11 @@
+using AspNetCoreRateLimit;
 using AutoMapper;
 using Contracts;
+using Contracts.DataShape;
 using Entities;
 using Entities.AutoMappers;
+using Entities.DataTransferObjects;
+using Entities.DataTransferObjects.IncludeDTO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Repositories;
+using Repositories.DataShaping;
 using Store.ActionFilters;
 using Store.Extensions;
 using System;
@@ -32,52 +37,24 @@ namespace Store
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<RepositoryContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("MyDbContext"), b =>
-            b.MigrationsAssembly("Store")));
+            services.AddScoped<IDataShaper<ModelFullInfo>, DataShaper<ModelFullInfo>>();
+            services.ConfigureSqlContext(Configuration);
             services.AddScoped<ValidationFilterAttribute>();
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy", builder =>
-                    builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader());
-            });
+            services.ConfigureCors();
+            services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
 
-            var mapperConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new MappingProfile());
-            });
-
-            services.Configure<ApiBehaviorOptions>(options =>
-            {
-                options.SuppressModelStateInvalidFilter = true;
-            });
-
-
+            var mapperConfig = new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile());});
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
-
-            services.AddControllersWithViews()
-            .AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            );
-
+            services.ConfigureResponseCaching();
+            services.ConfigureHttpCacheHeaders();
+            services.ConfigureVersioning();
+            services.ConfigureControllerWithViews();
+            services.AddMemoryCache();
+            services.ConfigureRateLimitingOptions();
+            services.AddHttpContextAccessor();
             services.AddScoped<IRepositoryManager, RepositoryManager>();
-            //services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
-            
-
-            /*services.AddControllers(config =>
-            {
-                config.RespectBrowserAcceptHeader = true;
-                config.ReturnHttpNotAcceptable = true;
-            }).AddXmlDataContractSerializerFormatters();
-            */
-            // services.ConfigureSqlContext(Configuration);
-
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,12 +70,14 @@ namespace Store
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCors("CorsPolicy");
-    
+            app.UseResponseCaching();
+            app.UseHttpCacheHeaders();
+            app.UseIpRateLimiting();
             app.UseRouting();
-
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
@@ -106,6 +85,7 @@ namespace Store
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            
         }
     }
 }

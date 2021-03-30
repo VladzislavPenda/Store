@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using Contracts;
+using Contracts.DataShape;
 using Entities.DataTransferObjects;
+using Entities.DataTransferObjects.IncludeDTO;
 using Entities.Models;
 using Entities.RequestFeatures;
+using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Store.ActionFilters;
@@ -13,25 +16,30 @@ namespace Store.Controllers
 {
     [Route("api/[controller]")] // Возможно нужно будет заменить маршрут
     [ApiController]
+    //[ResponseCache(CacheProfileName = "120SecondsDuration")]
     public class ShopModelsController : Controller
     {
         private readonly IRepositoryManager _repository;
         private readonly IMapper _mapper;
+        private readonly IDataShaper<ModelFullInfo> _dataShaper;
 
-        public ShopModelsController(IRepositoryManager repository, IMapper mapper)
+        public ShopModelsController(IRepositoryManager repository, IMapper mapper, IDataShaper<ModelFullInfo> dataShaper)
         {
             _repository = repository;
             _mapper = mapper;
+            _dataShaper = dataShaper;
         }
 
         [HttpGet]
+        [HttpHead]
+        [HttpCacheExpiration(MaxAge = 120)]
+        //[ResponseCache(Duration = 10, NoStore =true)]
         public async Task<IActionResult> GetModels([FromQuery] ModelsParameters modelsParameters)
         {
             if (!modelsParameters.ValidRange)
                 return BadRequest("Max price can't be less than min price.");
             //var models = await _repository.ShopModel.GetModelsAsync(modelsParameters, trackChanges: false);
             var models = await _repository.ShopModel.GetAllIncludes(modelsParameters, trackChanges: false);
-
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(models.MetaData));
 
             //var modelsDTO = _mapper.Map<IEnumerable<ModelDTO>>(models);
@@ -41,6 +49,8 @@ namespace Store.Controllers
         }
 
         [HttpGet("{id}", Name = "ModelById")]
+        [HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
+        [HttpCacheValidation(MustRevalidate = false)]
         public async Task<IActionResult> GetModel(int id)
         {
             var model = await _repository.ShopModel.GetModel(id, trackChanges: false);
@@ -51,6 +61,7 @@ namespace Store.Controllers
             var modelDTO = _mapper.Map<ModelDTO>(model);
             return Ok(modelDTO);
         }
+
         // Не уверен что так оно должно быть, тут надо еще подумать...
         [HttpPost("shopMark/{markId}/shopEngine/{engineId}/shopCarcaseType/{carcaseId}/shopDriveType/{driveId}/shopTransmission/{transmissionId}/models")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]

@@ -16,10 +16,18 @@
                 _pageSize = (value > maxPageSize) ? maxPageSize : value;
             }
         }
+        public string Fields { get; set; }
+
+        public string OrderBy { get; set; }
     }
 
     public class ModelsParameters : RequestParameters
     {
+        public ModelsParameters()
+        {
+            OrderBy = "name";
+        }
+
         public uint MinPrice { get; set; }
         public uint MaxPrice { get; set; } = uint.MaxValue;
         public bool ValidRange => MaxPrice > MinPrice;
