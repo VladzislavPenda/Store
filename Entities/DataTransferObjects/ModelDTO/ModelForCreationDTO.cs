@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Entities.DataTransferObjects
 {
-    public class ModelForCreationDTO
+    public class ModelForCreationDto
     {
         [Required(ErrorMessage = "Please, specify model name.")]
         [StringLength(100, MinimumLength = 3, ErrorMessage = "Model name is to long. Max length is 100 symbols")]
@@ -24,6 +24,6 @@ namespace Entities.DataTransferObjects
         [Range(1, int.MaxValue, ErrorMessage = "Please, indicate mileage correct.")]
         public int mileAge { get; set; }
 
-        public IEnumerable<MarkForCreationDTO> marks { get; set; }
+        public IEnumerable<MarkForCreationDto> marks { get; set; }
     }
 }

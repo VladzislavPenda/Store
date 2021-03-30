@@ -29,7 +29,7 @@ namespace Store.Controllers
         public async Task<IActionResult> GetMarks()
         {
             var marks = await _repository.ShopMark.GetAllMarks(trackChanges: false);
-            var marksDTO = _mapper.Map<IEnumerable<MarkDTO>>(marks);
+            var marksDTO = _mapper.Map<IEnumerable<MarkDto>>(marks);
             return Ok(marksDTO);
         }
 
@@ -42,7 +42,7 @@ namespace Store.Controllers
                 return NotFound();
             }
             var mark = await _repository.ShopMark.GetMark(model.markId, trackChanges: false);
-            var markDTO = _mapper.Map<MarkDTO>(mark);
+            var markDTO = _mapper.Map<MarkDto>(mark);
             return Ok(markDTO);
         }
 
@@ -61,12 +61,12 @@ namespace Store.Controllers
                 return NotFound();
             }
 
-            var marksToReturn = _mapper.Map<IEnumerable<MarkDTO>>(markEntities);
+            var marksToReturn = _mapper.Map<IEnumerable<MarkDto>>(markEntities);
             return Ok(marksToReturn);
         }
 
         [HttpPost("collection")]
-        public async Task<IActionResult> CreateMerkCollection([FromBody]IEnumerable<MarkDTO> markCollection)
+        public async Task<IActionResult> CreateMerkCollection([FromBody]IEnumerable<MarkDto> markCollection)
         {
             if (markCollection == null)
             {
@@ -81,7 +81,7 @@ namespace Store.Controllers
 
 
             await _repository.SaveAsync();
-            var marksCollectionToReturn = _mapper.Map<IEnumerable<MarkDTO>>(markEntities);
+            var marksCollectionToReturn = _mapper.Map<IEnumerable<MarkDto>>(markEntities);
             var ids = string.Join(",", marksCollectionToReturn.Select(c => c.id));
 
             return CreatedAtRoute("MarkCollection", new { ids }, marksCollectionToReturn);
@@ -89,13 +89,13 @@ namespace Store.Controllers
 
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> CreateMark([FromBody]MarkForCreationDTO mark)
+        public async Task<IActionResult> CreateMark([FromBody]MarkForCreationDto mark)
         {
             var markEntity = _mapper.Map<ShopMark>(mark);
             _repository.ShopMark.CreateMark(markEntity);
             await _repository.SaveAsync();
 
-            var MarkToReturn = _mapper.Map<MarkDTO>(markEntity);
+            var MarkToReturn = _mapper.Map<MarkDto>(markEntity);
             return CreatedAtRoute("MarkById", new { id = MarkToReturn.id }, MarkToReturn);
         }
 
@@ -116,7 +116,7 @@ namespace Store.Controllers
 
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> UpdateMark(int id, [FromBody] MarkForUpdatingDTO mark)
+        public async Task<IActionResult> UpdateMark(int id, [FromBody] MarkForUpdatingDto mark)
         {
             var markEntity = await _repository.ShopMark.GetMark(id, trackChanges: true);
             if (markEntity == null)

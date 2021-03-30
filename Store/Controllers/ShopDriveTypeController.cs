@@ -27,7 +27,7 @@ namespace Store.Controllers
         public async Task<IActionResult> GetAllDriveTypes()
         {
             var driveTypes = await _repository.ShopDriveType.GetAllDriveTypes(trackChanges: false);
-            var driveDTO = _mapper.Map<IEnumerable<DriveDTO>>(driveTypes);
+            var driveDTO = _mapper.Map<IEnumerable<DriveDto>>(driveTypes);
             return Ok(driveDTO);
         }
 
@@ -41,7 +41,7 @@ namespace Store.Controllers
             }
 
             var driveEntity = await _repository.ShopDriveType.GetDriveType(model.driveTypeId, trackChanges: false);
-            var driveDTO = _mapper.Map<DriveDTO>(driveEntity);
+            var driveDTO = _mapper.Map<DriveDto>(driveEntity);
             return Ok(driveDTO);
         }
 
@@ -60,12 +60,12 @@ namespace Store.Controllers
                 return NotFound();
             }
 
-            var driveToReturn = _mapper.Map<IEnumerable<DriveDTO>>(driveEntities);
+            var driveToReturn = _mapper.Map<IEnumerable<DriveDto>>(driveEntities);
             return Ok(driveToReturn);
         }
 
         [HttpPost("collection")]
-        public async Task<IActionResult> CreateDriveCollection([FromBody] IEnumerable<DriveDTO> driveCollection)
+        public async Task<IActionResult> CreateDriveCollection([FromBody] IEnumerable<DriveDto> driveCollection)
         {
             if (driveCollection == null)
             {
@@ -79,7 +79,7 @@ namespace Store.Controllers
             }
 
             await _repository.SaveAsync();
-            var driveCollectionToReturn = _mapper.Map<IEnumerable<DriveDTO>>(driveEntities);
+            var driveCollectionToReturn = _mapper.Map<IEnumerable<DriveDto>>(driveEntities);
             var ids = string.Join(",", driveCollectionToReturn.Select(c => c.id));
 
             return CreatedAtRoute("DriveCollection", new { ids }, driveCollectionToReturn);
@@ -87,19 +87,19 @@ namespace Store.Controllers
 
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> CreateDriveType([FromBody]DriveForCreationDTO driveType)
+        public async Task<IActionResult> CreateDriveType([FromBody]DriveForCreationDto driveType)
         {
             var driveEntity = _mapper.Map<ShopDriveType>(driveType);
             _repository.ShopDriveType.CreateDriveType(driveEntity);
             await _repository.SaveAsync();
 
-            var driveTypeToReturn = _mapper.Map<DriveDTO>(driveEntity);
+            var driveTypeToReturn = _mapper.Map<DriveDto>(driveEntity);
             return CreatedAtRoute("DriveTypeById", new { id = driveTypeToReturn.id }, driveTypeToReturn);
         }
 
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> UpdateDriveType(int id, [FromBody] DriveForUpdatingDTO drive)
+        public async Task<IActionResult> UpdateDriveType(int id, [FromBody] DriveForUpdatingDto drive)
         {
             var driveEntity = await _repository.ShopDriveType.GetDriveType(id, trackChanges: true);
             if (driveEntity == null)

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Entities.DataTransferObjects.MarkDTO
 {
-    public class MarkDTO
+    public class MarkDto
     {
         public int id { get; set; }
         public string markNum { get; set; }

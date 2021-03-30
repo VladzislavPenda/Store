@@ -27,7 +27,7 @@ namespace Store.Controllers
         public async Task<IActionResult> GetCarcaseTypes()
         {
             var carcases = await _repository.ShopCarcaseType.GetAllCarcaseTypes(trackChanges: false);
-            var carcasesDTO = _mapper.Map<CarcaseDTO>(carcases);
+            var carcasesDTO = _mapper.Map<CarcaseDto>(carcases);
             return Ok(carcasesDTO);
         }
 
@@ -41,7 +41,7 @@ namespace Store.Controllers
             }
 
             var carcase = await _repository.ShopCarcaseType.GetCarcaseType(model.carcaseTypeId, trackChanges: false);
-            var carcaseDTO = _mapper.Map<CarcaseDTO>(carcase);
+            var carcaseDTO = _mapper.Map<CarcaseDto>(carcase);
             return Ok(carcaseDTO);
         }
 
@@ -60,12 +60,12 @@ namespace Store.Controllers
                 return NotFound();
             }
 
-            var carcaseToReturn = _mapper.Map<IEnumerable<CarcaseDTO>>(carcaseEntities);
+            var carcaseToReturn = _mapper.Map<IEnumerable<CarcaseDto>>(carcaseEntities);
             return Ok(carcaseToReturn);
         }
 
         [HttpPost("collection")]
-        public async Task<IActionResult> CreateDriveCollection([FromBody] IEnumerable<CarcaseDTO> carcaseCollection)
+        public async Task<IActionResult> CreateDriveCollection([FromBody] IEnumerable<CarcaseDto> carcaseCollection)
         {
             if (carcaseCollection == null)
             {
@@ -79,7 +79,7 @@ namespace Store.Controllers
             }
 
             await _repository.SaveAsync();
-            var carcaseCollectionToReturn = _mapper.Map<IEnumerable<CarcaseDTO>>(carcaseEntities);
+            var carcaseCollectionToReturn = _mapper.Map<IEnumerable<CarcaseDto>>(carcaseEntities);
             var ids = string.Join(",", carcaseCollectionToReturn.Select(c => c.id));
 
             return CreatedAtRoute("CarcaseCollection", new { ids }, carcaseCollectionToReturn);
@@ -87,19 +87,19 @@ namespace Store.Controllers
 
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> CreateCarcase([FromBody]CarcaseForCreationDTO carcaseType)
+        public async Task<IActionResult> CreateCarcase([FromBody]CarcaseForCreationDto carcaseType)
         {
             var carcaseEntity = _mapper.Map<ShopCarcaseType>(carcaseType);
             _repository.ShopCarcaseType.CreateCarcaseType(carcaseEntity);
             await _repository.SaveAsync();
 
-            var carcaseTypeToReturn = _mapper.Map<CarcaseDTO>(carcaseEntity);
+            var carcaseTypeToReturn = _mapper.Map<CarcaseDto>(carcaseEntity);
             return CreatedAtRoute("CarcaseTypeById", new { id = carcaseTypeToReturn.id }, carcaseTypeToReturn);
         }
 
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> UpdateCarcaseType(int id, [FromBody] CarcaseForUpdatingDTO carcase)
+        public async Task<IActionResult> UpdateCarcaseType(int id, [FromBody] CarcaseForUpdatingDto carcase)
         {
             var carcaseEntity = await _repository.ShopCarcaseType.GetCarcaseType(id, trackChanges: true);
             if (carcaseEntity == null)

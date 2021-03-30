@@ -58,14 +58,14 @@ namespace Store.Controllers
             {
                 return NotFound();
             }
-            var modelDTO = _mapper.Map<ModelDTO>(model);
+            var modelDTO = _mapper.Map<ModelDto>(model);
             return Ok(modelDTO);
         }
 
         // Не уверен что так оно должно быть, тут надо еще подумать...
         [HttpPost("shopMark/{markId}/shopEngine/{engineId}/shopCarcaseType/{carcaseId}/shopDriveType/{driveId}/shopTransmission/{transmissionId}/models")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> CreateModel(int markId, int engineId, int carcaseId, int driveId, int transmissionId, [FromBody] ModelForCreationDTO model)
+        public async Task<IActionResult> CreateModel(int markId, int engineId, int carcaseId, int driveId, int transmissionId, [FromBody] ModelForCreationDto model)
         {
             var mark = await _repository.ShopMark.GetMark(markId, trackChanges: false);
             var engine = await _repository.ShopEngineType.GetEngineType(engineId, trackChanges: false);
@@ -83,7 +83,7 @@ namespace Store.Controllers
             _repository.ShopModel.CreateModel(markId, engineId, carcaseId, driveId, transmissionId, modelEntity);
             await _repository.SaveAsync();
 
-            var modelToReturn = _mapper.Map<ModelDTO>(modelEntity);
+            var modelToReturn = _mapper.Map<ModelDto>(modelEntity);
             return CreatedAtRoute("ModelById",
                 new { markId, engineId, carcaseId, driveId, transmissionId, modelEntity, id = modelToReturn.id }, modelToReturn);
         }
@@ -105,7 +105,7 @@ namespace Store.Controllers
 
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> UpdateModel(int id, [FromBody]ModelForUpdatingDTO model)
+        public async Task<IActionResult> UpdateModel(int id, [FromBody]ModelForUpdatingDto model)
         {
             var modelEntity = await _repository.ShopModel.GetModel(id, trackChanges: true);
             if (modelEntity == null)

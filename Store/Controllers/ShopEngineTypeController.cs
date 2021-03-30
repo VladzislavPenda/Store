@@ -32,7 +32,7 @@ namespace Store.Controllers
         public async Task<IActionResult> GetEngineTypes()
         {
             var engineTypes = await _repository.ShopEngineType.GetAllEngineTypes(trackChanges: false);
-            var engineTypesDTO = _mapper.Map<IEnumerable<EngineDTO>>(engineTypes);
+            var engineTypesDTO = _mapper.Map<IEnumerable<EngineDto>>(engineTypes);
             return Ok(engineTypesDTO);
         }
 
@@ -46,7 +46,7 @@ namespace Store.Controllers
             }
 
             var engineType = await _repository.ShopEngineType.GetEngineType(model.engineTypeId, trackChanges: false);
-            var engineTypeDTO = _mapper.Map<EngineDTO>(engineType);
+            var engineTypeDTO = _mapper.Map<EngineDto>(engineType);
             return Ok(engineTypeDTO);
         }
 
@@ -65,12 +65,12 @@ namespace Store.Controllers
                 return NotFound();
             }
 
-            var engineToReturn = _mapper.Map<IEnumerable<EngineDTO>>(engineEntities);
+            var engineToReturn = _mapper.Map<IEnumerable<EngineDto>>(engineEntities);
             return Ok(engineToReturn);
         }
 
         [HttpPost("collection")]
-        public async Task<IActionResult> CreateEngineCollection([FromBody] IEnumerable<EngineDTO> engineCollection)
+        public async Task<IActionResult> CreateEngineCollection([FromBody] IEnumerable<EngineDto> engineCollection)
         {
             if (engineCollection == null)
             {
@@ -84,20 +84,20 @@ namespace Store.Controllers
             }
             
             await _repository.SaveAsync();
-            var engineCollectionToReturn = _mapper.Map<IEnumerable<EngineDTO>>(engineEntities);
+            var engineCollectionToReturn = _mapper.Map<IEnumerable<EngineDto>>(engineEntities);
             var ids = string.Join(",", engineCollectionToReturn.Select(c => c.id));
 
             return CreatedAtRoute("EngineCollection", new { ids }, engineCollectionToReturn);
         }
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> CreateEngine([FromBody]EngineForCreationDTO engine)
+        public async Task<IActionResult> CreateEngine([FromBody]EngineForCreationDto engine)
         {
             var engineEntity = _mapper.Map<ShopEngineType>(engine);
             _repository.ShopEngineType.CreateEngineType(engineEntity);
             await _repository.SaveAsync();
 
-            var engineTypeToReturn = _mapper.Map<EngineDTO>(engineEntity);
+            var engineTypeToReturn = _mapper.Map<EngineDto>(engineEntity);
             return CreatedAtRoute("EngineById", new { id = engineTypeToReturn.id }, engineTypeToReturn);
         }
 
@@ -118,7 +118,7 @@ namespace Store.Controllers
 
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> UpdateMark(int id, [FromBody] EngineForUpdatingDTO engine)
+        public async Task<IActionResult> UpdateMark(int id, [FromBody] EngineForUpdatingDto engine)
         {
             var engineEntity = await _repository.ShopEngineType.GetEngineType(id, trackChanges: true);
             if (engineEntity == null)

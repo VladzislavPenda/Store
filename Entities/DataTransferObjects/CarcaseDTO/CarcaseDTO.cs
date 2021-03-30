@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Entities.DataTransferObjects.CarcaseDTO
 {
-    public class CarcaseDTO
+    public class CarcaseDto
     {
         public int id { get; set; }
         public string type { get; set; }

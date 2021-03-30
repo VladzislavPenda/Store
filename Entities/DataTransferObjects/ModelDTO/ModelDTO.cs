@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Entities.DataTransferObjects
 {
-    public class ModelDTO
+    public class ModelDto
     {
         public int id { get; set; }
         public string model { get; set; }

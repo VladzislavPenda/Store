@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Entities.DataTransferObjects.DriveDTO
 {
-    public class DriveDTO
+    public class DriveDto
     {
         public int id { get; set; }
         public string type { get; set; }

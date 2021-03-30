@@ -13,38 +13,34 @@ namespace Entities.AutoMappers
     {
         public MappingProfile()
         {
-            //CreateMap<ShopModel, modelDTO>()
-            //    .ForMember(c => c.year, opt => opt.MapFrom(x => (int)x.year))
-            //    .ForMember(c => c.horsePower, opt => opt.MapFrom(x => (int)x.horsePower));
+            CreateMap<ShopModel, ModelDto>();
+            CreateMap<ModelForCreationDto, ShopModel>();
+            CreateMap<ModelForUpdatingDto, ShopModel>();
 
-            CreateMap<ShopModel, ModelDTO>();
-            CreateMap<ModelForCreationDTO, ShopModel>();
-            CreateMap<ModelForUpdatingDTO, ShopModel>();
+            CreateMap<ShopMark, MarkDto>();
+            CreateMap<MarkDto, ShopMark>();
+            CreateMap<MarkForCreationDto, ShopMark>();
+            CreateMap<MarkForUpdatingDto, ShopMark>();
 
-            CreateMap<ShopMark, MarkDTO>();
-            CreateMap<MarkDTO, ShopMark>();
-            CreateMap<MarkForCreationDTO, ShopMark>();
-            CreateMap<MarkForUpdatingDTO, ShopMark>();
+            CreateMap<ShopEngineType, EngineDto>();
+            CreateMap<EngineDto, ShopEngineType>();
+            CreateMap<EngineForCreationDto, ShopEngineType>();
+            CreateMap<EngineForUpdatingDto, ShopEngineType>();
 
-            CreateMap<ShopEngineType, EngineDTO>();
-            CreateMap<EngineDTO, ShopEngineType>();
-            CreateMap<EngineForCreationDTO, ShopEngineType>();
-            CreateMap<EngineForUpdatingDTO, ShopEngineType>();
+            CreateMap<ShopDriveType, DriveDto>();
+            CreateMap<DriveDto, ShopDriveType>();
+            CreateMap<DriveForCreationDto, ShopDriveType>();
+            CreateMap<DriveForUpdatingDto, ShopDriveType>();
 
-            CreateMap<ShopDriveType, DriveDTO>();
-            CreateMap<DriveDTO, ShopDriveType>();
-            CreateMap<DriveForCreationDTO, ShopDriveType>();
-            CreateMap<DriveForUpdatingDTO, ShopDriveType>();
+            CreateMap<ShopCarcaseType, CarcaseDto>();
+            CreateMap<CarcaseDto, ShopCarcaseType>();
+            CreateMap<CarcaseForCreationDto, ShopCarcaseType>();
+            CreateMap<CarcaseForUpdatingDto, ShopCarcaseType>();
 
-            CreateMap<ShopCarcaseType, CarcaseDTO>();
-            CreateMap<CarcaseDTO, ShopCarcaseType>();
-            CreateMap<CarcaseForCreationDTO, ShopCarcaseType>();
-            CreateMap<CarcaseForUpdatingDTO, ShopCarcaseType>();
-
-            CreateMap<ShopTransmissionType, TransmissionDTO>();
-            CreateMap<TransmissionDTO, ShopTransmissionType>();
-            CreateMap<TransmissionForCreationDTO, ShopTransmissionType>();
-            CreateMap<TransmissionForUpdatingDTO, ShopTransmissionType>();
+            CreateMap<ShopTransmissionType, TransmissionDto>();
+            CreateMap<TransmissionDto, ShopTransmissionType>();
+            CreateMap<TransmissionForCreationDto, ShopTransmissionType>();
+            CreateMap<TransmissionForUpdatingDto, ShopTransmissionType>();
 
             
         }

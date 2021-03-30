@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Entities.DataTransferObjects
 {
-    public class ModelForUpdatingDTO
+    public class ModelForUpdatingDto
     {
         [Required(ErrorMessage = "Please, specify model name.")]
         [StringLength(100, MinimumLength = 3, ErrorMessage = "Model name is to long. Max length is 100 symbols")]
