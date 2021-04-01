@@ -5,6 +5,7 @@ using Entities.DataTransferObjects.DriveDTO;
 using Entities.DataTransferObjects.EngineDTO;
 using Entities.DataTransferObjects.MarkDTO;
 using Entities.DataTransferObjects.TransmissionDTO;
+using Entities.DataTransferObjects.UserDTO;
 using Entities.Models;
 
 namespace Entities.AutoMappers
@@ -42,7 +43,7 @@ namespace Entities.AutoMappers
             CreateMap<TransmissionForCreationDto, ShopTransmissionType>();
             CreateMap<TransmissionForUpdatingDto, ShopTransmissionType>();
 
-            
+            CreateMap<UserForRegistrationDto, User>();
         }
     }
 }

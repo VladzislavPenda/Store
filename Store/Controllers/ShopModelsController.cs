@@ -32,7 +32,7 @@ namespace Store.Controllers
 
         [HttpGet]
         [HttpHead]
-        [HttpCacheExpiration(MaxAge = 120)]
+        //[HttpCacheExpiration(MaxAge = 120)]
         //[ResponseCache(Duration = 10, NoStore =true)]
         public async Task<IActionResult> GetModels([FromQuery] ModelsParameters modelsParameters)
         {
@@ -49,8 +49,8 @@ namespace Store.Controllers
         }
 
         [HttpGet("{id}", Name = "ModelById")]
-        [HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
-        [HttpCacheValidation(MustRevalidate = false)]
+        //[HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
+        //[HttpCacheValidation(MustRevalidate = false)]
         public async Task<IActionResult> GetModel(int id)
         {
             var model = await _repository.ShopModel.GetModel(id, trackChanges: false);

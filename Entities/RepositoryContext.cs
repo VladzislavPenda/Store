@@ -1,4 +1,5 @@
-﻿using Entities.Models;
+﻿using Entities.Configuration;
+using Entities.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,6 +18,8 @@ namespace Entities
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
+
         }
 
         public DbSet<ShopModel> ShopModels { get; set; }
