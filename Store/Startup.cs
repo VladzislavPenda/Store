@@ -51,6 +51,8 @@ namespace Store
             services.ConfigureVersioning();
             services.ConfigureControllerWithViews();
             services.AddMemoryCache();
+            services.AddAuthentication();
+            services.ConfigureIdentity();
             services.ConfigureRateLimitingOptions();
             services.AddHttpContextAccessor();
             services.AddScoped<IRepositoryManager, RepositoryManager>();
@@ -78,6 +80,7 @@ namespace Store
             app.UseHttpCacheHeaders();
             app.UseIpRateLimiting();
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
