@@ -2,15 +2,11 @@ using AspNetCoreRateLimit;
 using AutoMapper;
 using Contracts;
 using Contracts.DataShape;
-using Entities;
 using Entities.AutoMappers;
-using Entities.DataTransferObjects;
 using Entities.DataTransferObjects.IncludeDTO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -18,10 +14,6 @@ using Repositories;
 using Repositories.DataShaping;
 using Store.ActionFilters;
 using Store.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Store
 {
@@ -53,8 +45,10 @@ namespace Store
             services.AddMemoryCache();
             services.AddAuthentication();
             services.ConfigureIdentity();
+            services.ConfigureJWT(Configuration);
             services.ConfigureRateLimitingOptions();
             services.AddHttpContextAccessor();
+            services.AddScoped<IAuthenticationManager, AuthenticationManager>();
             services.AddScoped<IRepositoryManager, RepositoryManager>();
             services.AddControllersWithViews();
         }

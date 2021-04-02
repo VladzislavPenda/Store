@@ -6,6 +6,7 @@ using Entities.DataTransferObjects.IncludeDTO;
 using Entities.Models;
 using Entities.RequestFeatures;
 using Marvin.Cache.Headers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Store.ActionFilters;
@@ -30,7 +31,7 @@ namespace Store.Controllers
             _dataShaper = dataShaper;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         [HttpHead]
         //[HttpCacheExpiration(MaxAge = 120)]
         //[ResponseCache(Duration = 10, NoStore =true)]

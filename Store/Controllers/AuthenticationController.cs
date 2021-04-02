@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
+using Contracts;
+using Entities.DataTransferObjects.UserDto;
 using Entities.DataTransferObjects.UserDTO;
 using Entities.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Store.ActionFilters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Store.Controllers
@@ -17,10 +16,12 @@ namespace Store.Controllers
     {
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
-        public AuthenticationController(IMapper mapper, UserManager<User> userManager)
+        private readonly IAuthenticationManager _authManager;
+        public AuthenticationController(IMapper mapper, UserManager<User> userManager, IAuthenticationManager authManager)
         {
             _mapper = mapper;
             _userManager = userManager;
+            _authManager = authManager;
         }
 
         [HttpPost]
@@ -42,6 +43,17 @@ namespace Store.Controllers
             await _userManager.AddToRolesAsync(user, userForRegistrationDto.Roles);
             return StatusCode(201);
         }
-    }
 
+        [HttpPost("login")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDto user)
+        {
+            if (!await _authManager.ValidateUser(user))
+            {
+                return Unauthorized();
+            }
+
+            return Ok(new { Token = await _authManager.CreateToken() });
+        }
+    }
 }
