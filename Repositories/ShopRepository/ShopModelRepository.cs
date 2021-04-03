@@ -28,14 +28,9 @@ namespace Repositories
                 .ToPagedList(model, modelsParametres.PageNumber, modelsParametres.PageSize);
         }
 
-        //public IEnumerable<object> GetAllIncludes(bool trackChanges)
-        public async Task<PagedList<ModelFullInfo>> GetAllIncludes(ModelsParameters modelsParametres, bool trackChanges)
+        public async Task<PagedList<ModelFullInfo>> GetAllIncludesAsync(ModelsParameters modelsParametres, bool trackChanges)
         {
-            //return _context.Set<ShopModel>()
-
-            //var shopModels = await _context.ShopModels
             var shopModels = await FindAll(trackChanges)
-                //.FilterModels()
                 .Include(c => c.ShopMark)
                 .Include(d => d.ShopEngineType)
                 .Include(f => f.ShopDriveType)
@@ -63,14 +58,7 @@ namespace Repositories
             
             return PagedList<ModelFullInfo>
                 .ToPagedList(shopModels, modelsParametres.PageNumber, modelsParametres.PageSize);
-
-            //return shopModels;
         }
-
-        //public IEnumerable<ShopModel> Get(bool trackChanges, IEnumerable<ModelDTO> models)
-        //{
-        //    IEnumerable<ShopModel> shopModels = _context.Set<ModelDTO>().Include(c => c.)
-        //}
         
         public async Task<IEnumerable<ShopModel>> GetAllShopModels(bool trackChanges)
         {

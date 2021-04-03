@@ -5,17 +5,15 @@ using Entities.DataTransferObjects;
 using Entities.DataTransferObjects.IncludeDTO;
 using Entities.Models;
 using Entities.RequestFeatures;
-using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Store.ActionFilters;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Store.Controllers
 {
-    [Route("api/[controller]")] // Возможно нужно будет заменить маршрут
+    [Route("api/[controller]")]
     [ApiController]
     [ApiExplorerSettings(GroupName = "v1")]
     //[ResponseCache(CacheProfileName = "120SecondsDuration")]
@@ -40,8 +38,8 @@ namespace Store.Controllers
         {
             if (!modelsParameters.ValidRange)
                 return BadRequest("Max price can't be less than min price.");
-            //var models = await _repository.ShopModel.GetModelsAsync(modelsParameters, trackChanges: false);
-            var models = await _repository.ShopModel.GetAllIncludes(modelsParameters, trackChanges: false);
+
+            var models = await _repository.ShopModel.GetAllIncludesAsync(modelsParameters, trackChanges: false);
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(models.MetaData));
 
             //var modelsDTO = _mapper.Map<IEnumerable<ModelDTO>>(models);
@@ -64,7 +62,6 @@ namespace Store.Controllers
             return View(model);
         }
 
-        // Не уверен что так оно должно быть, тут надо еще подумать...
         [HttpPost("shopMark/{markId}/shopEngine/{engineId}/shopCarcaseType/{carcaseId}/shopDriveType/{driveId}/shopTransmission/{transmissionId}/models")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateModel(int markId, int engineId, int carcaseId, int driveId, int transmissionId, [FromBody] ModelForCreationDto model)
