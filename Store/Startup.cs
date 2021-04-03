@@ -48,6 +48,7 @@ namespace Store
             services.ConfigureJWT(Configuration);
             services.ConfigureRateLimitingOptions();
             services.AddHttpContextAccessor();
+            services.ConfigureSwagger();
             services.AddScoped<IAuthenticationManager, AuthenticationManager>();
             services.AddScoped<IRepositoryManager, RepositoryManager>();
             services.AddControllersWithViews();
@@ -76,6 +77,13 @@ namespace Store
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSwagger();
+            app.UseSwaggerUI(s =>
+            {
+                s.SwaggerEndpoint("/swagger/v1/swagger.json", "Code Maze API v1");
+                //s.SwaggerEndpoint("/swagger/v2/swagger.json", "Code Maze API v2");
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

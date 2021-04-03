@@ -17,6 +17,7 @@ namespace Store.Controllers
 {
     [Route("api/[controller]")] // Возможно нужно будет заменить маршрут
     [ApiController]
+    [ApiExplorerSettings(GroupName = "v1")]
     //[ResponseCache(CacheProfileName = "120SecondsDuration")]
     public class ShopModelsController : Controller
     {
