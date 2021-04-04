@@ -30,7 +30,7 @@ namespace Store.Controllers
             _dataShaper = dataShaper;
         }
 
-        [HttpGet, Authorize]
+        [HttpGet]
         [HttpHead]
         //[HttpCacheExpiration(MaxAge = 120)]
         //[ResponseCache(Duration = 10, NoStore =true)]
