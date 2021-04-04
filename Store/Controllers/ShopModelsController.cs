@@ -32,7 +32,7 @@ namespace Store.Controllers
             _dataShaper = dataShaper;
         }
 
-        [HttpGet, Authorize]
+        [HttpGet]
         [HttpHead]
         //[HttpCacheExpiration(MaxAge = 120)]
         //[ResponseCache(Duration = 10, NoStore =true)]
@@ -47,7 +47,7 @@ namespace Store.Controllers
             //var modelsDTO = _mapper.Map<IEnumerable<ModelDTO>>(models);
 
 
-            return Ok(models);
+            return View(models);
         }
 
         [HttpGet("{id}", Name = "ModelById")]
@@ -61,7 +61,7 @@ namespace Store.Controllers
                 return NotFound();
             }
             var modelDTO = _mapper.Map<ModelDto>(model);
-            return Ok(modelDTO);
+            return View(model);
         }
 
         // Не уверен что так оно должно быть, тут надо еще подумать...
@@ -118,7 +118,7 @@ namespace Store.Controllers
             _mapper.Map(model, modelEntity);
             await _repository.SaveAsync();
 
-            return NoContent();
+            return View();
         }
     }
 }

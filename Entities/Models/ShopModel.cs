@@ -24,6 +24,11 @@ namespace Entities.Models
         [Required(ErrorMessage = "Please, specify the mileage.")]
         public int mileAge { get; set; }
 
+        [Required(ErrorMessage = "Please, specify the path to your picture.")]
+        public string pathToPicture { get; set; }
+
+        public string description { get; set; }
+
         [ForeignKey(nameof(ShopMark))]
         public int markId { get; set; }
         public ShopMark ShopMark { get; set; }
