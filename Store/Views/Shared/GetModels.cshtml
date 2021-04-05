@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Entities.DataTransferObjects.IncludeDTO.ModelFullInfo>
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>View</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    @*<thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.carcaseType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.driveType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.engineType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.horsePower)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.markName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.mileAge)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.modelId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.transmission)
+            </th>
+            <th></th>
+        </tr>
+    </thead>*@
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.carcaseType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.country)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.driveType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.engineType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.horsePower)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.markName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.mileAge)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.modelId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.transmission)
+            </td>
+            <td>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,83 @@
+﻿@model Entities.Models.ShopModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>ShopModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="model" class="control-label"></label>
+                <input asp-for="model" class="form-control" />
+                <span asp-validation-for="model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="year" class="control-label"></label>
+                <input asp-for="year" class="form-control" />
+                <span asp-validation-for="year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="horsePower" class="control-label"></label>
+                <input asp-for="horsePower" class="form-control" />
+                <span asp-validation-for="horsePower" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="price" class="control-label"></label>
+                <input asp-for="price" class="form-control" />
+                <span asp-validation-for="price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="mileAge" class="control-label"></label>
+                <input asp-for="mileAge" class="form-control" />
+                <span asp-validation-for="mileAge" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="pathToPicture" class="control-label"></label>
+                <input asp-for="pathToPicture" class="form-control" />
+                <span asp-validation-for="pathToPicture" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="description" class="control-label"></label>
+                <input asp-for="description" class="form-control" />
+                <span asp-validation-for="description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="markId" class="control-label"></label>
+                <select asp-for="markId" class ="form-control" asp-items="ViewBag.markId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="transmissionId" class="control-label"></label>
+                <select asp-for="transmissionId" class ="form-control" asp-items="ViewBag.transmissionId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="carcaseTypeId" class="control-label"></label>
+                <select asp-for="carcaseTypeId" class ="form-control" asp-items="ViewBag.carcaseTypeId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="engineTypeId" class="control-label"></label>
+                <select asp-for="engineTypeId" class ="form-control" asp-items="ViewBag.engineTypeId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="driveTypeId" class="control-label"></label>
+                <select asp-for="driveTypeId" class ="form-control" asp-items="ViewBag.driveTypeId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
