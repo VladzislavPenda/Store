@@ -48,7 +48,9 @@ namespace Repositories
                     carcaseType = c.ShopCarcaseType.type,
                     driveType = c.ShopDriveType.type,
                     transmission = c.ShopTransmissionType.type,
-                    markName = c.ShopMark.markNum
+                    markName = c.ShopMark.markNum,
+                    description = c.description,
+                    pathToPicture = c.pathToPicture
                 })
                 .FilterModels(modelsParametres.MinPrice, modelsParametres.MaxPrice)
                 .Search(modelsParametres.SearchTerm)
@@ -67,9 +69,37 @@ namespace Repositories
             .ToListAsync();
         }
 
+        public async Task<ModelFullInfo> GetModelFullInfo(int id, bool trackChanges)
+        {
+            return await FindByCondition(c => c.id.Equals(id), trackChanges)
+                .Include(c => c.ShopMark)
+                .Include(d => d.ShopEngineType)
+                .Include(f => f.ShopDriveType)
+                .Include(e => e.ShopCarcaseType)
+                .Include(t => t.ShopTransmissionType)
+                .Select(c => new ModelFullInfo
+                {
+                    modelId = c.id,
+                    model = c.model,
+                    price = c.price,
+                    mileAge = c.mileAge,
+                    horsePower = c.horsePower,
+                    country = c.ShopMark.country,
+                    engineType = c.ShopEngineType.type,
+                    carcaseType = c.ShopCarcaseType.type,
+                    driveType = c.ShopDriveType.type,
+                    transmission = c.ShopTransmissionType.type,
+                    markName = c.ShopMark.markNum,
+                    description = c.description,
+                    pathToPicture = c.pathToPicture
+                })
+                .SingleOrDefaultAsync();
+        }
+
         public async Task<ShopModel> GetModel(int id, bool trackChanges)
         {
             return await FindByCondition(c => c.id.Equals(id), trackChanges)
+
                 .SingleOrDefaultAsync();
         }
 

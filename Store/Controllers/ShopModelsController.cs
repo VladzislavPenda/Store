@@ -30,7 +30,7 @@ namespace Store.Controllers
             _dataShaper = dataShaper;
         }
 
-        [HttpGet, Authorize]
+        [HttpGet]
         [HttpHead]
         //[HttpCacheExpiration(MaxAge = 120)]
         //[ResponseCache(Duration = 10, NoStore =true)]
@@ -49,13 +49,13 @@ namespace Store.Controllers
         //[HttpCacheValidation(MustRevalidate = false)]
         public async Task<IActionResult> GetModel(int id)
         {
-            var model = await _repository.ShopModel.GetModel(id, trackChanges: false);
+            var model = await _repository.ShopModel.GetModelFullInfo(id, trackChanges: false);
             if (model == null)
             {
                 return NotFound();
             }
-            var modelDTO = _mapper.Map<ModelDto>(model);
-            return Ok(modelDTO);
+            //var modelDTO = _mapper.Map<ModelDto>(model);
+            return Ok(model);
         }
 
         [HttpPost("shopMark/{markId}/shopEngine/{engineId}/shopCarcaseType/{carcaseId}/shopDriveType/{driveId}/shopTransmission/{transmissionId}/models")]

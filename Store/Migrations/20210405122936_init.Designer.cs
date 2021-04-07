@@ -4,14 +4,16 @@ using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Store.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20210405122936_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,9 +104,6 @@ namespace Store.Migrations
                     b.Property<int>("carcaseTypeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("driveTypeId")
                         .HasColumnType("int");
 
@@ -125,9 +124,6 @@ namespace Store.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("pathToPicture")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("price")
                         .HasColumnType("int");
@@ -270,15 +266,15 @@ namespace Store.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "23984d14-fda6-41df-8b93-e68b5a887408",
-                            ConcurrencyStamp = "6b17825d-d487-459b-9113-bed44d0af40c",
+                            Id = "ae215378-6f9e-4866-afca-e31a71a43857",
+                            ConcurrencyStamp = "eb23a793-f8fe-4ea7-94e8-d3e2b4a36e79",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "3e433f00-56b9-4b32-a58a-7602d683ceb4",
-                            ConcurrencyStamp = "25b1e973-9925-4302-b3a4-2c47273921aa",
+                            Id = "c4a15acc-bf5c-4a6f-85d8-e46b0b2930c0",
+                            ConcurrencyStamp = "26d17ba0-39aa-4c7f-9601-d60381b05be0",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });

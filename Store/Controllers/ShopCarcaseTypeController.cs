@@ -27,7 +27,7 @@ namespace Store.Controllers
         public async Task<IActionResult> GetCarcaseTypes()
         {
             var carcases = await _repository.ShopCarcaseType.GetAllCarcaseTypes(trackChanges: false);
-            var carcasesDTO = _mapper.Map<CarcaseDto>(carcases);
+            var carcasesDTO = _mapper.Map<IEnumerable<CarcaseDto>>(carcases);
             return Ok(carcasesDTO);
         }
 
@@ -40,7 +40,7 @@ namespace Store.Controllers
                 return NotFound();
             }
 
-            var carcase = await _repository.ShopCarcaseType.GetCarcaseType(model.carcaseTypeId, trackChanges: false);
+            var carcase = await _repository.ShopCarcaseType.GetCarcaseType(id, trackChanges: false);
             var carcaseDTO = _mapper.Map<CarcaseDto>(carcase);
             return Ok(carcaseDTO);
         }
