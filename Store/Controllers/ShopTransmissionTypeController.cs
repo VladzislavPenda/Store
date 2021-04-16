@@ -2,6 +2,7 @@
 using Contracts;
 using Entities.DataTransferObjects.TransmissionDTO;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Store.ActionFilters;
 using Store.ModelBinders;
@@ -65,7 +66,7 @@ namespace Store.Controllers
             return Ok(transmissionToReturn);
         }
 
-        [HttpPost("collection")]
+        [HttpPost("collection"), Authorize(Roles = "Administrator")]
         public async Task<IActionResult> CreateTransmissionCollection([FromBody] IEnumerable<TransmissionDto> transmissionCollection)
         {
             if (transmissionCollection == null)
@@ -86,7 +87,7 @@ namespace Store.Controllers
             return CreatedAtRoute("TransmissionCollection", new { ids }, transmissionCollectionToReturn);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Administrator")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateTransmission([FromBody]TransmissionForCreationDto transmission)
         {
@@ -98,7 +99,7 @@ namespace Store.Controllers
             return CreatedAtRoute("TransmissionById", new { id = transmissionTypeToReturn.id }, transmissionTypeToReturn);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize(Roles = "Administrator")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> UpdateTransmission(int id, [FromBody] TransmissionForUpdatingDto transmission)
         {
@@ -110,6 +111,21 @@ namespace Store.Controllers
 
             _mapper.Map(transmission, transmissionEntity);
             await _repository.SaveAsync();
+            return NoContent();
+        }
+
+        [HttpDelete("{id}"), Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> DeleteTransmissionType(int id)
+        {
+            var transmission = await _repository.ShopTransmissionType.GetTransmissionType(id, trackChanges: false);
+            if (transmission == null)
+            {
+                return NotFound();
+            }
+
+            _repository.ShopTransmissionType.DeleteTransmissionType(transmission);
+            await _repository.SaveAsync();
+
             return NoContent();
         }
     }

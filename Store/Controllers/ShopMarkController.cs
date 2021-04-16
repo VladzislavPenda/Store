@@ -3,6 +3,7 @@ using Contracts;
 using Entities.DataTransferObjects;
 using Entities.DataTransferObjects.MarkDTO;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Store.ActionFilters;
 using Store.ModelBinders;
@@ -65,7 +66,7 @@ namespace Store.Controllers
             return Ok(marksToReturn);
         }
 
-        [HttpPost("collection")]
+        [HttpPost("collection"), Authorize(Roles = "Administrator")]
         public async Task<IActionResult> CreateMerkCollection([FromBody]IEnumerable<MarkDto> markCollection)
         {
             if (markCollection == null)
@@ -87,7 +88,7 @@ namespace Store.Controllers
             return CreatedAtRoute("MarkCollection", new { ids }, marksCollectionToReturn);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Administrator")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateMark([FromBody]MarkForCreationDto mark)
         {
@@ -99,7 +100,7 @@ namespace Store.Controllers
             return CreatedAtRoute("MarkById", new { id = MarkToReturn.id }, MarkToReturn);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteMark(int id)
         {
             var mark = await _repository.ShopMark.GetMark(id, trackChanges: false);
@@ -114,7 +115,7 @@ namespace Store.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize(Roles = "Administrator")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> UpdateMark(int id, [FromBody] MarkForUpdatingDto mark)
         {

@@ -6,6 +6,7 @@
         public string country { get; set; }
         public string driveType { get; set; }
         public string engineType { get; set; }
+        public int? year { get; set; }
         public int? horsePower { get; set; }
         public string markName { get; set; }
         public int mileAge { get; set; }

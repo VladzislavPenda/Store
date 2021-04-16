@@ -7,14 +7,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using Entities.RequestFeatures;
 
 namespace Repositories.Extensions
 {
     public static class RepositoryModelExtensions
     {
-        public static IQueryable<ModelFullInfo> FilterModels(this IQueryable<ModelFullInfo> model, uint minPrice, uint maxPrice)
+        public static IQueryable<ModelFullInfo> FilterModels(this IQueryable<ModelFullInfo> model, ModelsParameters modelsParametres)
         {
-            return model.Where(m => (m.price >= minPrice) && (m.price <= maxPrice));
+            var result = model
+                .Where(m => (m.price >= modelsParametres.MinPrice)
+                && (m.price <= modelsParametres.MaxPrice)
+                && (m.horsePower >= modelsParametres.MinHorsePower)
+                && (m.horsePower <= modelsParametres.MaxHorsePower)
+                && (m.mileAge >= modelsParametres.MinMileAge)
+                && (m.mileAge <= modelsParametres.MaxMileAge)
+                && (m.year <= modelsParametres.MaxYear)
+                && (m.year >= modelsParametres.MinYear));
+            
+
+            
+            if (!string.IsNullOrWhiteSpace(modelsParametres.Country))
+                result = result.Where(m => (m.country == modelsParametres.Country));
+            if (!string.IsNullOrWhiteSpace(modelsParametres.CarcaseType))
+                result = result.Where(m => (m.carcaseType == modelsParametres.CarcaseType));
+            if (!string.IsNullOrWhiteSpace(modelsParametres.DriveType))
+                result = result.Where(m => (m.driveType == modelsParametres.DriveType));
+            if (!string.IsNullOrWhiteSpace(modelsParametres.EngineType))
+                result = result.Where(m => (m.engineType == modelsParametres.EngineType));
+            if (!string.IsNullOrWhiteSpace(modelsParametres.MarkName))
+                result = result.Where(m => (m.markName == modelsParametres.MarkName));
+
+            return result;
         }
 
         public static IQueryable<ModelFullInfo> Search(this IQueryable<ModelFullInfo> model, string searchItem)

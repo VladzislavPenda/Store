@@ -36,7 +36,7 @@ namespace Store.Controllers
         //[ResponseCache(Duration = 10, NoStore =true)]
         public async Task<IActionResult> GetModels([FromQuery] ModelsParameters modelsParameters)
         {
-            if (!modelsParameters.ValidRange)
+            if (!modelsParameters.ValidRange())
                 return BadRequest("Max price can't be less than min price.");
 
             var models = await _repository.ShopModel.GetAllIncludesAsync(modelsParameters, trackChanges: false);

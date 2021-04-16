@@ -2,6 +2,7 @@
 using Contracts;
 using Entities.DataTransferObjects.CarcaseDTO;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Store.ActionFilters;
 using Store.ModelBinders;
@@ -64,7 +65,7 @@ namespace Store.Controllers
             return Ok(carcaseToReturn);
         }
 
-        [HttpPost("collection")]
+        [HttpPost("collection"), Authorize(Roles = "Administrator")]
         public async Task<IActionResult> CreateDriveCollection([FromBody] IEnumerable<CarcaseDto> carcaseCollection)
         {
             if (carcaseCollection == null)
@@ -85,7 +86,7 @@ namespace Store.Controllers
             return CreatedAtRoute("CarcaseCollection", new { ids }, carcaseCollectionToReturn);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Administrator")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateCarcase([FromBody]CarcaseForCreationDto carcaseType)
         {
@@ -97,7 +98,7 @@ namespace Store.Controllers
             return CreatedAtRoute("CarcaseTypeById", new { id = carcaseTypeToReturn.id }, carcaseTypeToReturn);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize(Roles = "Administrator")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> UpdateCarcaseType(int id, [FromBody] CarcaseForUpdatingDto carcase)
         {
@@ -109,6 +110,21 @@ namespace Store.Controllers
 
             _mapper.Map(carcase, carcaseEntity);
             await _repository.SaveAsync();
+            return NoContent();
+        }
+
+        [HttpDelete("{id}"), Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> DeleteCarcaseType(int id)
+        {
+            var carcase = await _repository.ShopCarcaseType.GetCarcaseType(id, trackChanges: false);
+            if (carcase == null)
+            {
+                return NotFound();
+            }
+
+            _repository.ShopCarcaseType.DeleteCarcaseType(carcase);
+            await _repository.SaveAsync();
+
             return NoContent();
         }
     }

@@ -40,6 +40,7 @@ namespace Repositories
                 {
                     modelId = c.id,
                     model = c.model,
+                    year = c.year,
                     price = c.price,
                     mileAge = c.mileAge,
                     horsePower = c.horsePower,
@@ -52,7 +53,7 @@ namespace Repositories
                     description = c.description,
                     pathToPicture = c.pathToPicture
                 })
-                .FilterModels(modelsParametres.MinPrice, modelsParametres.MaxPrice)
+                .FilterModels(modelsParametres)
                 .Search(modelsParametres.SearchTerm)
                 .Sort(modelsParametres.OrderBy)
                 .ToListAsync();
@@ -83,6 +84,7 @@ namespace Repositories
                     model = c.model,
                     price = c.price,
                     mileAge = c.mileAge,
+                    year = c.year,
                     horsePower = c.horsePower,
                     country = c.ShopMark.country,
                     engineType = c.ShopEngineType.type,

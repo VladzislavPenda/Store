@@ -67,7 +67,7 @@ namespace Store.Extensions
                 new RateLimitRule
                 {
                     Endpoint = "*",
-                    Limit= 15,
+                    Limit= 200,
                     Period = "5m"
                 }
             };
