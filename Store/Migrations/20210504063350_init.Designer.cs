@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Store.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20210401103636_add")]
-    partial class add
+    [Migration("20210504063350_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,7 +30,6 @@ namespace Store.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("type")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -104,6 +103,9 @@ namespace Store.Migrations
                     b.Property<int>("carcaseTypeId")
                         .HasColumnType("int");
 
+                    b.Property<string>("description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("driveTypeId")
                         .HasColumnType("int");
 
@@ -124,6 +126,9 @@ namespace Store.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("pathToPicture")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("price")
                         .HasColumnType("int");
@@ -262,6 +267,22 @@ namespace Store.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b6676a61-eced-4344-b2ce-7b85f389874a",
+                            ConcurrencyStamp = "8bb7463f-159d-4544-bf0a-c62a8a7d321b",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "1962023a-dc5e-40a6-b018-1b6dfda0df60",
+                            ConcurrencyStamp = "accb609f-3d26-4827-94cb-a6dafce7df4f",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -28,7 +28,6 @@ namespace Store.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("type")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -270,15 +269,15 @@ namespace Store.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "23984d14-fda6-41df-8b93-e68b5a887408",
-                            ConcurrencyStamp = "6b17825d-d487-459b-9113-bed44d0af40c",
+                            Id = "b6676a61-eced-4344-b2ce-7b85f389874a",
+                            ConcurrencyStamp = "8bb7463f-159d-4544-bf0a-c62a8a7d321b",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "3e433f00-56b9-4b32-a58a-7602d683ceb4",
-                            ConcurrencyStamp = "25b1e973-9925-4302-b3a4-2c47273921aa",
+                            Id = "1962023a-dc5e-40a6-b018-1b6dfda0df60",
+                            ConcurrencyStamp = "accb609f-3d26-4827-94cb-a6dafce7df4f",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
