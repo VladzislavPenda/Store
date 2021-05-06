@@ -38,7 +38,7 @@ namespace Store
             var mapperConfig = new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile());});
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
-            //services.ConfigureResponseCaching();
+            services.ConfigureResponseCaching();
             //services.ConfigureHttpCacheHeaders();
             services.ConfigureVersioning();
             services.ConfigureControllerWithViews();
@@ -46,7 +46,7 @@ namespace Store
             services.AddAuthentication();
             services.ConfigureIdentity();
             services.ConfigureJWT(Configuration);
-            services.ConfigureRateLimitingOptions();
+            //services.ConfigureRateLimitingOptions();
             services.AddHttpContextAccessor();
             services.ConfigureSwagger();
             services.AddScoped<IAuthenticationManager, AuthenticationManager>();
@@ -71,9 +71,9 @@ namespace Store
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCors("CorsPolicy");
-            //app.UseResponseCaching();
+            app.UseResponseCaching();
             //app.UseHttpCacheHeaders();
-            app.UseIpRateLimiting();
+            //app.UseIpRateLimiting();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

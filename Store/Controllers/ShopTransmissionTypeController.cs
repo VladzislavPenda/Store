@@ -66,7 +66,7 @@ namespace Store.Controllers
             return Ok(transmissionToReturn);
         }
 
-        [HttpPost("collection"), Authorize(Roles = "Administrator")]
+        [HttpPost("collection")]
         public async Task<IActionResult> CreateTransmissionCollection([FromBody] IEnumerable<TransmissionDto> transmissionCollection)
         {
             if (transmissionCollection == null)
@@ -87,7 +87,7 @@ namespace Store.Controllers
             return CreatedAtRoute("TransmissionCollection", new { ids }, transmissionCollectionToReturn);
         }
 
-        [HttpPost, Authorize(Roles = "Administrator")]
+        [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateTransmission([FromBody]TransmissionForCreationDto transmission)
         {
@@ -99,7 +99,7 @@ namespace Store.Controllers
             return CreatedAtRoute("TransmissionById", new { id = transmissionTypeToReturn.id }, transmissionTypeToReturn);
         }
 
-        [HttpPut("{id}"), Authorize(Roles = "Administrator")]
+        [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> UpdateTransmission(int id, [FromBody] TransmissionForUpdatingDto transmission)
         {
@@ -114,7 +114,7 @@ namespace Store.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}"), Authorize(Roles = "Administrator")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTransmissionType(int id)
         {
             var transmission = await _repository.ShopTransmissionType.GetTransmissionType(id, trackChanges: false);

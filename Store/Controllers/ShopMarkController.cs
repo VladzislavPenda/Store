@@ -66,7 +66,7 @@ namespace Store.Controllers
             return Ok(marksToReturn);
         }
 
-        [HttpPost("collection"), Authorize(Roles = "Administrator")]
+        [HttpPost("collection")]
         public async Task<IActionResult> CreateMerkCollection([FromBody]IEnumerable<MarkDto> markCollection)
         {
             if (markCollection == null)
@@ -88,7 +88,7 @@ namespace Store.Controllers
             return CreatedAtRoute("MarkCollection", new { ids }, marksCollectionToReturn);
         }
 
-        [HttpPost, Authorize(Roles = "Administrator")]
+        [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateMark([FromBody]MarkForCreationDto mark)
         {
@@ -100,7 +100,7 @@ namespace Store.Controllers
             return CreatedAtRoute("MarkById", new { id = MarkToReturn.id }, MarkToReturn);
         }
 
-        [HttpDelete("{id}"), Authorize(Roles = "Administrator")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMark(int id)
         {
             var mark = await _repository.ShopMark.GetMark(id, trackChanges: false);
@@ -115,7 +115,7 @@ namespace Store.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id}"), Authorize(Roles = "Administrator")]
+        [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> UpdateMark(int id, [FromBody] MarkForUpdatingDto mark)
         {

@@ -65,7 +65,7 @@ namespace Store.Controllers
             return Ok(driveToReturn);
         }
 
-        [HttpPost("collection"), Authorize(Roles = "Administrator")]
+        [HttpPost("collection")]
         public async Task<IActionResult> CreateDriveCollection([FromBody] IEnumerable<DriveDto> driveCollection)
         {
             if (driveCollection == null)
@@ -86,7 +86,7 @@ namespace Store.Controllers
             return CreatedAtRoute("DriveCollection", new { ids }, driveCollectionToReturn);
         }
 
-        [HttpPost, Authorize(Roles = "Administrator")]
+        [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateDriveType([FromBody]DriveForCreationDto driveType)
         {
@@ -98,7 +98,7 @@ namespace Store.Controllers
             return CreatedAtRoute("DriveTypeById", new { id = driveTypeToReturn.id }, driveTypeToReturn);
         }
 
-        [HttpPut("{id}"), Authorize(Roles = "Administrator")]
+        [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> UpdateDriveType(int id, [FromBody] DriveForUpdatingDto drive)
         {
@@ -113,7 +113,7 @@ namespace Store.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}"), Authorize(Roles = "Administrator")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDriveType(int id)
         {
             var drive = await _repository.ShopDriveType.GetDriveType(id, trackChanges: false);

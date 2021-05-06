@@ -65,7 +65,7 @@ namespace Store.Controllers
             return Ok(carcaseToReturn);
         }
 
-        [HttpPost("collection"), Authorize(Roles = "Administrator")]
+        [HttpPost("collection")]
         public async Task<IActionResult> CreateDriveCollection([FromBody] IEnumerable<CarcaseDto> carcaseCollection)
         {
             if (carcaseCollection == null)
@@ -86,7 +86,7 @@ namespace Store.Controllers
             return CreatedAtRoute("CarcaseCollection", new { ids }, carcaseCollectionToReturn);
         }
 
-        [HttpPost, Authorize(Roles = "Administrator")]
+        [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateCarcase([FromBody]CarcaseForCreationDto carcaseType)
         {
@@ -98,7 +98,7 @@ namespace Store.Controllers
             return CreatedAtRoute("CarcaseTypeById", new { id = carcaseTypeToReturn.id }, carcaseTypeToReturn);
         }
 
-        [HttpPut("{id}"), Authorize(Roles = "Administrator")]
+        [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> UpdateCarcaseType(int id, [FromBody] CarcaseForUpdatingDto carcase)
         {
@@ -113,7 +113,7 @@ namespace Store.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}"), Authorize(Roles = "Administrator")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCarcaseType(int id)
         {
             var carcase = await _repository.ShopCarcaseType.GetCarcaseType(id, trackChanges: false);

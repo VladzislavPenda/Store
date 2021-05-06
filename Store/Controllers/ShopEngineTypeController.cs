@@ -67,7 +67,7 @@ namespace Store.Controllers
             return Ok(engineToReturn);
         }
 
-        [HttpPost("collection"), Authorize(Roles = "Administrator")]
+        [HttpPost("collection")]
         public async Task<IActionResult> CreateEngineCollection([FromBody] IEnumerable<EngineDto> engineCollection)
         {
             if (engineCollection == null)
@@ -87,7 +87,7 @@ namespace Store.Controllers
 
             return CreatedAtRoute("EngineCollection", new { ids }, engineCollectionToReturn);
         }
-        [HttpPost, Authorize(Roles = "Administrator")]
+        [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateEngine([FromBody]EngineForCreationDto engine)
         {
@@ -99,7 +99,7 @@ namespace Store.Controllers
             return CreatedAtRoute("EngineById", new { id = engineTypeToReturn.id }, engineTypeToReturn);
         }
 
-        [HttpDelete("{id}"), Authorize(Roles = "Administrator")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEngine(int id)
         {
             var engine = await _repository.ShopEngineType.GetEngineType(id, trackChanges: false);
@@ -114,7 +114,7 @@ namespace Store.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id}"), Authorize(Roles = "Administrator")]
+        [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> UpdateMark(int id, [FromBody] EngineForUpdatingDto engine)
         {

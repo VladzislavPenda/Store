@@ -57,6 +57,8 @@ namespace Repositories
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
 
+            claims.Add(new Claim(ClaimTypes.Email, _user.Email));
+            claims.Add(new Claim(ClaimTypes.MobilePhone, _user.PhoneNumber));
             return claims;
         }
         private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)

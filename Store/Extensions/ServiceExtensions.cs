@@ -29,6 +29,7 @@ namespace Store.Extensions
                 options.AddPolicy("CorsPolicy", builder =>
                     builder.AllowAnyOrigin()
                     .AllowAnyMethod()
+                    .WithExposedHeaders("X-Pagination")
                     .AllowAnyHeader());
             });
         }
@@ -51,7 +52,7 @@ namespace Store.Extensions
             });
         }
 
-        //public static void ConfigureResponseCaching(this IServiceCollection services) => services.AddResponseCaching();
+        public static void ConfigureResponseCaching(this IServiceCollection services) => services.AddResponseCaching();
 
         //public static void ConfigureHttpCacheHeaders(this IServiceCollection services) => services.AddHttpCacheHeaders(
         //    (expirationOpt) =>

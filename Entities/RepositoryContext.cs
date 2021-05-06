@@ -28,5 +28,6 @@ namespace Entities
         public DbSet<ShopMark> shopMarks { get; set; }
         public DbSet<ShopEngineType> ShopEngineTypes { get; set; }
         public DbSet<ShopTransmissionType> shopTransmissionTypes { get; set; }
+        public DbSet<User> users { get; set; }
     }
 }
