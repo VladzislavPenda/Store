@@ -42,7 +42,7 @@ namespace Store
             //services.ConfigureHttpCacheHeaders();
             services.ConfigureVersioning();
             services.ConfigureControllerWithViews();
-            services.AddMemoryCache();
+            //services.AddMemoryCache();
             services.AddAuthentication();
             services.ConfigureIdentity();
             services.ConfigureJWT(Configuration);
