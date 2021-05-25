@@ -3,15 +3,18 @@ using Contracts;
 using Entities.DataTransferObjects.UserDto;
 using Entities.DataTransferObjects.UserDTO;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Store.ActionFilters;
+using Store.Server.Extensions;
 using System.Threading.Tasks;
 
 namespace Store.Controllers
 {
     [Route("api/authentication")]
     [ApiController]
+    
     public class AuthenticationController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -38,6 +41,20 @@ namespace Store.Controllers
                 }
 
                 return BadRequest(ModelState);
+            }
+            else
+            {
+                EmailService emailService = new EmailService();
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                // создаем ссылку для подтверждения
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
+                           protocol: Request.Scheme);
+
+                
+                // отправка письма
+                await emailService.SendEmailAsync(user.Email, "Подтверждение электронной почты",
+                           "Для завершения регистрации перейдите по ссылке:: <a href=\""
+                                                           + callbackUrl + "\">завершить регистрацию</a>");
             }
 
             await _userManager.AddToRolesAsync(user, userForRegistrationDto.Roles);
