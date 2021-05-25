@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Store.ActionFilters;
 using Store.Server.Extensions;
+using System;
 using System.Threading.Tasks;
 
 namespace Store.Controllers
@@ -15,16 +16,18 @@ namespace Store.Controllers
     [Route("api/authentication")]
     [ApiController]
     
-    public class AuthenticationController : ControllerBase
+    public class AuthenticationController : Controller
     {
+        private readonly IRepositoryManager _repository;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly IAuthenticationManager _authManager;
-        public AuthenticationController(IMapper mapper, UserManager<User> userManager, IAuthenticationManager authManager)
+        public AuthenticationController(IMapper mapper, UserManager<User> userManager, IAuthenticationManager authManager, IRepositoryManager repositoryManager)
         {
             _mapper = mapper;
             _userManager = userManager;
             _authManager = authManager;
+            _repository = repositoryManager;
         }
 
         [HttpPost]
@@ -47,7 +50,7 @@ namespace Store.Controllers
                 EmailService emailService = new EmailService();
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 // создаем ссылку для подтверждения
-                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
+                var callbackUrl = Url.Action("authentication", "api", new { userId = user.Id, code = code },
                            protocol: Request.Scheme);
 
                 
@@ -71,6 +74,15 @@ namespace Store.Controllers
             }
 
             return Ok(new { Token = await _authManager.CreateToken() });
+        }
+        [HttpGet]
+        public async Task<IActionResult> ConfirmEmail(string userId, string code)
+        {
+            var user = await _repository.User.GetUser(userId, trackChanges: true);
+            
+            user.EmailConfirmed = true;
+            _repository.SaveAsync();
+            return View();
         }
     }
 }

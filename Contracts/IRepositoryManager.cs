@@ -1,4 +1,5 @@
 ﻿using Contracts;
+using Contracts.IShopRepository;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,6 +15,7 @@ namespace Contracts
         IShopMarkRepository ShopMark { get; }
         IShopModelRepository ShopModel { get; }
         IShopTransmissionTypeRepository ShopTransmissionType { get; }
+        IUsersRepository User { get; }
 
         Task SaveAsync();
     }
