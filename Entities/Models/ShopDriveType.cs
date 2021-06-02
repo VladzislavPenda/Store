@@ -7,6 +7,7 @@ using System.Text;
 namespace Entities.Models
 {
     [Serializable]
+    [Table("DriveType")]
     public class ShopDriveType
     {
         [Column("driveTypeId")]
