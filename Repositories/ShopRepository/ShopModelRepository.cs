@@ -20,6 +20,13 @@ namespace Repositories
             _context = repositoryContext;
         }
 
+        public async Task<List<ShopModel>> GetModelsAsyncAll(bool trackChanges)
+        {
+            var model = await FindAll(trackChanges)
+                .ToListAsync();
+            return model;
+        }
+
         public async Task<PagedList<ShopModel>> GetModelsAsync(ModelsParameters modelsParametres, bool trackChanges)
         {
             var model = await FindAll(trackChanges)
@@ -51,7 +58,8 @@ namespace Repositories
                     transmission = c.ShopTransmissionType.type,
                     markName = c.ShopMark.markNum,
                     description = c.description,
-                    pathToPicture = c.pathToPicture
+                    pathToPicture = c.pathToPicture,
+                    phoneNumber = c.phoneNumber
                 })
                 .FilterModels(modelsParametres)
                 .Search(modelsParametres.SearchTerm)
@@ -93,7 +101,8 @@ namespace Repositories
                     transmission = c.ShopTransmissionType.type,
                     markName = c.ShopMark.markNum,
                     description = c.description,
-                    pathToPicture = c.pathToPicture
+                    pathToPicture = c.pathToPicture,
+                    phoneNumber = c.phoneNumber
                 })
                 .SingleOrDefaultAsync();
         }

@@ -6,6 +6,7 @@ using System.Text;
 
 namespace Entities.Models
 {
+    [Serializable]
     public class ShopTransmissionType
     {
         [Column("transmissionId")]

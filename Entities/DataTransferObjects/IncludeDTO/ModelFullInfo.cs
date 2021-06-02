@@ -16,5 +16,6 @@
         public int modelId { get; set; }
         public int price { get; set; }
         public string transmission { get; set; }
+        public string phoneNumber { get; set; }
     }
 }

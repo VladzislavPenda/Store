@@ -8,6 +8,7 @@ namespace Contracts
 {
     public interface IShopModelRepository
     {
+        Task<List<ShopModel>> GetModelsAsyncAll(bool trackChanges);
         Task<PagedList<ShopModel>> GetModelsAsync(ModelsParameters modelsParametres, bool trackChanges);
         Task<IEnumerable<ShopModel>> GetAllShopModels(bool trackChanges);
         Task<PagedList<ModelFullInfo>> GetAllIncludesAsync(ModelsParameters modelsParametres, bool trackChanges);

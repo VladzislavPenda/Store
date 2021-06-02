@@ -6,6 +6,7 @@ using System.Text;
 
 namespace Entities.Models
 {
+    [Serializable]
     public class ShopModel
     {
         public int id { get; set; }
@@ -26,7 +27,12 @@ namespace Entities.Models
 
         public string description { get; set; }
 
+        
         public string pathToPicture { get; set; }
+        [Required]
+        [RegularExpression(@"^\+?(\d[\d-. ]+)?(\([\d-. ]+\))?[\d-. ]+\d$", ErrorMessage = "Please enter valid phone no.")]
+        [StringLength(13, MinimumLength = 13)]
+        public string phoneNumber { get; set; }
 
         [ForeignKey(nameof(ShopMark))]
         public int markId { get; set; }

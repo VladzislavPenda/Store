@@ -23,6 +23,13 @@ namespace Entities.DataTransferObjects
         [Required(ErrorMessage = "Please, specify the mileage.")]
         [Range(1, int.MaxValue, ErrorMessage = "Please, indicate mileage correct.")]
         public int mileAge { get; set; }
+        public string description { get; set; }
+
+        public string pathToPicture { get; set; }
+        [Required]
+        [RegularExpression(@"^\+?(\d[\d-. ]+)?(\([\d-. ]+\))?[\d-. ]+\d$", ErrorMessage = "Please enter valid phone no.")]
+        [StringLength(13, MinimumLength = 13)]
+        public string phoneNumber { get; set; }
 
         public IEnumerable<MarkForCreationDto> marks { get; set; }
     }
