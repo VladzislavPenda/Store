@@ -3,12 +3,10 @@ using Contracts;
 using Entities.DataTransferObjects.UserDto;
 using Entities.DataTransferObjects.UserDTO;
 using Entities.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Store.ActionFilters;
 using Store.Server.Extensions;
-using System;
 using System.Threading.Tasks;
 
 namespace Store.Controllers
