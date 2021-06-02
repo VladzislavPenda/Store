@@ -40,7 +40,6 @@ namespace Store.Controllers
             {
                 return NotFound();
             }
-
             var carcase = await _repository.ShopCarcaseType.GetCarcaseType(id, trackChanges: false);
             var carcaseDTO = _mapper.Map<CarcaseDto>(carcase);
             return Ok(carcaseDTO);

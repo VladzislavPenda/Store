@@ -1,5 +1,7 @@
 ﻿using Contracts;
+using Contracts.IShopRepository;
 using Entities;
+using Repositories.ShopRepository;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,6 +18,7 @@ namespace Repositories
         private IShopMarkRepository _shopMarkRepository;
         private IShopModelRepository _shopModelRepository;
         private IShopTransmissionTypeRepository _shopTransmissionTypeRepository;
+        private IUsersRepository _usersRepository;
 
         public RepositoryManager(RepositoryContext repositoryContext)
         {
@@ -97,6 +100,18 @@ namespace Repositories
                 }
 
                 return _shopTransmissionTypeRepository;
+            }
+        }
+        public IUsersRepository User
+        {
+            get
+            {
+                if (_usersRepository == null)
+                {
+                    _usersRepository = new UsersRepository(_repositoryContext);
+                }
+
+                return _usersRepository;
             }
         }
 
