@@ -20,7 +20,7 @@ namespace Store.Extensions
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
             services.AddDbContext<RepositoryContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("MyDbContext"), b =>
-            b.MigrationsAssembly("Store")));
+            b.MigrationsAssembly("Store.Server")));
 
         public static void ConfigureCors(this IServiceCollection services)
         {
