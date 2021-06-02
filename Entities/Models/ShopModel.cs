@@ -45,7 +45,7 @@ namespace Entities.Models
 
         [ForeignKey(nameof(ShopCarcaseType))]
         public int carcaseTypeId { get; set; }
-        public ShopCarcaseType ShopCarcaseType { get; set; }
+        public CarcaseType ShopCarcaseType { get; set; }
 
         [ForeignKey(nameof(ShopEngineType))]
         public int engineTypeId { get; set; }

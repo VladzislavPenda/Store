@@ -8,10 +8,10 @@ namespace Contracts
 {
     public interface IShopCarcaseTypeRepository
     {
-        Task<IEnumerable<ShopCarcaseType>> GetAllCarcaseTypes(bool trackChanges);
-        Task<ShopCarcaseType> GetCarcaseType(int id, bool trackChanges);
-        void CreateCarcaseType(ShopCarcaseType shopCarcaseType);
-        Task<IEnumerable<ShopCarcaseType>> GetByIds(IEnumerable<int> ids, bool trackChanges);
-        void DeleteCarcaseType(ShopCarcaseType shopCarcaseType);
+        Task<IEnumerable<CarcaseType>> GetAllCarcaseTypes(bool trackChanges);
+        Task<CarcaseType> GetCarcaseType(int id, bool trackChanges);
+        void CreateCarcaseType(CarcaseType shopCarcaseType);
+        Task<IEnumerable<CarcaseType>> GetByIds(IEnumerable<int> ids, bool trackChanges);
+        void DeleteCarcaseType(CarcaseType shopCarcaseType);
     }
 }

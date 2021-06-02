@@ -33,10 +33,10 @@ namespace Entities.AutoMappers
             CreateMap<DriveForCreationDto, ShopDriveType>();
             CreateMap<DriveForUpdatingDto, ShopDriveType>();
 
-            CreateMap<ShopCarcaseType, CarcaseDto>();
-            CreateMap<CarcaseDto, ShopCarcaseType>();
-            CreateMap<CarcaseForCreationDto, ShopCarcaseType>();
-            CreateMap<CarcaseForUpdatingDto, ShopCarcaseType>();
+            CreateMap<CarcaseType, CarcaseDto>();
+            CreateMap<CarcaseDto, CarcaseType>();
+            CreateMap<CarcaseForCreationDto, CarcaseType>();
+            CreateMap<CarcaseForUpdatingDto, CarcaseType>();
 
             CreateMap<ShopTransmissionType, TransmissionDto>();
             CreateMap<TransmissionDto, ShopTransmissionType>();

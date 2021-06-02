@@ -10,31 +10,31 @@ using System.Threading.Tasks;
 
 namespace Repositories
 {
-    class ShopCarcaseTypeRepository : RepositoryBase<ShopCarcaseType>, IShopCarcaseTypeRepository
+    class ShopCarcaseTypeRepository : RepositoryBase<CarcaseType>, IShopCarcaseTypeRepository
     {
         public ShopCarcaseTypeRepository(RepositoryContext repositoryContext)
             : base(repositoryContext)
         {
         }
 
-        public async Task<IEnumerable<ShopCarcaseType>> GetAllCarcaseTypes(bool trackChanges)
+        public async Task<IEnumerable<CarcaseType>> GetAllCarcaseTypes(bool trackChanges)
         {
             return await FindAll(trackChanges).ToListAsync();
         }
 
-        public async Task<ShopCarcaseType> GetCarcaseType(int id, bool trackChanges)
+        public async Task<CarcaseType> GetCarcaseType(int id, bool trackChanges)
         {
             return await FindByCondition(c => c.id.Equals(id), trackChanges).SingleOrDefaultAsync();
         }
 
-        public void CreateCarcaseType(ShopCarcaseType shopCarcaseType) => Create(shopCarcaseType);
+        public void CreateCarcaseType(CarcaseType shopCarcaseType) => Create(shopCarcaseType);
 
-        public async Task<IEnumerable<ShopCarcaseType>> GetByIds(IEnumerable<int> ids, bool trackChanges)
+        public async Task<IEnumerable<CarcaseType>> GetByIds(IEnumerable<int> ids, bool trackChanges)
         {
             return await FindByCondition(x => ids.Contains(x.id), trackChanges)
                 .ToListAsync();
         }
 
-        public void DeleteCarcaseType(ShopCarcaseType shopCarcaseType) => Delete(shopCarcaseType);
+        public void DeleteCarcaseType(CarcaseType shopCarcaseType) => Delete(shopCarcaseType);
     }
 }

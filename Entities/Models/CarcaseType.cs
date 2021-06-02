@@ -7,7 +7,8 @@ using System.Text;
 namespace Entities.Models
 {
     [Serializable]
-    public class ShopCarcaseType
+    [Table("CarcaseType")]
+    public class CarcaseType
     {
         [Column("carcaseTypeId")]
         public int id { get; set; }
