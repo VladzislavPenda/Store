@@ -19,7 +19,7 @@ namespace Store.Migrations
                 .HasAnnotation("ProductVersion", "5.0.4")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Entities.Models.ShopCarcaseType", b =>
+            modelBuilder.Entity("Entities.Models.CarcaseType", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -33,10 +33,10 @@ namespace Store.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("shopCarcaseTypes");
+                    b.ToTable("CarcaseType");
                 });
 
-            modelBuilder.Entity("Entities.Models.ShopDriveType", b =>
+            modelBuilder.Entity("Entities.Models.DriveType", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -50,7 +50,7 @@ namespace Store.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("shopDriveTypes");
+                    b.ToTable("DriveType");
                 });
 
             modelBuilder.Entity("Entities.Models.ShopEngineType", b =>
@@ -274,15 +274,15 @@ namespace Store.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ec760113-3501-46a0-804f-bf7cd5840dee",
-                            ConcurrencyStamp = "b9dbf373-472a-4a49-a90d-e54b8bdea9dd",
+                            Id = "1d21d77f-6fa8-4f36-95ed-6a62ebf966fe",
+                            ConcurrencyStamp = "293cd08b-2d22-45dd-b7cb-394358b67c26",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "20a66e83-8d1d-4630-b7de-528543a34cb4",
-                            ConcurrencyStamp = "6abc69f4-4887-4e1a-aac4-4658aa61d291",
+                            Id = "c89a4135-8407-4eac-8277-976e6f2de284",
+                            ConcurrencyStamp = "51a8693b-345a-40d6-ae13-6d1815a94ee8",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -394,13 +394,13 @@ namespace Store.Migrations
 
             modelBuilder.Entity("Entities.Models.ShopModel", b =>
                 {
-                    b.HasOne("Entities.Models.ShopCarcaseType", "ShopCarcaseType")
+                    b.HasOne("Entities.Models.CarcaseType", "ShopCarcaseType")
                         .WithMany("ShopModels")
                         .HasForeignKey("carcaseTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.Models.ShopDriveType", "ShopDriveType")
+                    b.HasOne("Entities.Models.DriveType", "ShopDriveType")
                         .WithMany("ShopModels")
                         .HasForeignKey("driveTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -486,12 +486,12 @@ namespace Store.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Entities.Models.ShopCarcaseType", b =>
+            modelBuilder.Entity("Entities.Models.CarcaseType", b =>
                 {
                     b.Navigation("ShopModels");
                 });
 
-            modelBuilder.Entity("Entities.Models.ShopDriveType", b =>
+            modelBuilder.Entity("Entities.Models.DriveType", b =>
                 {
                     b.Navigation("ShopModels");
                 });

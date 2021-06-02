@@ -72,7 +72,7 @@ namespace Store.Controllers
                 return BadRequest("carcaseCollection parameter was null");
             }
 
-            var carcaseEntities = _mapper.Map<IEnumerable<CarcaseType>>(carcaseCollection);
+            var carcaseEntities = _mapper.Map<IEnumerable<ShopCarcaseType>>(carcaseCollection);
             foreach (var carcase in carcaseEntities)
             {
                 _repository.ShopCarcaseType.CreateCarcaseType(carcase);
@@ -89,7 +89,7 @@ namespace Store.Controllers
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateCarcase([FromBody]CarcaseForCreationDto carcaseType)
         {
-            var carcaseEntity = _mapper.Map<CarcaseType>(carcaseType);
+            var carcaseEntity = _mapper.Map<ShopCarcaseType>(carcaseType);
             _repository.ShopCarcaseType.CreateCarcaseType(carcaseEntity);
             await _repository.SaveAsync();
 

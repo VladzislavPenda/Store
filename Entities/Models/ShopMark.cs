@@ -7,6 +7,7 @@ using System.Text;
 namespace Entities.Models
 {
     [Serializable]
+    [Table("Mark")]
     public class ShopMark
     {
         [Column("markId")]
