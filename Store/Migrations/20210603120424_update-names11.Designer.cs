@@ -4,14 +4,16 @@ using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Store.Server.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20210603120424_update-names11")]
+    partial class updatenames11
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,7 +213,7 @@ namespace Store.Server.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<Guid>("CarShopId")
+                    b.Property<Guid?>("CarShopId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CarcaseTypeId")
@@ -391,15 +393,15 @@ namespace Store.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "595e2abf-476e-4a47-a72e-58296ee76ae5",
-                            ConcurrencyStamp = "70f6f154-0583-43ad-b938-d776c85b2d9a",
+                            Id = "dd616db7-4a3b-4b4a-b21e-403000561224",
+                            ConcurrencyStamp = "91cf7ae2-fcde-44b6-92ca-0e5d5446af8d",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "f5a8f77a-4346-4e04-94f0-e806cd5e44e3",
-                            ConcurrencyStamp = "cef7db7b-6429-4f97-86ba-fb093018d6ba",
+                            Id = "8624e8f7-69f3-474a-93af-115caabe03ff",
+                            ConcurrencyStamp = "574f54ed-dce1-48d7-a335-7a7a7ab91013",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -552,9 +554,7 @@ namespace Store.Server.Migrations
                 {
                     b.HasOne("Entities.Models.CarShop", "CarShop")
                         .WithMany("ShopModels")
-                        .HasForeignKey("CarShopId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CarShopId");
 
                     b.HasOne("Entities.Models.ShopCarcaseType", "ShopCarcaseType")
                         .WithMany("ShopModels")

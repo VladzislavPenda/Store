@@ -41,7 +41,11 @@ namespace Store.Controllers
 
             var models = await _repository.ShopModel.GetAllIncludesAsync(modelsParameters, trackChanges: false);
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(models.MetaData));
-            return Ok(models);
+
+            //var modelsDTO = _mapper.Map<IEnumerable<ModelDTO>>(models);
+
+
+            return View(models);
         }
 
         [HttpGet("{id}", Name = "ModelById")]
@@ -49,13 +53,13 @@ namespace Store.Controllers
         //[HttpCacheValidation(MustRevalidate = false)]
         public async Task<IActionResult> GetModel(int id)
         {
-            var model = await _repository.ShopModel.GetModelFullInfo(id, trackChanges: false);
+            var model = await _repository.ShopModel.GetModel(id, trackChanges: false);
             if (model == null)
             {
                 return NotFound();
             }
-            //var modelDTO = _mapper.Map<ModelDto>(model);
-            return Ok(model);
+            var modelDTO = _mapper.Map<ModelDto>(model);
+            return View(model);
         }
 
         [HttpPost("shopMark/{markId}/shopEngine/{engineId}/shopCarcaseType/{carcaseId}/shopDriveType/{driveId}/shopTransmission/{transmissionId}/models")]
@@ -111,7 +115,7 @@ namespace Store.Controllers
             _mapper.Map(model, modelEntity);
             await _repository.SaveAsync();
 
-            return NoContent();
+            return View();
         }
     }
 }
