@@ -20,13 +20,13 @@ namespace Repositories
         public async Task<IEnumerable<ShopMark>> GetAllMarks(bool trackChanges)
         {
             return await FindAll(trackChanges)
-            .OrderBy(c => c.markNum)
+            .OrderBy(c => c.Name)
             .ToListAsync();
         }
 
         public async Task<ShopMark> GetMark(int markId, bool trackChanges)
         {
-            return await FindByCondition(c => c.id.Equals(markId), trackChanges)
+            return await FindByCondition(c => c.Id.Equals(markId), trackChanges)
                 .SingleOrDefaultAsync();
         }
 
@@ -34,7 +34,7 @@ namespace Repositories
 
         public async Task<IEnumerable<ShopMark>> GetByIds(IEnumerable<int> ids, bool trackChanges)
         {
-            return await FindByCondition(x => ids.Contains(x.id), trackChanges)
+            return await FindByCondition(x => ids.Contains(x.Id), trackChanges)
                 .ToListAsync();
         }
 

@@ -25,14 +25,14 @@ namespace Repositories
 
         public async Task<ShopEngineType> GetEngineType(int engineId, bool trackChanges)
         {
-            return await FindByCondition(c => c.id.Equals(engineId), trackChanges).SingleOrDefaultAsync();
+            return await FindByCondition(c => c.Id.Equals(engineId), trackChanges).SingleOrDefaultAsync();
         }
 
         public void CreateEngineType(ShopEngineType engineType) => Create(engineType);
 
         public async Task<IEnumerable<ShopEngineType>> GetByIds(IEnumerable<int> ids, bool trackChanges)
         {
-            return await FindByCondition(x => ids.Contains(x.id), trackChanges)
+            return await FindByCondition(x => ids.Contains(x.Id), trackChanges)
                 .ToListAsync();
         }
         public void DeleteEngineType(ShopEngineType shopEngineType)

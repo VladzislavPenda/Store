@@ -42,7 +42,7 @@ namespace Store.Controllers
             {
                 return NotFound();
             }
-            var mark = await _repository.ShopMark.GetMark(model.markId, trackChanges: false);
+            var mark = await _repository.ShopMark.GetMark(model.MarkId, trackChanges: false);
             var markDTO = _mapper.Map<MarkDto>(mark);
             return Ok(markDTO);
         }

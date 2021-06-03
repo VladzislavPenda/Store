@@ -10,12 +10,11 @@ namespace Entities.Models
     [Table("CarcaseType")]
     public class ShopCarcaseType
     {
-        [Column("carcaseTypeId")]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         
         [StringLength(100, ErrorMessage = "The name is too long (maximum 100 characters).")]
-        public string type { get; set; }
+        public string Type { get; set; }
 
         public ICollection<ShopModel> ShopModels { get; set; }
     }

@@ -43,7 +43,7 @@ namespace Store.Controllers
                 return NotFound(); 
             }
 
-            var engineType = await _repository.ShopEngineType.GetEngineType(model.engineTypeId, trackChanges: false);
+            var engineType = await _repository.ShopEngineType.GetEngineType(model.EngineTypeId, trackChanges: false);
             var engineTypeDTO = _mapper.Map<EngineDto>(engineType);
             return Ok(engineTypeDTO);
         }

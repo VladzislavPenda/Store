@@ -1,38 +1,35 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Store.Migrations
+namespace Store.Server.Migrations
 {
-    public partial class addNumber : Migration
+    public partial class updatenames2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "8651d378-fcb0-46c8-92d7-81cc15e0d548");
+                keyValue: "3bf227be-7843-4d93-b79a-bd48e8fa7af1");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "acc7fbf7-d6e2-4fc0-a825-200e1d915591");
+                keyValue: "72ca036f-1859-4ba0-b3a3-86008fe14550");
 
-            migrationBuilder.AddColumn<string>(
-                name: "phoneNumber",
-                table: "ShopModels",
-                type: "nvarchar(13)",
-                maxLength: 13,
-                nullable: false,
-                defaultValue: "");
+            migrationBuilder.RenameColumn(
+                name: "type",
+                table: "CarcaseType",
+                newName: "Type");
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "9eebe4ee-ebde-48a4-9014-43de0bf98b28", "f171bbf2-18fb-45e4-ae67-b37a4e0b6e4a", "User", "USER" });
+                values: new object[] { "2e692c4d-c6eb-41c5-8fd1-38525cc8de20", "2c6d03fd-2bf9-4020-b10a-7a95ba8e26c6", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "5ae87810-98c2-4bd2-b5e1-52c6561d6217", "eb2bf34f-f34d-4cf6-93b8-acc2926c3660", "Administrator", "ADMINISTRATOR" });
+                values: new object[] { "a6af8647-499f-419c-9611-1b30fe14dc96", "0eafa921-fef5-4466-8a06-1b7efffae257", "Administrator", "ADMINISTRATOR" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -40,26 +37,27 @@ namespace Store.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "5ae87810-98c2-4bd2-b5e1-52c6561d6217");
+                keyValue: "2e692c4d-c6eb-41c5-8fd1-38525cc8de20");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "9eebe4ee-ebde-48a4-9014-43de0bf98b28");
+                keyValue: "a6af8647-499f-419c-9611-1b30fe14dc96");
 
-            migrationBuilder.DropColumn(
-                name: "phoneNumber",
-                table: "ShopModels");
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "8651d378-fcb0-46c8-92d7-81cc15e0d548", "4ff9b435-5a37-4f14-adfd-a8b15b45b08a", "User", "USER" });
+            migrationBuilder.RenameColumn(
+                name: "Type",
+                table: "CarcaseType",
+                newName: "type");
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "acc7fbf7-d6e2-4fc0-a825-200e1d915591", "711fce26-d4de-4009-bd24-59bfad98df7f", "Administrator", "ADMINISTRATOR" });
+                values: new object[] { "3bf227be-7843-4d93-b79a-bd48e8fa7af1", "c7c8a18b-28a8-470c-8e93-1eb41761b99d", "User", "USER" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "72ca036f-1859-4ba0-b3a3-86008fe14550", "fba52115-fbb5-4cd2-bffa-f8f416bcbfbe", "Administrator", "ADMINISTRATOR" });
         }
     }
 }

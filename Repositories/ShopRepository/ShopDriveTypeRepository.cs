@@ -22,14 +22,14 @@ namespace Repositories
 
         public async Task<ShopDriveType> GetDriveType(int driveTypeId, bool trackChanges)
         {
-            return await FindByCondition(c => c.id.Equals(driveTypeId), trackChanges).SingleOrDefaultAsync();
+            return await FindByCondition(c => c.Id.Equals(driveTypeId), trackChanges).SingleOrDefaultAsync();
         }
 
         public void CreateDriveType(ShopDriveType shopDriveType) => Create(shopDriveType);
 
         public async Task<IEnumerable<ShopDriveType>> GetByIds(IEnumerable<int> ids, bool trackChanges)
         {
-            return await FindByCondition(x => ids.Contains(x.id), trackChanges)
+            return await FindByCondition(x => ids.Contains(x.Id), trackChanges)
                 .ToListAsync();
         }
 

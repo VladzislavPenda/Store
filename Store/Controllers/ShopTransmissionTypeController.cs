@@ -42,7 +42,7 @@ namespace Store.Controllers
                 return NotFound();
             }
 
-            var transmissionType = await _repository.ShopTransmissionType.GetTransmissionType(model.transmissionId, trackChanges: false);
+            var transmissionType = await _repository.ShopTransmissionType.GetTransmissionType(model.TransmissionTypeId, trackChanges: false);
             var transmissionTypeDTO = _mapper.Map<TransmissionDto>(transmissionType);
             return Ok(transmissionTypeDTO);
         }

@@ -41,7 +41,7 @@ namespace Store.Controllers
                 return NotFound();
             }
 
-            var driveEntity = await _repository.ShopDriveType.GetDriveType(model.driveTypeId, trackChanges: false);
+            var driveEntity = await _repository.ShopDriveType.GetDriveType(model.DriveTypeId, trackChanges: false);
             var driveDTO = _mapper.Map<DriveDto>(driveEntity);
             return Ok(driveDTO);
         }

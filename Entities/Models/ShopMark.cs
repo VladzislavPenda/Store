@@ -10,14 +10,13 @@ namespace Entities.Models
     [Table("Mark")]
     public class ShopMark
     {
-        [Column("markId")]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [StringLength(100, ErrorMessage = "The name of the car brand is too long (maximum length 100 characters).")]
-        public string markNum { get; set; }
+        public string Name { get; set; }
 
         [StringLength(100, ErrorMessage = "Manufacturer country name too long (maximum length 100 characters).")]
-        public string country { get; set; }
+        public string Country { get; set; }
 
         public ICollection<ShopModel> ShopModels { get; set; }
     }

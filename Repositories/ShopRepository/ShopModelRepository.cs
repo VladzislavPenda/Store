@@ -45,21 +45,21 @@ namespace Repositories
                 .Include(t => t.ShopTransmissionType)
                 .Select(c => new ModelFullInfo
                 {
-                    modelId = c.id,
-                    model = c.model,
-                    year = c.year,
-                    price = c.price,
-                    mileAge = c.mileAge,
-                    horsePower = c.horsePower,
-                    country = c.ShopMark.country,
-                    engineType = c.ShopEngineType.type,
-                    carcaseType = c.ShopCarcaseType.type,
-                    driveType = c.ShopDriveType.type,
-                    transmission = c.ShopTransmissionType.type,
-                    markName = c.ShopMark.markNum,
-                    description = c.description,
-                    pathToPicture = c.pathToPicture,
-                    phoneNumber = c.phoneNumber
+                    modelId = c.Id,
+                    model = c.Model,
+                    year = c.Year,
+                    price = c.Price,
+                    mileAge = c.MileAge,
+                    horsePower = c.HorsePower,
+                    country = c.ShopMark.Country,
+                    engineType = c.ShopEngineType.Type,
+                    carcaseType = c.ShopCarcaseType.Type,
+                    driveType = c.ShopDriveType.Type,
+                    transmission = c.ShopTransmissionType.Type,
+                    markName = c.ShopMark.Name,
+                    description = c.Description,
+                    //pathToPicture = c.pathToPicture,
+                    phoneNumber = c.PhoneNumber
                 })
                 .FilterModels(modelsParametres)
                 .Search(modelsParametres.SearchTerm)
@@ -74,13 +74,13 @@ namespace Repositories
         public async Task<IEnumerable<ShopModel>> GetAllShopModels(bool trackChanges)
         {
             return await FindAll(trackChanges)
-            .OrderBy(c => c.year)
+            .OrderBy(c => c.Year)
             .ToListAsync();
         }
 
         public async Task<ModelFullInfo> GetModelFullInfo(int id, bool trackChanges)
         {
-            return await FindByCondition(c => c.id.Equals(id), trackChanges)
+            return await FindByCondition(c => c.Id.Equals(id), trackChanges)
                 .Include(c => c.ShopMark)
                 .Include(d => d.ShopEngineType)
                 .Include(f => f.ShopDriveType)
@@ -88,39 +88,39 @@ namespace Repositories
                 .Include(t => t.ShopTransmissionType)
                 .Select(c => new ModelFullInfo
                 {
-                    modelId = c.id,
-                    model = c.model,
-                    price = c.price,
-                    mileAge = c.mileAge,
-                    year = c.year,
-                    horsePower = c.horsePower,
-                    country = c.ShopMark.country,
-                    engineType = c.ShopEngineType.type,
-                    carcaseType = c.ShopCarcaseType.type,
-                    driveType = c.ShopDriveType.type,
-                    transmission = c.ShopTransmissionType.type,
-                    markName = c.ShopMark.markNum,
-                    description = c.description,
-                    pathToPicture = c.pathToPicture,
-                    phoneNumber = c.phoneNumber
+                    modelId = c.Id,
+                    model = c.Model,
+                    price = c.Price,
+                    mileAge = c.MileAge,
+                    year = c.Year,
+                    horsePower = c.HorsePower,
+                    country = c.ShopMark.Country,
+                    engineType = c.ShopEngineType.Type,
+                    carcaseType = c.ShopCarcaseType.Type,
+                    driveType = c.ShopDriveType.Type,
+                    transmission = c.ShopTransmissionType.Type,
+                    markName = c.ShopMark.Name,
+                    description = c.Description,
+                    //pathToPicture = c.pathToPicture,
+                    phoneNumber = c.PhoneNumber
                 })
                 .SingleOrDefaultAsync();
         }
 
         public async Task<ShopModel> GetModel(int id, bool trackChanges)
         {
-            return await FindByCondition(c => c.id.Equals(id), trackChanges)
+            return await FindByCondition(c => c.Id.Equals(id), trackChanges)
 
                 .SingleOrDefaultAsync();
         }
 
         public void CreateModel(int markId, int engineId, int carcaseId, int driveId, int transmissionId, ShopModel shopModel)
         {
-            shopModel.engineTypeId = engineId;
-            shopModel.driveTypeId = driveId;
-            shopModel.carcaseTypeId = carcaseId;
-            shopModel.markId = markId;
-            shopModel.transmissionId = transmissionId;
+            shopModel.EngineTypeId = engineId;
+            shopModel.DriveTypeId = driveId;
+            shopModel.CarcaseTypeId = carcaseId;
+            shopModel.MarkId = markId;
+            shopModel.TransmissionTypeId = transmissionId;
             Create(shopModel);
         }
 
