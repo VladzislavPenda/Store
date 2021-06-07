@@ -7,13 +7,17 @@ using Entities.DataTransferObjects.IncludeDTO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Serialization;
 using Repositories;
 using Repositories.DataShaping;
 using Store.ActionFilters;
 using Store.Extensions;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Store
 {
@@ -35,6 +39,7 @@ namespace Store
             services.ConfigureCors();
             services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
 
+            
             var mapperConfig = new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile());});
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
@@ -55,8 +60,12 @@ namespace Store
             services.AddControllers(config =>
             {
                 config.RespectBrowserAcceptHeader = true;
-            }).AddXmlDataContractSerializerFormatters();
-
+            })
+                .AddXmlDataContractSerializerFormatters()
+                .AddJsonOptions(x => 
+                { 
+                    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

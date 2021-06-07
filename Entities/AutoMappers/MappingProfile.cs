@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Entities.DataTransferObjects;
 using Entities.DataTransferObjects.CarcaseDTO;
+using Entities.DataTransferObjects.CarShopDto;
 using Entities.DataTransferObjects.DriveDTO;
 using Entities.DataTransferObjects.EngineDTO;
 using Entities.DataTransferObjects.MarkDTO;
@@ -44,6 +45,13 @@ namespace Entities.AutoMappers
             CreateMap<TransmissionForUpdatingDto, ShopTransmissionType>();
 
             CreateMap<UserForRegistrationDto, User>();
+
+            CreateMap<CarShop, CarShopDto>()
+                .PreserveReferences();
+
+            CreateMap<CarShopForCreatingDto, CarShop>();
+            CreateMap<CarShopForUpdatingDto, CarShop>();
+
         }
     }
 }

@@ -16,6 +16,7 @@ namespace Contracts
         IShopModelRepository ShopModel { get; }
         IShopTransmissionTypeRepository ShopTransmissionType { get; }
         IUsersRepository User { get; }
+        ICarShopRepository CarShop { get; }
 
         Task SaveAsync();
     }

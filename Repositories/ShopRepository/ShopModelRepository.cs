@@ -13,11 +13,10 @@ namespace Repositories
 {
     class ShopModelRepository : RepositoryBase<ShopModel>, IShopModelRepository
     {
-        private readonly RepositoryContext _context;
         public ShopModelRepository(RepositoryContext repositoryContext)
             : base(repositoryContext)
         {
-            _context = repositoryContext;
+
         }
 
         public async Task<List<ShopModel>> GetModelsAsyncAll(bool trackChanges)
@@ -58,7 +57,6 @@ namespace Repositories
                     transmission = c.ShopTransmissionType.Type,
                     markName = c.ShopMark.Name,
                     description = c.Description,
-                    //pathToPicture = c.pathToPicture,
                     phoneNumber = c.PhoneNumber
                 })
                 .FilterModels(modelsParametres)
@@ -101,7 +99,6 @@ namespace Repositories
                     transmission = c.ShopTransmissionType.Type,
                     markName = c.ShopMark.Name,
                     description = c.Description,
-                    //pathToPicture = c.pathToPicture,
                     phoneNumber = c.PhoneNumber
                 })
                 .SingleOrDefaultAsync();

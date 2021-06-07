@@ -19,6 +19,7 @@ namespace Repositories
         private IShopModelRepository _shopModelRepository;
         private IShopTransmissionTypeRepository _shopTransmissionTypeRepository;
         private IUsersRepository _usersRepository;
+        private ICarShopRepository _carShopRepository;
 
         public RepositoryManager(RepositoryContext repositoryContext)
         {
@@ -112,6 +113,19 @@ namespace Repositories
                 }
 
                 return _usersRepository;
+            }
+        }
+
+        public ICarShopRepository CarShop
+        {
+            get
+            {
+                if (_carShopRepository == null)
+                {
+                    _carShopRepository = new CarShopRepository(_repositoryContext);
+                }
+
+                return _carShopRepository;
             }
         }
 
