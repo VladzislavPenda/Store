@@ -1,23 +1,17 @@
-using AspNetCoreRateLimit;
-using AutoMapper;
 using Contracts;
 using Contracts.DataShape;
 using Entities;
-using Entities.AutoMappers;
 using Entities.DataTransferObjects.IncludeDTO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json.Serialization;
 using Repositories;
 using Repositories.DataShaping;
 using Store.ActionFilters;
 using Store.Extensions;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Store
