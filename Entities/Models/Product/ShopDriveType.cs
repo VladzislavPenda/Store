@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,5 +18,15 @@ namespace Entities.Models
         public string Type { get; set; }
 
         public ICollection<ShopModel> ShopModels { get; set; }
+    }
+
+    partial class EntityTypeConfiguration : IEntityTypeConfiguration<ShopDriveType>
+    {
+        public void Configure(EntityTypeBuilder<ShopDriveType> e)
+        {
+            e.Property(t => t.Id).HasColumnName("drive_id");
+            e.Property(t => t.Type).HasColumnName("drive_type");
+        }
+
     }
 }

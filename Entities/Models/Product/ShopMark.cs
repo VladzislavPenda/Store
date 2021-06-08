@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -19,5 +21,15 @@ namespace Entities.Models
         public string Country { get; set; }
 
         public ICollection<ShopModel> ShopModels { get; set; }
+    }
+
+    partial class EntityTypeConfiguration: IEntityTypeConfiguration<ShopMark>
+    {
+        public void Configure(EntityTypeBuilder<ShopMark> e)
+        {
+            e.Property(t => t.Id).HasColumnName("mark_id");
+            e.Property(t => t.Name).HasColumnName("mark_name");
+            e.Property(t => t.Country).HasColumnName("producing_country");
+        }
     }
 }

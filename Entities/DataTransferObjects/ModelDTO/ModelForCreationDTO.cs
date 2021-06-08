@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Entities.DataTransferObjects
 {
+    // update
     public class ModelForCreationDto
     {
         [Required(ErrorMessage = "Please, specify model name.")]
@@ -25,11 +26,6 @@ namespace Entities.DataTransferObjects
         public int mileAge { get; set; }
         public string description { get; set; }
 
-        public string pathToPicture { get; set; }
-        [Required]
-        [RegularExpression(@"^\+?(\d[\d-. ]+)?(\([\d-. ]+\))?[\d-. ]+\d$", ErrorMessage = "Please enter valid phone no.")]
-        [StringLength(13, MinimumLength = 13)]
-        public string phoneNumber { get; set; }
 
         public IEnumerable<MarkForCreationDto> marks { get; set; }
     }

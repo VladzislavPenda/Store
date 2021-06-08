@@ -4,14 +4,16 @@ using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Store.Server.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20210608114625_updateTableNames")]
+    partial class updateTableNames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,7 +143,7 @@ namespace Store.Server.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("carcase_id")
+                        .HasColumnName("id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Type")
@@ -159,13 +161,11 @@ namespace Store.Server.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("drive_id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Type")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("drive_type");
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -177,13 +177,11 @@ namespace Store.Server.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("engine_id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Type")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("engine_type");
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -195,18 +193,15 @@ namespace Store.Server.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("mark_id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Country")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("producing_country");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("mark_name");
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -218,7 +213,6 @@ namespace Store.Server.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("model_id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<Guid>("CarShopId")
@@ -238,26 +232,26 @@ namespace Store.Server.Migrations
 
                     b.Property<int?>("HorsePower")
                         .IsRequired()
-                        .HasColumnType("int")
-                        .HasColumnName("horse_power");
+                        .HasColumnType("int");
 
                     b.Property<int>("MarkId")
-                        .HasColumnType("int")
-                        .HasColumnName("mark_id");
+                        .HasColumnType("int");
 
                     b.Property<int>("MileAge")
-                        .HasColumnType("int")
-                        .HasColumnName("mile_age");
+                        .HasColumnType("int");
 
                     b.Property<string>("Model")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("model");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("NumberOfCar")
-                        .HasColumnType("int")
-                        .HasColumnName("number_of_car");
+                        .HasColumnType("int");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
@@ -397,6 +391,22 @@ namespace Store.Server.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "37fe43e1-dd6d-4a6a-b0ff-6ce67ab15e94",
+                            ConcurrencyStamp = "6534ff9b-de4e-40bc-ab20-c2db46f0efc3",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "7478b40f-e692-47ac-b047-1c2fe3604629",
+                            ConcurrencyStamp = "98fa320a-9fa7-4117-9188-6052156f3f63",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

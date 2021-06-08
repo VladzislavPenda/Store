@@ -1,5 +1,4 @@
-﻿using Entities.Configuration;
-using Entities.Models;
+﻿using Entities.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +13,7 @@ namespace Entities
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
+            builder.ApplyConfigurationsFromAssembly(typeof(RepositoryContext).Assembly);
 
             base.OnModelCreating(builder);
             //builder.ApplyConfiguration(new RoleConfiguration());

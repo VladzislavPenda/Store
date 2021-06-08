@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -28,11 +30,6 @@ namespace Entities.Models
         public string Description { get; set; }
         [Range(0, int.MaxValue, ErrorMessage ="Number of cars can't be less than zero")]
         public int NumberOfCar { get; set; }
-        
-        [Required]
-        [RegularExpression(@"^\+?(\d[\d-. ]+)?(\([\d-. ]+\))?[\d-. ]+\d$", ErrorMessage = "Please enter valid phone no.")]
-        [StringLength(13, MinimumLength = 13)]
-        public string PhoneNumber { get; set; }
 
         [ForeignKey(nameof(ShopMark))]
         public int MarkId { get; set; }
@@ -58,5 +55,18 @@ namespace Entities.Models
         public Guid CarShopId { get; set; }
         public CarShop CarShop { get; set; }
         public ICollection<Picture> Pictures { get; set; }
+    }
+
+    partial class EntityTypeConfiguration: IEntityTypeConfiguration<ShopModel>
+    {
+        public void Configure(EntityTypeBuilder<ShopModel> e)
+        {
+            e.Property(c => c.Id).HasColumnName("model_id");
+            e.Property(c => c.MileAge).HasColumnName("mile_age");
+            e.Property(c => c.HorsePower).HasColumnName("horse_power");
+            e.Property(c => c.MarkId).HasColumnName("mark_id");
+            e.Property(c => c.Model).HasColumnName("model");
+            e.Property(c => c.NumberOfCar).HasColumnName("number_of_car");
+        }
     }
 }

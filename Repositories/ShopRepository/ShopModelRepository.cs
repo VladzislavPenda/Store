@@ -56,8 +56,7 @@ namespace Repositories
                     driveType = c.ShopDriveType.Type,
                     transmission = c.ShopTransmissionType.Type,
                     markName = c.ShopMark.Name,
-                    description = c.Description,
-                    phoneNumber = c.PhoneNumber
+                    description = c.Description
                 })
                 .FilterModels(modelsParametres)
                 .Search(modelsParametres.SearchTerm)
@@ -98,8 +97,7 @@ namespace Repositories
                     driveType = c.ShopDriveType.Type,
                     transmission = c.ShopTransmissionType.Type,
                     markName = c.ShopMark.Name,
-                    description = c.Description,
-                    phoneNumber = c.PhoneNumber
+                    description = c.Description
                 })
                 .SingleOrDefaultAsync();
         }

@@ -12,10 +12,8 @@
         public int mileAge { get; set; }
         public string model { get; set; }
         public string description { get; set; }
-        public string pathToPicture { get; set; }
         public int modelId { get; set; }
         public int price { get; set; }
         public string transmission { get; set; }
-        public string phoneNumber { get; set; }
     }
 }
