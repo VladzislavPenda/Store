@@ -18,14 +18,12 @@ namespace Store
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IDataShaper<ModelFullInfo>, DataShaper<ModelFullInfo>>();
@@ -33,37 +31,21 @@ namespace Store
             services.AddScoped<ValidationFilterAttribute>();
             services.ConfigureCors();
             services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
-
-            
-            //var mapperConfig = new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile());});
-            //IMapper mapper = mapperConfig.CreateMapper();
             services.AddAutoMapper(typeof(Startup), typeof(AutoMapperMarker));
-            //services.AddSingleton(mapper);
             services.ConfigureResponseCaching();
-            //services.ConfigureHttpCacheHeaders();
             services.ConfigureVersioning();
-            services.ConfigureControllerWithViews();
+            services.AddControllersWithViews();
+            services.ConfigureControllers();
             services.AddMemoryCache();
             services.AddAuthentication();
             services.ConfigureIdentity();
             services.ConfigureJWT(Configuration);
-            //services.ConfigureRateLimitingOptions();
             services.AddHttpContextAccessor();
             services.ConfigureSwagger();
             services.AddScoped<IAuthenticationManager, AuthenticationManager>();
             services.AddScoped<IRepositoryManager, RepositoryManager>();
-            services.AddControllers(config =>
-            {
-                config.RespectBrowserAcceptHeader = true;
-            })
-                .AddXmlDataContractSerializerFormatters()
-                .AddJsonOptions(x => 
-                { 
-                    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-                });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -73,7 +55,6 @@ namespace Store
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -81,8 +62,6 @@ namespace Store
             app.UseStaticFiles();
             app.UseCors("CorsPolicy");
             app.UseResponseCaching();
-            //app.UseHttpCacheHeaders();
-            //app.UseIpRateLimiting();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

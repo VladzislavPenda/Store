@@ -35,9 +35,9 @@ namespace Store.Extensions
             });
         }
 
-        public static void ConfigureControllerWithViews(this IServiceCollection services)
+        public static void ConfigureControllers(this IServiceCollection services)
         {
-            services.AddControllersWithViews()
+            services.AddControllers()
             .AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             )
