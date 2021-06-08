@@ -16,7 +16,6 @@ namespace Store.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ApiExplorerSettings(GroupName = "v1")]
-    //[ResponseCache(CacheProfileName = "120SecondsDuration")]
     public class ShopModelsController : Controller
     {
         private readonly IRepositoryManager _repository;
@@ -32,8 +31,6 @@ namespace Store.Controllers
 
         [HttpGet]
         [HttpHead]
-        //[HttpCacheExpiration(MaxAge = 120)]
-        //[ResponseCache(Duration = 10, NoStore =true)]
         public async Task<IActionResult> GetModels([FromQuery] ModelsParameters modelsParameters)
         {
             if (!modelsParameters.ValidRange())
@@ -41,16 +38,10 @@ namespace Store.Controllers
 
             var models = await _repository.ShopModel.GetAllIncludesAsync(modelsParameters, trackChanges: false);
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(models.MetaData));
-
-            //var modelsDTO = _mapper.Map<IEnumerable<ModelDTO>>(models);
-
-
-            return View(models);
+            return Ok(models);
         }
 
         [HttpGet("{id}", Name = "ModelById")]
-        //[HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
-        //[HttpCacheValidation(MustRevalidate = false)]
         public async Task<IActionResult> GetModel(int id)
         {
             var model = await _repository.ShopModel.GetModel(id, trackChanges: false);
@@ -59,7 +50,7 @@ namespace Store.Controllers
                 return NotFound();
             }
             var modelDTO = _mapper.Map<ModelDto>(model);
-            return View(model);
+            return Ok(model);
         }
 
         [HttpPost("shopMark/{markId}/shopEngine/{engineId}/shopCarcaseType/{carcaseId}/shopDriveType/{driveId}/shopTransmission/{transmissionId}/models")]
@@ -115,7 +106,7 @@ namespace Store.Controllers
             _mapper.Map(model, modelEntity);
             await _repository.SaveAsync();
 
-            return View();
+            return Ok();
         }
     }
 }

@@ -2,6 +2,7 @@ using AspNetCoreRateLimit;
 using AutoMapper;
 using Contracts;
 using Contracts.DataShape;
+using Entities;
 using Entities.AutoMappers;
 using Entities.DataTransferObjects.IncludeDTO;
 using Microsoft.AspNetCore.Builder;
@@ -40,9 +41,10 @@ namespace Store
             services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
 
             
-            var mapperConfig = new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile());});
-            IMapper mapper = mapperConfig.CreateMapper();
-            services.AddSingleton(mapper);
+            //var mapperConfig = new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile());});
+            //IMapper mapper = mapperConfig.CreateMapper();
+            services.AddAutoMapper(typeof(Startup), typeof(AutoMapperMarker));
+            //services.AddSingleton(mapper);
             services.ConfigureResponseCaching();
             //services.ConfigureHttpCacheHeaders();
             services.ConfigureVersioning();
@@ -56,7 +58,6 @@ namespace Store
             services.ConfigureSwagger();
             services.AddScoped<IAuthenticationManager, AuthenticationManager>();
             services.AddScoped<IRepositoryManager, RepositoryManager>();
-            services.AddControllersWithViews();
             services.AddControllers(config =>
             {
                 config.RespectBrowserAcceptHeader = true;

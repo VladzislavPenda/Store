@@ -45,13 +45,6 @@ namespace Entities.AutoMappers
             CreateMap<TransmissionForUpdatingDto, ShopTransmissionType>();
 
             CreateMap<UserForRegistrationDto, User>();
-
-            CreateMap<CarShop, CarShopDto>()
-                .PreserveReferences();
-
-            CreateMap<CarShopForCreatingDto, CarShop>();
-            CreateMap<CarShopForUpdatingDto, CarShop>();
-
         }
     }
 }
