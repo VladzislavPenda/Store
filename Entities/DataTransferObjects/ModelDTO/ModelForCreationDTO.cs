@@ -27,6 +27,6 @@ namespace Entities.DataTransferObjects
         public string description { get; set; }
 
 
-        public IEnumerable<MarkForCreationDto> marks { get; set; }
+        //public IEnumerable<MarkForCreationDto> marks { get; set; }
     }
 }

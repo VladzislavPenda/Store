@@ -3,7 +3,6 @@
     public class ModelFullInfo
     {
         public string carcaseType { get; set; } 
-        public string country { get; set; }
         public string driveType { get; set; }
         public string engineType { get; set; }
         public int? year { get; set; }

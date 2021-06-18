@@ -1,4 +1,6 @@
 ﻿using Entities.Models;
+using Entities.Models.Product;
+using Entities.Models.Shop;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,26 +13,21 @@ namespace Entities
 
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            builder.ApplyConfigurationsFromAssembly(typeof(RepositoryContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(RepositoryContext).Assembly);
 
-            base.OnModelCreating(builder);
-            //builder.ApplyConfiguration(new RoleConfiguration());
+            base.OnModelCreating(modelBuilder);
 
+            
         }
 
         public DbSet<ShopModel> ShopModels { get; set; }
-        public DbSet<ShopCarcaseType> ShopCarcaseTypes { get; set; }
-        public DbSet<ShopDriveType> ShopDriveTypes { get; set; }
-        public DbSet<ShopMark> ShopMarks { get; set; }
-        public DbSet<ShopEngineType> ShopEngineTypes { get; set; }
-        public DbSet<ShopTransmissionType> ShopTransmissionTypes { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<CarShop> CarShops { get; set; }
-        public DbSet<Employee> Employees { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<Picture> Pictures { get; set; }
-        public DbSet<Profession> Professions { get; set; }
+
+        public DbSet<Ent> Ents { get; set; }
+        public DbSet<Mesh> Meshes { get; set; }
+        public DbSet<Storage> Storages { get; set; }
     }
 }

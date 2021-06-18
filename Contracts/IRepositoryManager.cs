@@ -9,14 +9,8 @@ namespace Contracts
 {
     public interface IRepositoryManager
     {
-        IShopCarcaseTypeRepository ShopCarcaseType { get; }
-        IShopDriveTypeRepository ShopDriveType { get; }
-        IShopEngineTypeRepository ShopEngineType { get; }
-        IShopMarkRepository ShopMark { get; }
         IShopModelRepository ShopModel { get; }
-        IShopTransmissionTypeRepository ShopTransmissionType { get; }
         IUsersRepository User { get; }
-        ICarShopRepository CarShop { get; }
 
         Task SaveAsync();
     }

@@ -49,97 +49,30 @@ namespace Store.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CarcaseType",
+                name: "Ents",
                 columns: table => new
                 {
-                    carcaseTypeId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    type = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
+                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    value = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ent_type = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CarcaseType", x => x.carcaseTypeId);
+                    table.PrimaryKey("PK_Ents", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "CarShop",
+                name: "Storage",
                 columns: table => new
                 {
-                    CarShopGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ShopName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ContactPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Desctiption = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    storage_address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    open_time = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    close_time = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CarShop", x => x.CarShopGuid);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DriveType",
-                columns: table => new
-                {
-                    driveTypeId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    type = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DriveType", x => x.driveTypeId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EngineType",
-                columns: table => new
-                {
-                    engineTypeId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    type = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EngineType", x => x.engineTypeId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Mark",
-                columns: table => new
-                {
-                    markId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    markNum = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    country = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Mark", x => x.markId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Profession",
-                columns: table => new
-                {
-                    ProfessionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Salary = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Profession", x => x.ProfessionId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TransmissionType",
-                columns: table => new
-                {
-                    transmissionId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    type = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TransmissionType", x => x.transmissionId);
+                    table.PrimaryKey("PK_Storage", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -249,126 +182,73 @@ namespace Store.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Employee",
-                columns: table => new
-                {
-                    EmployeeGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CarShopGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProfessionGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ContactPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CarShopId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Employee", x => x.EmployeeGuid);
-                    table.ForeignKey(
-                        name: "FK_Employee_CarShop_CarShopId",
-                        column: x => x.CarShopId,
-                        principalTable: "CarShop",
-                        principalColumn: "CarShopGuid",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Employee_Profession_ProfessionGuid",
-                        column: x => x.ProfessionGuid,
-                        principalTable: "Profession",
-                        principalColumn: "ProfessionId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ShopModels",
                 columns: table => new
                 {
-                    ShopModelId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    model = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    model_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    model = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     year = table.Column<int>(type: "int", nullable: true),
-                    horsePower = table.Column<int>(type: "int", nullable: false),
+                    horse_power = table.Column<int>(type: "int", nullable: true),
                     price = table.Column<int>(type: "int", nullable: false),
-                    mileAge = table.Column<int>(type: "int", nullable: false),
+                    mile_age = table.Column<int>(type: "int", nullable: false),
                     description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NumberOfCar = table.Column<int>(type: "int", nullable: false),
-                    phoneNumber = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
-                    markId = table.Column<int>(type: "int", nullable: false),
-                    transmissionId = table.Column<int>(type: "int", nullable: false),
-                    carcaseTypeId = table.Column<int>(type: "int", nullable: false),
-                    engineTypeId = table.Column<int>(type: "int", nullable: false),
-                    driveTypeId = table.Column<int>(type: "int", nullable: false),
-                    CarShopGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    number_of_car = table.Column<int>(type: "int", nullable: false),
+                    storage_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShopModels", x => x.ShopModelId);
+                    table.PrimaryKey("PK_ShopModels", x => x.model_id);
                     table.ForeignKey(
-                        name: "FK_ShopModels_CarcaseType_carcaseTypeId",
-                        column: x => x.carcaseTypeId,
-                        principalTable: "CarcaseType",
-                        principalColumn: "carcaseTypeId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ShopModels_CarShop_CarShopGuid",
-                        column: x => x.CarShopGuid,
-                        principalTable: "CarShop",
-                        principalColumn: "CarShopGuid",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ShopModels_DriveType_driveTypeId",
-                        column: x => x.driveTypeId,
-                        principalTable: "DriveType",
-                        principalColumn: "driveTypeId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ShopModels_EngineType_engineTypeId",
-                        column: x => x.engineTypeId,
-                        principalTable: "EngineType",
-                        principalColumn: "engineTypeId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ShopModels_Mark_markId",
-                        column: x => x.markId,
-                        principalTable: "Mark",
-                        principalColumn: "markId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ShopModels_TransmissionType_transmissionId",
-                        column: x => x.transmissionId,
-                        principalTable: "TransmissionType",
-                        principalColumn: "transmissionId",
+                        name: "FK_ShopModels_Storage_storage_id",
+                        column: x => x.storage_id,
+                        principalTable: "Storage",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Picture",
+                name: "Meshes",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Path = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ShopModelId = table.Column<int>(type: "int", nullable: false)
+                    model_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ent_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Picture", x => x.Id);
+                    table.PrimaryKey("PK_Meshes", x => new { x.model_id, x.ent_id });
                     table.ForeignKey(
-                        name: "FK_Picture_ShopModels_ShopModelId",
-                        column: x => x.ShopModelId,
+                        name: "FK_Meshes_Ents_ent_id",
+                        column: x => x.ent_id,
+                        principalTable: "Ents",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Meshes_ShopModels_model_id",
+                        column: x => x.model_id,
                         principalTable: "ShopModels",
-                        principalColumn: "ShopModelId",
+                        principalColumn: "model_id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "cb9d1611-de00-4a64-8b98-efe2efaf9ee5", "44a32de1-9d0a-4a96-9e54-820f1498223d", "User", "USER" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "eb0ebd35-bbe1-49e9-8b7c-991e0c6f5fae", "c5e3a077-78b1-4bde-b570-39b5d6d009e7", "Administrator", "ADMINISTRATOR" });
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    user_email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    creating_data = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ShopModelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Orders_ShopModels_ShopModelId",
+                        column: x => x.ShopModelId,
+                        principalTable: "ShopModels",
+                        principalColumn: "model_id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -410,49 +290,19 @@ namespace Store.Server.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Employee_CarShopId",
-                table: "Employee",
-                column: "CarShopId");
+                name: "IX_Meshes_ent_id",
+                table: "Meshes",
+                column: "ent_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Employee_ProfessionGuid",
-                table: "Employee",
-                column: "ProfessionGuid");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Picture_ShopModelId",
-                table: "Picture",
+                name: "IX_Orders_ShopModelId",
+                table: "Orders",
                 column: "ShopModelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShopModels_carcaseTypeId",
+                name: "IX_ShopModels_storage_id",
                 table: "ShopModels",
-                column: "carcaseTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ShopModels_CarShopGuid",
-                table: "ShopModels",
-                column: "CarShopGuid");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ShopModels_driveTypeId",
-                table: "ShopModels",
-                column: "driveTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ShopModels_engineTypeId",
-                table: "ShopModels",
-                column: "engineTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ShopModels_markId",
-                table: "ShopModels",
-                column: "markId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ShopModels_transmissionId",
-                table: "ShopModels",
-                column: "transmissionId");
+                column: "storage_id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -473,10 +323,10 @@ namespace Store.Server.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Employee");
+                name: "Meshes");
 
             migrationBuilder.DropTable(
-                name: "Picture");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -485,28 +335,13 @@ namespace Store.Server.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Profession");
+                name: "Ents");
 
             migrationBuilder.DropTable(
                 name: "ShopModels");
 
             migrationBuilder.DropTable(
-                name: "CarcaseType");
-
-            migrationBuilder.DropTable(
-                name: "CarShop");
-
-            migrationBuilder.DropTable(
-                name: "DriveType");
-
-            migrationBuilder.DropTable(
-                name: "EngineType");
-
-            migrationBuilder.DropTable(
-                name: "Mark");
-
-            migrationBuilder.DropTable(
-                name: "TransmissionType");
+                name: "Storage");
         }
     }
 }

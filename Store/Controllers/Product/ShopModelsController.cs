@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Store.ActionFilters;
+using System;
 using System.Threading.Tasks;
 
 namespace Store.Controllers
@@ -36,9 +37,9 @@ namespace Store.Controllers
             if (!modelsParameters.ValidRange())
                 return BadRequest("Max price can't be less than min price.");
 
-            var models = await _repository.ShopModel.GetAllIncludesAsync(modelsParameters, trackChanges: false);
-            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(models.MetaData));
-            return Ok(models);
+            //var models = await _repository.ShopModel.GetAllIncludesAsync(modelsParameters, trackChanges: false);
+            //Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(models.MetaData));
+            return Ok();
         }
 
         [HttpGet("{id}", Name = "ModelById")]
@@ -55,18 +56,18 @@ namespace Store.Controllers
 
         [HttpPost("shopMark/{markId}/shopEngine/{engineId}/shopCarcaseType/{carcaseId}/shopDriveType/{driveId}/shopTransmission/{transmissionId}/models")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> CreateModel(int markId, int engineId, int carcaseId, int driveId, int transmissionId, [FromBody] ModelForCreationDto model)
+        public async Task<IActionResult> CreateModel(int markId, Guid engineId, Guid carcaseId, Guid driveId, Guid transmissionId, [FromBody] ModelForCreationDto model)
         {
-            var mark = await _repository.ShopMark.GetMark(markId, trackChanges: false);
-            var engine = await _repository.ShopEngineType.GetEngineType(engineId, trackChanges: false);
-            var carcase = await _repository.ShopCarcaseType.GetCarcaseType(carcaseId, trackChanges: false);
-            var drive = await _repository.ShopDriveType.GetDriveType(driveId, trackChanges: false);
-            var transmission = await _repository.ShopTransmissionType.GetTransmissionType(transmissionId, trackChanges: false);
+            //var mark = await _repository.ShopMark.GetMark(markId, trackChanges: false);
+            //var engine = await _repository.ShopEngineType.GetEngineType(engineId, trackChanges: false);
+            //var carcase = await _repository.ShopCarcaseType.GetCarcaseType(carcaseId, trackChanges: false);
+            //var drive = await _repository.ShopDriveType.GetDriveType(driveId, trackChanges: false);
+            //var transmission = await _repository.ShopTransmissionType.GetTransmissionType(transmissionId, trackChanges: false);
 
-            if (mark == null || engine == null || carcase == null || drive == null || transmission == null)
-            {
-                return NotFound();
-            }
+            //if (mark == null || engine == null || carcase == null || drive == null || transmission == null)
+            //{
+            //    return NotFound();
+            //}
 
             var modelEntity = _mapper.Map<ShopModel>(model);
 

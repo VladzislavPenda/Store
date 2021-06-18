@@ -19,79 +19,23 @@ namespace Store.Server.Migrations
                 .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Entities.Models.CarShop", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Adress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ContactPhone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ShopName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CarShops");
-                });
-
-            modelBuilder.Entity("Entities.Models.Employee", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CarShopId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ContactPhone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("ProfessionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CarShopId");
-
-                    b.HasIndex("ProfessionId");
-
-                    b.ToTable("Employees");
-                });
-
             modelBuilder.Entity("Entities.Models.Order", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("OrderDateTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("creating_data");
 
-                    b.Property<int>("ShopModelId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ShopModelId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserEmail")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("user_email");
 
                     b.HasKey("Id");
 
@@ -100,159 +44,88 @@ namespace Store.Server.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Entities.Models.Picture", b =>
+            modelBuilder.Entity("Entities.Models.Product.Ent", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id");
 
-                    b.Property<string>("Path")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Type")
+                        .HasColumnType("int")
+                        .HasColumnName("ent_type");
 
-                    b.Property<int>("ShopModelId")
-                        .HasColumnType("int");
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("value");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ShopModelId");
-
-                    b.ToTable("Pictures");
+                    b.ToTable("Ents");
                 });
 
-            modelBuilder.Entity("Entities.Models.Profession", b =>
+            modelBuilder.Entity("Entities.Models.Product.Mesh", b =>
+                {
+                    b.Property<Guid>("ModelId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("model_id");
+
+                    b.Property<Guid>("EntId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("ent_id");
+
+                    b.HasKey("ModelId", "EntId");
+
+                    b.HasIndex("EntId");
+
+                    b.ToTable("Meshes");
+                });
+
+            modelBuilder.Entity("Entities.Models.Shop.Storage", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("storage_address");
 
-                    b.Property<int>("Salary")
-                        .HasColumnType("int");
+                    b.Property<TimeSpan>("CloseTime")
+                        .HasColumnType("time")
+                        .HasColumnName("close_time");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Professions");
-                });
-
-            modelBuilder.Entity("Entities.Models.ShopCarcaseType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("carcase_id")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Type")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("carcase_type");
+                    b.Property<TimeSpan>("OpenTime")
+                        .HasColumnType("time")
+                        .HasColumnName("open_time");
 
                     b.HasKey("Id");
 
-                    b.ToTable("CarcaseType");
-                });
-
-            modelBuilder.Entity("Entities.Models.ShopDriveType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("drive_id")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Type")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("drive_type");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DriveType");
-                });
-
-            modelBuilder.Entity("Entities.Models.ShopEngineType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("engine_id")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Type")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("engine_type");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EngineType");
-                });
-
-            modelBuilder.Entity("Entities.Models.ShopMark", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("mark_id")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Country")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("producing_country");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("mark_name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Mark");
+                    b.ToTable("Storages");
                 });
 
             modelBuilder.Entity("Entities.Models.ShopModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("model_id")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<Guid>("CarShopId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("CarcaseTypeId")
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("model_id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DriveTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EngineTypeId")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("description");
 
                     b.Property<int?>("HorsePower")
-                        .IsRequired()
                         .HasColumnType("int")
                         .HasColumnName("horse_power");
-
-                    b.Property<int>("MarkId")
-                        .HasColumnType("int")
-                        .HasColumnName("mark_id");
 
                     b.Property<int>("MileAge")
                         .HasColumnType("int")
                         .HasColumnName("mile_age");
 
                     b.Property<string>("Model")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("model");
 
                     b.Property<int>("NumberOfCar")
@@ -260,45 +133,22 @@ namespace Store.Server.Migrations
                         .HasColumnName("number_of_car");
 
                     b.Property<int>("Price")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("price");
 
-                    b.Property<int>("TransmissionTypeId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("StorageId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("storage_id");
 
                     b.Property<int?>("Year")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("year");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CarShopId");
-
-                    b.HasIndex("CarcaseTypeId");
-
-                    b.HasIndex("DriveTypeId");
-
-                    b.HasIndex("EngineTypeId");
-
-                    b.HasIndex("MarkId");
-
-                    b.HasIndex("TransmissionTypeId");
+                    b.HasIndex("StorageId");
 
                     b.ToTable("ShopModels");
-                });
-
-            modelBuilder.Entity("Entities.Models.ShopTransmissionType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Type")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TransmissionType");
                 });
 
             modelBuilder.Entity("Entities.Models.User", b =>
@@ -503,27 +353,10 @@ namespace Store.Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Entities.Models.Employee", b =>
-                {
-                    b.HasOne("Entities.Models.CarShop", null)
-                        .WithMany("Employees")
-                        .HasForeignKey("CarShopId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Models.Profession", "Profession")
-                        .WithMany("Employees")
-                        .HasForeignKey("ProfessionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Profession");
-                });
-
             modelBuilder.Entity("Entities.Models.Order", b =>
                 {
                     b.HasOne("Entities.Models.ShopModel", "ShopModel")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("ShopModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -531,66 +364,34 @@ namespace Store.Server.Migrations
                     b.Navigation("ShopModel");
                 });
 
-            modelBuilder.Entity("Entities.Models.Picture", b =>
+            modelBuilder.Entity("Entities.Models.Product.Mesh", b =>
                 {
-                    b.HasOne("Entities.Models.ShopModel", "ShopModel")
-                        .WithMany("Pictures")
-                        .HasForeignKey("ShopModelId")
+                    b.HasOne("Entities.Models.Product.Ent", "Ent")
+                        .WithMany("Meshes")
+                        .HasForeignKey("EntId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Entities.Models.ShopModel", "ShopModel")
+                        .WithMany("Meshes")
+                        .HasForeignKey("ModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Ent");
 
                     b.Navigation("ShopModel");
                 });
 
             modelBuilder.Entity("Entities.Models.ShopModel", b =>
                 {
-                    b.HasOne("Entities.Models.CarShop", "CarShop")
+                    b.HasOne("Entities.Models.Shop.Storage", "Storage")
                         .WithMany("ShopModels")
-                        .HasForeignKey("CarShopId")
+                        .HasForeignKey("StorageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.Models.ShopCarcaseType", "ShopCarcaseType")
-                        .WithMany("ShopModels")
-                        .HasForeignKey("CarcaseTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Models.ShopDriveType", "ShopDriveType")
-                        .WithMany("ShopModels")
-                        .HasForeignKey("DriveTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Models.ShopEngineType", "ShopEngineType")
-                        .WithMany("ShopModels")
-                        .HasForeignKey("EngineTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Models.ShopMark", "ShopMark")
-                        .WithMany("ShopModels")
-                        .HasForeignKey("MarkId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Models.ShopTransmissionType", "ShopTransmissionType")
-                        .WithMany("ShopModels")
-                        .HasForeignKey("TransmissionTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CarShop");
-
-                    b.Navigation("ShopCarcaseType");
-
-                    b.Navigation("ShopDriveType");
-
-                    b.Navigation("ShopEngineType");
-
-                    b.Navigation("ShopMark");
-
-                    b.Navigation("ShopTransmissionType");
+                    b.Navigation("Storage");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -644,46 +445,21 @@ namespace Store.Server.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Entities.Models.CarShop", b =>
+            modelBuilder.Entity("Entities.Models.Product.Ent", b =>
                 {
-                    b.Navigation("Employees");
-
-                    b.Navigation("ShopModels");
+                    b.Navigation("Meshes");
                 });
 
-            modelBuilder.Entity("Entities.Models.Profession", b =>
-                {
-                    b.Navigation("Employees");
-                });
-
-            modelBuilder.Entity("Entities.Models.ShopCarcaseType", b =>
-                {
-                    b.Navigation("ShopModels");
-                });
-
-            modelBuilder.Entity("Entities.Models.ShopDriveType", b =>
-                {
-                    b.Navigation("ShopModels");
-                });
-
-            modelBuilder.Entity("Entities.Models.ShopEngineType", b =>
-                {
-                    b.Navigation("ShopModels");
-                });
-
-            modelBuilder.Entity("Entities.Models.ShopMark", b =>
+            modelBuilder.Entity("Entities.Models.Shop.Storage", b =>
                 {
                     b.Navigation("ShopModels");
                 });
 
             modelBuilder.Entity("Entities.Models.ShopModel", b =>
                 {
-                    b.Navigation("Pictures");
-                });
+                    b.Navigation("Meshes");
 
-            modelBuilder.Entity("Entities.Models.ShopTransmissionType", b =>
-                {
-                    b.Navigation("ShopModels");
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

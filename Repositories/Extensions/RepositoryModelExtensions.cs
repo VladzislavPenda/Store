@@ -25,10 +25,6 @@ namespace Repositories.Extensions
                 && (m.year <= modelsParametres.MaxYear)
                 && (m.year >= modelsParametres.MinYear));
             
-
-            
-            if (!string.IsNullOrWhiteSpace(modelsParametres.Country))
-                result = result.Where(m => (m.country == modelsParametres.Country));
             if (!string.IsNullOrWhiteSpace(modelsParametres.CarcaseType))
                 result = result.Where(m => (m.carcaseType == modelsParametres.CarcaseType));
             if (!string.IsNullOrWhiteSpace(modelsParametres.DriveType))
