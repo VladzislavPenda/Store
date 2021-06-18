@@ -1,4 +1,6 @@
-﻿using Entities.Models;
+﻿
+using Entities.DataTransferObjects.QueryModelDto;
+using Entities.Models;
 
 namespace Entities.DataTransferObjects.Model
 {
@@ -9,6 +11,7 @@ namespace Entities.DataTransferObjects.Model
             CreateMap<ShopModel, ModelDto>();
             CreateMap<ModelForCreationDto, ShopModel>();
             CreateMap<ModelForUpdatingDto, ShopModel>();
+            CreateMap<QueryModelForCreating, ShopModel>();
         }
     }
 }

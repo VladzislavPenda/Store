@@ -35,39 +35,22 @@ namespace Repositories
                 .ToPagedList(model, modelsParametres.PageNumber, modelsParametres.PageSize);
         }
 
-        //public async Task<PagedList<ModelFullInfo>> GetAllIncludesAsync(ModelsParameters modelsParametres, bool trackChanges)
-        //{
-        //    var shopModels = await FindAll(trackChanges)
-        //        .Include(c => c.MarkEnt)
-        //        .Include(d => d.EngineType)
-        //        .Include(f => f.DriveType)
-        //        .Include(e => e.CarcaseType)
-        //        .Include(t => t.TransmissionType)
-        //        .Select(c => new ModelFullInfo
-        //        {
-        //            modelId = c.Id,
-        //            model = c.Model,
-        //            year = c.Year,
-        //            price = c.Price,
-        //            mileAge = c.MileAge,
-        //            horsePower = c.HorsePower,
-        //            engineType = c.EngineType.Name,
-        //            carcaseType = c.CarcaseType.Name,
-        //            driveType = c.DriveType.Name,
-        //            transmission = c.TransmissionType.Name,
-        //            markName = c.MarkEnt.Name,
-        //            description = c.Description
-        //        })
-        //        .FilterModels(modelsParametres)
-        //        .Search(modelsParametres.SearchTerm)
-        //        .Sort(modelsParametres.OrderBy)
-        //        .ToListAsync();
+        public async Task<PagedList<ModelFullInfo>> GetAllIncludesAsync(ModelsParameters modelsParametres, bool trackChanges)
+        {
+            var shopModels = await FindAll(trackChanges)
+                .Include(e => e.Meshes)
+                .ThenInclude(e => e.Ent)
+                .SelectMany(c => c, (parent, child) => new { parent.MileAge, child.Ent.Value })
+                .FilterModels(modelsParametres)
+                .Search(modelsParametres.SearchTerm)
+                .Sort(modelsParametres.OrderBy)
+                .ToListAsync();
 
-            
-        //    return PagedList<ModelFullInfo>
-        //        .ToPagedList(shopModels, modelsParametres.PageNumber, modelsParametres.PageSize);
-        //}
-        
+
+            return PagedList<ModelFullInfo>
+                .ToPagedList(shopModels, modelsParametres.PageNumber, modelsParametres.PageSize);
+        }
+
         public async Task<IEnumerable<ShopModel>> GetAllShopModels(bool trackChanges)
         {
             return await FindAll(trackChanges)
@@ -108,13 +91,10 @@ namespace Repositories
                 .SingleOrDefaultAsync();
         }
 
-        public void CreateModel(int markId, Guid engineId, Guid carcaseId, Guid driveId, Guid transmissionId, ShopModel shopModel)
+        public void CreateModel(ShopModel shopModel, Guid modelId, Guid storageId)
         {
-            //shopModel.EngineTypeId = engineId;
-            //shopModel.DriveTypeId = driveId;
-            //shopModel.CarcaseTypeId = carcaseId;
-            //shopModel.MarkId = markId;
-            //shopModel.TransmissionTypeId = transmissionId;
+            shopModel.Id = modelId;
+            shopModel.StorageId = storageId;
             Create(shopModel);
         }
 

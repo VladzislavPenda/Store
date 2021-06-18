@@ -13,7 +13,7 @@ namespace Repositories
     {
         private readonly RepositoryContext _repositoryContext;
         private IShopModelRepository _shopModelRepository;
-     
+        private IMeshRepository _meshRepository;
         private IUsersRepository _usersRepository;
         
 
@@ -33,6 +33,18 @@ namespace Repositories
                 }
 
                 return _shopModelRepository;
+            }
+        }
+        public IMeshRepository Mesh
+        {
+            get
+            {
+                if (_meshRepository == null)
+                {
+                    _meshRepository = new MeshRepository(_repositoryContext);
+                }
+
+                return _meshRepository;
             }
         }
 

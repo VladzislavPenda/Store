@@ -4,6 +4,7 @@ using Contracts.DataShape;
 using Entities;
 using Entities.DataTransferObjects;
 using Entities.DataTransferObjects.IncludeDTO;
+using Entities.DataTransferObjects.QueryModelDto;
 using Entities.Models;
 using Entities.Models.Product;
 using Entities.RequestFeatures;
@@ -14,6 +15,7 @@ using Newtonsoft.Json;
 using Store.ActionFilters;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -43,6 +45,21 @@ namespace Store.Controllers
         {
             if (!modelsParameters.ValidRange())
                 return BadRequest("Max price can't be less than min price.");
+            List<ShopModel> a = await _repositoryContext.ShopModels
+                .Include(e => e.Meshes)
+                .ToListAsync();
+
+            List<Ent> meshes = await _repositoryContext.Meshes
+                .Include(e => e.Ent)
+                //.Where(e => a.)
+                .Select(e => new Ent
+                {
+                    Id = e.Ent.Id,
+                    Type = e.Ent.Type,
+                    Meshes = e.Ent.Meshes,
+                    Value = e.Ent.Value
+                }).ToListAsync();
+                
 
             //var models = await _repository.ShopModel.GetAllIncludesAsync(modelsParameters, trackChanges: false);
             //Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(models.MetaData));
@@ -63,34 +80,31 @@ namespace Store.Controllers
 
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> CreateModel([FromBody] ModelForCreationDto model)
+        public async Task<IActionResult> CreateModel([FromBody] QueryModelForCreating model)
         {
-            Ent[] ents = await _repositoryContext.Ents.Where(e => model.Characteristics.Contains(e.Value)).ToArrayAsync();
+            Guid storageId = await _repositoryContext.Storages
+                .Where(e => e.Address == model.StorageAddress)
+                .Select(e => e.Id)
+                .SingleOrDefaultAsync();
 
-            return Ok();
+            Guid[] ents = await _repositoryContext.Ents
+                .Where(e => model.Characteristics.Contains(e.Value))
+                .Select(e => e.Id)
+                .ToArrayAsync();
 
+            Guid modelId = Guid.NewGuid();
+            List<Mesh> meshes = new List<Mesh>();
+            foreach (var ent in ents)
+                meshes.Add(new Mesh {
+                   ModelId = modelId, 
+                   EntId = ent
+                });
 
-
-
-            //var mark = await _repository.ShopMark.GetMark(markId, trackChanges: false);
-            //var engine = await _repository.ShopEngineType.GetEngineType(engineId, trackChanges: false);
-            //var carcase = await _repository.ShopCarcaseType.GetCarcaseType(carcaseId, trackChanges: false);
-            //var drive = await _repository.ShopDriveType.GetDriveType(driveId, trackChanges: false);
-            //var transmission = await _repository.ShopTransmissionType.GetTransmissionType(transmissionId, trackChanges: false);
-
-            //if (mark == null || engine == null || carcase == null || drive == null || transmission == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //var modelEntity = _mapper.Map<ShopModel>(model);
-
-            //_repository.ShopModel.CreateModel(markId, engineId, carcaseId, driveId, transmissionId, modelEntity);
-            //await _repository.SaveAsync();
-
-            //var modelToReturn = _mapper.Map<ModelDto>(modelEntity);
-            //return CreatedAtRoute("ModelById",
-            //    new { markId, engineId, carcaseId, driveId, transmissionId, modelEntity, id = modelToReturn.id }, modelToReturn);
+            ShopModel shopModel = _mapper.Map<ShopModel>(model);
+            _repository.ShopModel.CreateModel(shopModel, modelId, storageId);
+            _repository.Mesh.CreateMeshRange(meshes);
+            _repository.SaveAsync();
+            return CreatedAtAction(nameof(CreateModel), new { id = modelId }, shopModel);
         }
 
         [HttpDelete("{id}")]
@@ -124,4 +138,6 @@ namespace Store.Controllers
             return Ok();
         }
     }
+    
+    
 }

@@ -15,7 +15,7 @@ namespace Contracts
         //Task<PagedList<ModelFullInfo>> GetAllIncludesAsync(ModelsParameters modelsParametres, bool trackChanges);
         Task<ShopModel> GetModel(int id, bool trackChanges);
         //Task<ModelFullInfo> GetModelFullInfo(int id, bool trackChanges);
-        void CreateModel(int markId, Guid engineId, Guid carcaseId, Guid driveId, Guid transmissionId, ShopModel shopModel);
+        void CreateModel(ShopModel shopModel, Guid modelId, Guid storageId);
         void DeleteModel(ShopModel shopModel);
     }
 }
