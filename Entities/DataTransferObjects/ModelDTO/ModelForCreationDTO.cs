@@ -25,7 +25,12 @@ namespace Entities.DataTransferObjects
         [Range(1, int.MaxValue, ErrorMessage = "Please, indicate mileage correct.")]
         public int mileAge { get; set; }
         public string description { get; set; }
-
+        public List<string> Characteristics { get; set; }
+        //public string CarcaseType { get; set; }
+        //public string EngineType { get; set; }
+        //public string DriveType { get; set; }
+        //public string TransmissionType { get; set; }
+        //public string Mark { get; set; }
 
         //public IEnumerable<MarkForCreationDto> marks { get; set; }
     }

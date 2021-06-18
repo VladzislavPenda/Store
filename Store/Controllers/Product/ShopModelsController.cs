@@ -1,15 +1,20 @@
 ﻿using AutoMapper;
 using Contracts;
 using Contracts.DataShape;
+using Entities;
 using Entities.DataTransferObjects;
 using Entities.DataTransferObjects.IncludeDTO;
 using Entities.Models;
+using Entities.Models.Product;
 using Entities.RequestFeatures;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Store.ActionFilters;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Store.Controllers
@@ -22,9 +27,11 @@ namespace Store.Controllers
         private readonly IRepositoryManager _repository;
         private readonly IMapper _mapper;
         private readonly IDataShaper<ModelFullInfo> _dataShaper;
+        private readonly RepositoryContext _repositoryContext;
 
-        public ShopModelsController(IRepositoryManager repository, IMapper mapper, IDataShaper<ModelFullInfo> dataShaper)
+        public ShopModelsController(IRepositoryManager repository, IMapper mapper, IDataShaper<ModelFullInfo> dataShaper, RepositoryContext repositoryContext)
         {
+            _repositoryContext = repositoryContext;
             _repository = repository;
             _mapper = mapper;
             _dataShaper = dataShaper;
@@ -54,10 +61,17 @@ namespace Store.Controllers
             return Ok(model);
         }
 
-        [HttpPost("shopMark/{markId}/shopEngine/{engineId}/shopCarcaseType/{carcaseId}/shopDriveType/{driveId}/shopTransmission/{transmissionId}/models")]
+        [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> CreateModel(int markId, Guid engineId, Guid carcaseId, Guid driveId, Guid transmissionId, [FromBody] ModelForCreationDto model)
+        public async Task<IActionResult> CreateModel([FromBody] ModelForCreationDto model)
         {
+            Ent[] ents = await _repositoryContext.Ents.Where(e => model.Characteristics.Contains(e.Value)).ToArrayAsync();
+
+            return Ok();
+
+
+
+
             //var mark = await _repository.ShopMark.GetMark(markId, trackChanges: false);
             //var engine = await _repository.ShopEngineType.GetEngineType(engineId, trackChanges: false);
             //var carcase = await _repository.ShopCarcaseType.GetCarcaseType(carcaseId, trackChanges: false);
@@ -69,14 +83,14 @@ namespace Store.Controllers
             //    return NotFound();
             //}
 
-            var modelEntity = _mapper.Map<ShopModel>(model);
+            //var modelEntity = _mapper.Map<ShopModel>(model);
 
-            _repository.ShopModel.CreateModel(markId, engineId, carcaseId, driveId, transmissionId, modelEntity);
-            await _repository.SaveAsync();
+            //_repository.ShopModel.CreateModel(markId, engineId, carcaseId, driveId, transmissionId, modelEntity);
+            //await _repository.SaveAsync();
 
-            var modelToReturn = _mapper.Map<ModelDto>(modelEntity);
-            return CreatedAtRoute("ModelById",
-                new { markId, engineId, carcaseId, driveId, transmissionId, modelEntity, id = modelToReturn.id }, modelToReturn);
+            //var modelToReturn = _mapper.Map<ModelDto>(modelEntity);
+            //return CreatedAtRoute("ModelById",
+            //    new { markId, engineId, carcaseId, driveId, transmissionId, modelEntity, id = modelToReturn.id }, modelToReturn);
         }
 
         [HttpDelete("{id}")]
