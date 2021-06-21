@@ -10,6 +10,7 @@ namespace Entities.Models.Product
         public Guid Id { get; set; }
         public string Value { get; set; }
         public int Type { get; set; }
+        [System.Text.Json.Serialization.JsonIgnore]
         public ICollection<Mesh> Meshes { get; set; }
 
     }

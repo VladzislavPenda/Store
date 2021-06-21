@@ -35,21 +35,23 @@ namespace Repositories
                 .ToPagedList(model, modelsParametres.PageNumber, modelsParametres.PageSize);
         }
 
-        public async Task<PagedList<ModelFullInfo>> GetAllIncludesAsync(ModelsParameters modelsParametres, bool trackChanges)
-        {
-            var shopModels = await FindAll(trackChanges)
-                .Include(e => e.Meshes)
-                .ThenInclude(e => e.Ent)
-                .SelectMany(c => c, (parent, child) => new { parent.MileAge, child.Ent.Value })
-                .FilterModels(modelsParametres)
-                .Search(modelsParametres.SearchTerm)
-                .Sort(modelsParametres.OrderBy)
-                .ToListAsync();
+        //public async Task<PagedList<ModelFullInfo>> GetAllIncludesAsync(ModelsParameters modelsParametres, bool trackChanges)
+        //{
+        //    var shopModels = await FindAll(trackChanges)
+                
+        //        .GroupBy()
+        //        //.Include(e => e.Meshes)
+        //        //.ThenInclude(e => e.Ent)
+        //        //.SelectMany(c => c, (parent, child) => new { parent.MileAge, child.Ent.Value })
+        //        //.FilterModels(modelsParametres)
+        //        //.Search(modelsParametres.SearchTerm)
+        //        //.Sort(modelsParametres.OrderBy)
+        //        .ToListAsync();
 
 
-            return PagedList<ModelFullInfo>
-                .ToPagedList(shopModels, modelsParametres.PageNumber, modelsParametres.PageSize);
-        }
+        //    return PagedList<ModelFullInfo>
+        //        .ToPagedList(shopModels, modelsParametres.PageNumber, modelsParametres.PageSize);
+        //}
 
         public async Task<IEnumerable<ShopModel>> GetAllShopModels(bool trackChanges)
         {

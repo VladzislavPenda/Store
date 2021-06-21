@@ -11,12 +11,14 @@ using Entities.RequestFeatures;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+
 using Store.ActionFilters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Store.Controllers
@@ -45,9 +47,24 @@ namespace Store.Controllers
         {
             if (!modelsParameters.ValidRange())
                 return BadRequest("Max price can't be less than min price.");
-            List<ShopModel> a = await _repositoryContext.ShopModels
+            List<ShopModel> models = await _repositoryContext.ShopModels
                 .Include(e => e.Meshes)
+                .ThenInclude(c => c.Ent)
+                .Where(c => c.Meshes.Where(e => e.Ent.Value == "Седан").Any())
                 .ToListAsync();
+
+            foreach(var model in models)
+            {
+                model.Meshes.Where(c => c.Ent.Value == "Седан");
+            }
+            
+
+            JsonSerializerOptions options = new()
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                WriteIndented = true
+            };
+            string result = JsonSerializer.Serialize(models, options);
 
             List<Ent> meshes = await _repositoryContext.Meshes
                 .Include(e => e.Ent)
@@ -63,7 +80,7 @@ namespace Store.Controllers
 
             //var models = await _repository.ShopModel.GetAllIncludesAsync(modelsParameters, trackChanges: false);
             //Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(models.MetaData));
-            return Ok();
+            return Ok(result);
         }
 
         [HttpGet("{id}", Name = "ModelById")]
