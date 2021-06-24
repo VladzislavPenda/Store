@@ -1,13 +1,17 @@
-﻿using System;
+﻿using Entities.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Entities.RequestFeatures
 {
-    public class PagedList<T> : List<T>
+    public class PagedModels
     {
         public MetaData MetaData { get; set; }
-        public PagedList(T[] items, int count, int pageNumber, int pageSize)
+        public ShopModel[] Models { get; set; }
+        public PagedModels(ShopModel[] models, int count, int pageNumber, int pageSize)
         {
             MetaData = new MetaData
             {
@@ -16,16 +20,16 @@ namespace Entities.RequestFeatures
                 CurrentPage = pageNumber,
                 TotalPages = (int)Math.Ceiling(count / (double)pageSize)
             };
-            AddRange(items);
+            Models = models;
         }
 
-        public static PagedList<T> ToPagedList(T[] source, int pageNumber, int pageSize)
+        public static PagedModels ToPagedModels (ShopModel[] source, int pageNumber, int pageSize)
         {
             var count = source.Count();
             var items = source
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize).ToArray();
-            return new PagedList<T>(items, count, pageNumber, pageSize);
+            return new PagedModels(items, count, pageNumber, pageSize);
         }
     }
 }

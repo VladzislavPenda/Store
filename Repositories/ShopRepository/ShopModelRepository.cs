@@ -1,7 +1,8 @@
 ﻿using Contracts;
 using Entities;
-using Entities.DataTransferObjects.IncludeDTO;
+//using Entities.DataTransferObjects.IncludeDTO;
 using Entities.Models;
+using Entities.Models.Product;
 using Entities.RequestFeatures;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Extensions;
@@ -14,44 +15,32 @@ namespace Repositories
 {
     class ShopModelRepository : RepositoryBase<ShopModel>, IShopModelRepository
     {
+        private readonly RepositoryContext _repositoryContext; 
         public ShopModelRepository(RepositoryContext repositoryContext)
             : base(repositoryContext)
         {
-
+            _repositoryContext = repositoryContext;
         }
 
-        public async Task<List<ShopModel>> GetModelsAsyncAll(bool trackChanges)
+        public async Task<PagedModels> GetPagedModelsWithParams(ModelsParameters modelsParametres, bool trackChanges)
         {
-            var model = await FindAll(trackChanges)
-                .ToListAsync();
-            return model;
+            ShopModel[] shopModels = await _repositoryContext.ShopModels
+                .Include(e => e.Meshes)
+                .ThenInclude(c => c.Ent)
+                .FilterModels(modelsParametres)
+                .ToArrayAsync();
+
+            return PagedModels
+                .ToPagedModels(shopModels, modelsParametres.PageNumber, modelsParametres.PageSize);
         }
 
-        public async Task<PagedList<ShopModel>> GetModelsAsync(ModelsParameters modelsParametres, bool trackChanges)
+        public async Task<ShopModel> GetModel(Guid id, bool trackChanges)
         {
-            var model = await FindAll(trackChanges)
-                .ToListAsync();
-            return PagedList<ShopModel>
-                .ToPagedList(model, modelsParametres.PageNumber, modelsParametres.PageSize);
+            return await FindByCondition(e => e.Id.Equals(id), trackChanges)
+                .Include(e => e.Meshes)
+                .ThenInclude(c => c.Ent)
+                .SingleOrDefaultAsync();
         }
-
-        //public async Task<PagedList<ModelFullInfo>> GetAllIncludesAsync(ModelsParameters modelsParametres, bool trackChanges)
-        //{
-        //    var shopModels = await FindAll(trackChanges)
-                
-        //        .GroupBy()
-        //        //.Include(e => e.Meshes)
-        //        //.ThenInclude(e => e.Ent)
-        //        //.SelectMany(c => c, (parent, child) => new { parent.MileAge, child.Ent.Value })
-        //        //.FilterModels(modelsParametres)
-        //        //.Search(modelsParametres.SearchTerm)
-        //        //.Sort(modelsParametres.OrderBy)
-        //        .ToListAsync();
-
-
-        //    return PagedList<ModelFullInfo>
-        //        .ToPagedList(shopModels, modelsParametres.PageNumber, modelsParametres.PageSize);
-        //}
 
         public async Task<IEnumerable<ShopModel>> GetAllShopModels(bool trackChanges)
         {
@@ -85,13 +74,6 @@ namespace Repositories
         //        })
         //        .SingleOrDefaultAsync();
         //}
-
-        public async Task<ShopModel> GetModel(int id, bool trackChanges)
-        {
-            return await FindByCondition(c => c.Id.Equals(id), trackChanges)
-
-                .SingleOrDefaultAsync();
-        }
 
         public void CreateModel(ShopModel shopModel, Guid modelId, Guid storageId)
         {

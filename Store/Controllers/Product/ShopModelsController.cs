@@ -43,56 +43,40 @@ namespace Store.Controllers
 
         [HttpGet]
         [HttpHead]
-        public async Task<IActionResult> GetModels([FromQuery] ModelsParameters modelsParameters)
+        public async Task<IActionResult> GetModelsWithParams([FromQuery] ModelsParameters modelsParameters)
         {
             if (!modelsParameters.ValidRange())
                 return BadRequest("Max price can't be less than min price.");
-            List<ShopModel> models = await _repositoryContext.ShopModels
-                .Include(e => e.Meshes)
-                .ThenInclude(c => c.Ent)
-                .Where(c => c.Meshes.Where(e => e.Ent.Value == "Седан").Any())
-                .ToListAsync();
-
-            foreach(var model in models)
-            {
-                model.Meshes.Where(c => c.Ent.Value == "Седан");
-            }
-            
 
             JsonSerializerOptions options = new()
             {
                 ReferenceHandler = ReferenceHandler.Preserve,
                 WriteIndented = true
             };
-            string result = JsonSerializer.Serialize(models, options);
 
-            List<Ent> meshes = await _repositoryContext.Meshes
-                .Include(e => e.Ent)
-                //.Where(e => a.)
-                .Select(e => new Ent
-                {
-                    Id = e.Ent.Id,
-                    Type = e.Ent.Type,
-                    Meshes = e.Ent.Meshes,
-                    Value = e.Ent.Value
-                }).ToListAsync();
-                
-
-            //var models = await _repository.ShopModel.GetAllIncludesAsync(modelsParameters, trackChanges: false);
-            //Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(models.MetaData));
+            PagedModels models = await _repository.ShopModel.GetPagedModelsWithParams(modelsParameters, trackChanges: false);
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(models.MetaData));
+            string result = JsonSerializer.Serialize(models.Models, options);
             return Ok(result);
         }
 
         [HttpGet("{id}", Name = "ModelById")]
-        public async Task<IActionResult> GetModel(int id)
+        public async Task<IActionResult> GetModel(Guid id)
         {
-            var model = await _repository.ShopModel.GetModel(id, trackChanges: false);
+            ShopModel model = await _repository.ShopModel.GetModel(id, trackChanges: false);
             if (model == null)
             {
                 return NotFound();
             }
-            var modelDTO = _mapper.Map<ModelDto>(model);
-            return Ok(model);
+
+            JsonSerializerOptions options = new()
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                WriteIndented = true
+            };
+
+            string modelForResponse = JsonSerializer.Serialize(model, options);
+            return Ok(modelForResponse);
         }
 
         [HttpPost]
@@ -105,7 +89,7 @@ namespace Store.Controllers
                 .SingleOrDefaultAsync();
 
             Guid[] ents = await _repositoryContext.Ents
-                .Where(e => model.Characteristics.Contains(e.Value))
+                .Where(e => model.Ents.Contains(e.Value))
                 .Select(e => e.Id)
                 .ToArrayAsync();
 
@@ -120,12 +104,12 @@ namespace Store.Controllers
             ShopModel shopModel = _mapper.Map<ShopModel>(model);
             _repository.ShopModel.CreateModel(shopModel, modelId, storageId);
             _repository.Mesh.CreateMeshRange(meshes);
-            _repository.SaveAsync();
+            await _repository.SaveAsync();
             return CreatedAtAction(nameof(CreateModel), new { id = modelId }, shopModel);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteModel(int id)
+        public async Task<IActionResult> DeleteModel(Guid id)
         {
             var model = await _repository.ShopModel.GetModel(id, trackChanges: false);
             if (model == null)
@@ -141,7 +125,7 @@ namespace Store.Controllers
 
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> UpdateModel(int id, [FromBody]ModelForUpdatingDto model)
+        public async Task<IActionResult> UpdateModel(Guid id, [FromBody]ModelForUpdatingDto model)
         {
             var modelEntity = await _repository.ShopModel.GetModel(id, trackChanges: true);
             if (modelEntity == null)

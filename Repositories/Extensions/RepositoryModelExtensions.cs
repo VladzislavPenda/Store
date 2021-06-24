@@ -8,33 +8,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using Entities.RequestFeatures;
+using Entities.Models;
+using Entities.Models.Product;
 
 namespace Repositories.Extensions
 {
     public static class RepositoryModelExtensions
     {
-        public static IQueryable<ModelFullInfo> FilterModels(this IQueryable<ModelFullInfo> model, ModelsParameters modelsParametres)
+        public static IQueryable<ShopModel> FilterModels(this IQueryable<ShopModel> model, ModelsParameters modelsParametres)
         {
-            var result = model
-                .Where(m => (m.price >= modelsParametres.MinPrice)
-                && (m.price <= modelsParametres.MaxPrice)
-                && (m.horsePower >= modelsParametres.MinHorsePower)
-                && (m.horsePower <= modelsParametres.MaxHorsePower)
-                && (m.mileAge >= modelsParametres.MinMileAge)
-                && (m.mileAge <= modelsParametres.MaxMileAge)
-                && (m.year <= modelsParametres.MaxYear)
-                && (m.year >= modelsParametres.MinYear));
-            
             if (!string.IsNullOrWhiteSpace(modelsParametres.CarcaseType))
-                result = result.Where(m => (m.carcaseType == modelsParametres.CarcaseType));
-            if (!string.IsNullOrWhiteSpace(modelsParametres.DriveType))
-                result = result.Where(m => (m.driveType == modelsParametres.DriveType));
-            if (!string.IsNullOrWhiteSpace(modelsParametres.EngineType))
-                result = result.Where(m => (m.engineType == modelsParametres.EngineType));
+                model = model.Where(e => e.Meshes.Where(c => c.Ent.Value == modelsParametres.CarcaseType && c.Ent.Type == EntType.Carcase).Any());
             if (!string.IsNullOrWhiteSpace(modelsParametres.MarkName))
-                result = result.Where(m => (m.markName == modelsParametres.MarkName));
+                model = model.Where(e => e.Meshes.Where(c => c.Ent.Value == modelsParametres.MarkName && c.Ent.Type == EntType.Mark).Any());
+            if (!string.IsNullOrWhiteSpace(modelsParametres.EngineType))
+                model = model.Where(e => e.Meshes.Where(c => c.Ent.Value == modelsParametres.EngineType && c.Ent.Type == EntType.Engine).Any());
+            if (!string.IsNullOrWhiteSpace(modelsParametres.DriveType))
+                model = model.Where(e => e.Meshes.Where(c => c.Ent.Value == modelsParametres.DriveType && c.Ent.Type == EntType.Drive).Any());
 
-            return result;
+            return model;
         }
 
         public static IQueryable<ModelFullInfo> Search(this IQueryable<ModelFullInfo> model, string searchItem)

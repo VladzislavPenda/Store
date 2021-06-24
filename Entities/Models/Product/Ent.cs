@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Entities.Models.Product
 {
@@ -9,8 +10,8 @@ namespace Entities.Models.Product
     {
         public Guid Id { get; set; }
         public string Value { get; set; }
-        public int Type { get; set; }
-        [System.Text.Json.Serialization.JsonIgnore]
+        public EntType Type { get; set; }
+        [JsonIgnore]
         public ICollection<Mesh> Meshes { get; set; }
 
     }
@@ -21,6 +22,7 @@ namespace Entities.Models.Product
             e.Property(t => t.Id).HasColumnName("id");
             e.Property(t => t.Value).HasColumnName("value");
             e.Property(t => t.Type).HasColumnName("ent_type");
+            //e.Property(t => t.Meshes).HasAnnotation("JsonIgnore", new JsonIgnoreAttribute());     
         }
     }
 }
