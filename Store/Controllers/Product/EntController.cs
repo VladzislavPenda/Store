@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Contracts;
 using Entities;
+
 using Entities.DataTransferObjects.EntDto;
 using Entities.Models.Product;
 using Microsoft.AspNetCore.Mvc;
@@ -16,23 +18,32 @@ namespace Store.Server.Controllers.Product
     [ApiExplorerSettings(GroupName = "v1")]
     public class EntController : Controller
     {
-        private readonly RepositoryContext _repository;
+        //private readonly RepositoryContext _repository;
+        private readonly IRepositoryManager _repository;
         private readonly IMapper _mapper;
-        public EntController(RepositoryContext repositoryContext, IMapper mapper)
+        public EntController(IRepositoryManager repository, IMapper mapper)
         {
             _mapper = mapper;
-            _repository = repositoryContext; 
+            _repository = repository;
         }
-        
-        [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] EntType entType)
-        {
-            Ent[] ents = await _repository.Ents
-                .Where(e => e.Type == entType)
-                .ToArrayAsync();
 
+        [HttpGet("{entType}")]
+        public async Task<IActionResult> GetEnts(EntType entType)
+        {
+            //Ent[] ents = await _repository.Ents
+            //    .Where(e => e.Type == entType)
+            //    .ToArrayAsync();
+            Ent[] ents = await _repository.Ent.GetEntsByType(entType).ToArrayAsync();
             EntResponseDto[] dtos = _mapper.Map<EntResponseDto[]>(ents);
             return Ok(dtos);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateEnt([FromBody] EntCreateDto entCreateDto)
+        {
+            Ent ent = _mapper.Map<Ent>(entCreateDto);
+            _repository.Ent.CreateEnt(ent);
+            return CreatedAtAction(nameof(CreateEnt), new { id = ent.Id }, ent);
         }
     }
 }

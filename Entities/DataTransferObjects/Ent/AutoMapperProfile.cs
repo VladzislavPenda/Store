@@ -7,6 +7,7 @@ namespace Entities.DataTransferObjects.EntDto
         public AutoMapperProfile()
         {
             CreateMap<Ent, EntResponseDto>();
+            CreateMap<EntCreateDto, Ent>();
         }
     }
 }

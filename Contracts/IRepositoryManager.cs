@@ -12,6 +12,7 @@ namespace Contracts
         IShopModelRepository ShopModel { get; }
         IUsersRepository User { get; }
         IMeshRepository Mesh { get; }
+        IEntRepository Ent { get; }
 
         Task SaveAsync();
     }

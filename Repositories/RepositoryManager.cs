@@ -15,6 +15,7 @@ namespace Repositories
         private IShopModelRepository _shopModelRepository;
         private IMeshRepository _meshRepository;
         private IUsersRepository _usersRepository;
+        private IEntRepository _entRepository;
         
 
         public RepositoryManager(RepositoryContext repositoryContext)
@@ -58,6 +59,19 @@ namespace Repositories
                 }
 
                 return _usersRepository;
+            }
+        }
+
+        public IEntRepository Ent
+        {
+            get
+            {
+                if (_entRepository == null)
+                {
+                    _entRepository = new EntRepository(_repositoryContext);
+                }
+
+                return _entRepository;
             }
         }
 

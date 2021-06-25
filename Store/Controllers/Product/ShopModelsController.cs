@@ -88,8 +88,19 @@ namespace Store.Controllers
                 .Select(e => e.Id)
                 .SingleOrDefaultAsync();
 
+            List<Ent> picturesEnts = new List<Ent>();
+            foreach (var picture in model.Pictures)
+            {
+                picturesEnts.Add(new Ent {
+                    Type = EntType.Picture,
+                    Value = picture
+                });
+            }
+
+            _repository.Ent.CreateEntRange(picturesEnts);
+
             Guid[] ents = await _repositoryContext.Ents
-                .Where(e => model.Ents.Contains(e.Value))
+                .Where(e => model.Ents.Contains(e.Value) || model.Pictures.Contains(e.Value))
                 .Select(e => e.Id)
                 .ToArrayAsync();
 

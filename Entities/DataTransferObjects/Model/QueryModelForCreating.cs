@@ -31,7 +31,7 @@ namespace Entities.DataTransferObjects.QueryModelDto
         public int NumberOfCar { get; set; }
         public string Description { get; set; }
         public string StorageAddress { get; set; }
-        public List<string> Ents { get; set; }
-        
+        public string[] Ents { get; set; }
+        public string[] Pictures { get; set; }
     }
 }
