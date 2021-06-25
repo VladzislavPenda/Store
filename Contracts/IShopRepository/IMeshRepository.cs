@@ -11,5 +11,7 @@ namespace Contracts.IShopRepository
     {
         void CreateMesh(Mesh mesh);
         void CreateMeshRange(IEnumerable<Mesh> mesh);
+        void DeleteMeshRange(IEnumerable<Mesh> meshes);
+        Task<Mesh[]> GetMeshesForModel(Guid modelId);
     }
 }

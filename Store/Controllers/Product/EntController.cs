@@ -45,5 +45,18 @@ namespace Store.Server.Controllers.Product
             _repository.Ent.CreateEnt(ent);
             return CreatedAtAction(nameof(CreateEnt), new { id = ent.Id }, ent);
         }
+
+        [HttpDelete("{entId}")]
+        public async Task<IActionResult> DeleteEnt(Guid entId)
+        {
+            Ent ent = await _repository.Ent.GetEntById(entId);
+
+            if (ent == null)
+                return NotFound();
+
+            _repository.Ent.DeleteEnt(ent);
+            _repository.SaveAsync();
+            return NoContent();
+        }
     }
 }

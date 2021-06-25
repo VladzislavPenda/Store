@@ -90,14 +90,13 @@ namespace Store.Controllers
 
             List<Ent> picturesEnts = new List<Ent>();
             foreach (var picture in model.Pictures)
-            {
                 picturesEnts.Add(new Ent {
                     Type = EntType.Picture,
                     Value = picture
                 });
-            }
 
             _repository.Ent.CreateEntRange(picturesEnts);
+            await _repository.SaveAsync();
 
             Guid[] ents = await _repositoryContext.Ents
                 .Where(e => model.Ents.Contains(e.Value) || model.Pictures.Contains(e.Value))
@@ -122,11 +121,15 @@ namespace Store.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteModel(Guid id)
         {
-            var model = await _repository.ShopModel.GetModel(id, trackChanges: false);
+            ShopModel model = await _repository.ShopModel.GetModel(id, trackChanges: false);
             if (model == null)
             {
                 return NotFound();
             }
+
+            Mesh[] meshes = await _repository.Mesh.GetMeshesForModel(model.Id);
+            if(meshes != null)
+                _repository.Mesh.DeleteMeshRange(meshes);
 
             _repository.ShopModel.DeleteModel(model);
             await _repository.SaveAsync();

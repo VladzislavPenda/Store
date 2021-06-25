@@ -1,6 +1,7 @@
 ﻿using Contracts.IShopRepository;
 using Entities;
 using Entities.Models.Product;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,17 @@ namespace Repositories.ShopRepository
 
         public async void CreateMeshRange(IEnumerable<Mesh> meshes)
         {
-            await repository.AddRangeAsync(meshes);
+            CreateRange(meshes);
+        }
+
+        public void DeleteMeshRange(IEnumerable<Mesh> meshes)
+        {
+            DeleteRange(meshes);
+        }
+
+        public async Task<Mesh[]> GetMeshesForModel(Guid modelId)
+        {
+            return await FindByCondition(e => e.ModelId == modelId, trackChanges: false).ToArrayAsync(); 
         }
     }
 }

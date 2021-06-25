@@ -34,6 +34,7 @@ namespace Repositories
         public void Update(T entity) => RepositoryContext.Set<T>().Update(entity);
         public void Delete(T entity) => RepositoryContext.Set<T>().Remove(entity);
         public void CreateRange(IEnumerable<T> entity) => RepositoryContext.Set<T>().AddRangeAsync(entity);
+        public void DeleteRange(IEnumerable<T> entity) => RepositoryContext.Set<T>().RemoveRange(entity);
 
     }
 }

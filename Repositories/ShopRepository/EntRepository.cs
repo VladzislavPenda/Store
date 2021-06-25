@@ -1,9 +1,11 @@
 ﻿using Contracts.IShopRepository;
 using Entities;
 using Entities.Models.Product;
-
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Repositories.ShopRepository
 {
@@ -26,6 +28,16 @@ namespace Repositories.ShopRepository
         public IQueryable<Ent> GetEntsByType(EntType entType)
         {
             return FindByCondition(e => e.Type == entType, trackChanges: false);
+        }
+
+        public async Task<Ent> GetEntById(Guid entId)
+        {
+            return await FindByCondition(e => e.Id == entId, trackChanges: false).SingleOrDefaultAsync();
+        }
+
+        public void DeleteEnt(Ent ent)
+        {
+            Delete(ent);
         }
     }
 }

@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\Shop\**" />
+    <Content Remove="Controllers\Shop\**" />
+    <EmbeddedResource Remove="Controllers\Shop\**" />
+    <None Remove="Controllers\Shop\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="File\text.txt" />
   </ItemGroup>
 
@@ -35,7 +42,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\Shop\" />
     <Folder Include="wwwroot\File\" />
   </ItemGroup>
 
