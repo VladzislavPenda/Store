@@ -13,4 +13,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DataTransferObjects\Mesh\" />
+  </ItemGroup>
+
 </Project>

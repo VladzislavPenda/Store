@@ -93,10 +93,15 @@ namespace Store.Controllers
 
             List<Ent> picturesEnts = new List<Ent>();
             foreach (var picture in model.Pictures)
-                picturesEnts.Add(new Ent {
+            {
+                //Guid guid = Guid.NewGuid();
+                picturesEnts.Add(new Ent
+                {
+                    //Id = guid,
                     Type = EntType.Picture,
                     Value = picture
                 });
+            }
 
             _repository.Ent.CreateEntRange(picturesEnts);
             await _repository.SaveAsync();
@@ -149,10 +154,9 @@ namespace Store.Controllers
                 return NotFound();
             }
 
-            Mesh[] existingMeshes = await _repository.Mesh.GetMeshesForModel(modelEntity.Id, trackChanges: true);
-
             Guid[] entsToAdd = await _repositoryContext.Ents
                 .Where(e => model.EntsToAdd.Contains(e.Value))
+                .AsNoTracking()
                 .Select(e => e.Id)
                 .ToArrayAsync();
 
@@ -166,23 +170,32 @@ namespace Store.Controllers
 
             Guid[] entsToRemove = await _repositoryContext.Ents
                 .Where(e => model.EntsToRemove.Contains(e.Value))
+                .AsNoTracking()
                 .Select(e => e.Id)
                 .ToArrayAsync();
 
             List<Mesh> meshesToRemove = new List<Mesh>();
             foreach (var ent in entsToRemove)
-                meshesToAdd.Add(new Mesh
+                meshesToRemove.Add(new Mesh
                 {
                     ModelId = id,
                     EntId = ent
                 });
 
-            _repository.Mesh.CreateMeshRange(meshesToAdd);
-            _repository.Mesh.DeleteMeshRange(meshesToRemove);
+            foreach (Mesh mesh in meshesToRemove)
+            {
+                Mesh meshToRemove = modelEntity.Meshes.Where(e => e.ModelId == mesh.ModelId && e.EntId == mesh.EntId).SingleOrDefault();
+                if (meshToRemove != null)
+                    modelEntity.Meshes.Remove(meshToRemove);
+            }
+
+            foreach (Mesh mesh in meshesToAdd)
+            {
+                modelEntity.Meshes.Add(mesh);
+            }
 
             _mapper.Map(model, modelEntity);
             await _repository.SaveAsync();
-
             return Ok();
         }
     }
