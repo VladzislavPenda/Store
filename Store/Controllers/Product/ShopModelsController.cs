@@ -88,6 +88,9 @@ namespace Store.Controllers
                 .Select(e => e.Id)
                 .SingleOrDefaultAsync();
 
+            if (storageId == Guid.Empty)
+                return Conflict();
+
             List<Ent> picturesEnts = new List<Ent>();
             foreach (var picture in model.Pictures)
                 picturesEnts.Add(new Ent {
@@ -121,31 +124,61 @@ namespace Store.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteModel(Guid id)
         {
-            ShopModel model = await _repository.ShopModel.GetModel(id, trackChanges: false);
+            ShopModel model = await _repository.ShopModel.GetModel(id, trackChanges: true);
             if (model == null)
             {
                 return NotFound();
             }
 
-            Mesh[] meshes = await _repository.Mesh.GetMeshesForModel(model.Id);
+            Mesh[] meshes = await _repository.Mesh.GetMeshesForModel(model.Id, trackChanges: true);
             if(meshes != null)
                 _repository.Mesh.DeleteMeshRange(meshes);
 
             _repository.ShopModel.DeleteModel(model);
             await _repository.SaveAsync();
-
             return NoContent();
         }
 
         [HttpPut("{id}")]
-        [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> UpdateModel(Guid id, [FromBody]ModelForUpdatingDto model)
+        //[ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> UpdateModel(Guid id, [FromBody]QueryModelForUpdating model)
         {
-            var modelEntity = await _repository.ShopModel.GetModel(id, trackChanges: true);
+            ShopModel modelEntity = await _repository.ShopModel.GetModel(id, trackChanges: true);
             if (modelEntity == null)
             {
                 return NotFound();
             }
+
+            Mesh[] existingMeshes = await _repository.Mesh.GetMeshesForModel(modelEntity.Id, trackChanges: true);
+
+            Guid[] entsToAdd = await _repositoryContext.Ents
+                .Where(e => model.EntsToAdd.Contains(e.Value))
+                .Select(e => e.Id)
+                .ToArrayAsync();
+
+            List<Mesh> meshesToAdd = new List<Mesh>();
+            foreach (var ent in entsToAdd)
+                meshesToAdd.Add(new Mesh
+                {
+                    ModelId = id,
+                    EntId = ent
+                });
+
+            Guid[] entsToRemove = await _repositoryContext.Ents
+                .Where(e => model.EntsToRemove.Contains(e.Value))
+                .Select(e => e.Id)
+                .ToArrayAsync();
+
+            List<Mesh> meshesToRemove = new List<Mesh>();
+            foreach (var ent in entsToRemove)
+                meshesToAdd.Add(new Mesh
+                {
+                    ModelId = id,
+                    EntId = ent
+                });
+
+            _repository.Mesh.CreateMeshRange(meshesToAdd);
+            _repository.Mesh.DeleteMeshRange(meshesToRemove);
 
             _mapper.Map(model, modelEntity);
             await _repository.SaveAsync();

@@ -33,9 +33,9 @@ namespace Repositories.ShopRepository
             DeleteRange(meshes);
         }
 
-        public async Task<Mesh[]> GetMeshesForModel(Guid modelId)
+        public async Task<Mesh[]> GetMeshesForModel(Guid modelId, bool trackChanges)
         {
-            return await FindByCondition(e => e.ModelId == modelId, trackChanges: false).ToArrayAsync(); 
+            return await FindByCondition(e => e.ModelId == modelId, trackChanges).ToArrayAsync(); 
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Entities.DataTransferObjects.Model
         {
             CreateMap<ShopModel, ModelDto>();
             CreateMap<ModelForCreationDto, ShopModel>();
-            CreateMap<ModelForUpdatingDto, ShopModel>();
+            CreateMap<QueryModelForUpdating, ShopModel>();
             CreateMap<QueryModelForCreating, ShopModel>();
         }
     }
