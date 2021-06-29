@@ -30,9 +30,6 @@ namespace Store.Server.Controllers.Product
         [HttpGet("{entType}")]
         public async Task<IActionResult> GetEnts(EntType entType)
         {
-            //Ent[] ents = await _repository.Ents
-            //    .Where(e => e.Type == entType)
-            //    .ToArrayAsync();
             Ent[] ents = await _repository.Ent.GetEntsByType(entType).ToArrayAsync();
             EntResponseDto[] dtos = _mapper.Map<EntResponseDto[]>(ents);
             return Ok(dtos);

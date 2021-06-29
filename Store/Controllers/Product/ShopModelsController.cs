@@ -8,14 +8,10 @@ using Entities.DataTransferObjects.QueryModelDto;
 using Entities.Models;
 using Entities.Models.Product;
 using Entities.RequestFeatures;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
 using Store.ActionFilters;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -91,37 +87,44 @@ namespace Store.Controllers
             if (storageId == Guid.Empty)
                 return Conflict();
 
-            List<Ent> picturesEnts = new List<Ent>();
-            foreach (var picture in model.Pictures)
+            Ent[] pictureEnts = new Ent[model.Pictures.Length];
+            for (int i = 0; i < pictureEnts.Length; i++)
             {
-                //Guid guid = Guid.NewGuid();
-                picturesEnts.Add(new Ent
+                pictureEnts[i] = new Ent
                 {
-                    //Id = guid,
+                    Id = Guid.NewGuid(),
                     Type = EntType.Picture,
-                    Value = picture
-                });
+                    Value = model.Pictures[i]
+                };
             }
 
-            _repository.Ent.CreateEntRange(picturesEnts);
+            _repository.Ent.CreateEntRange(pictureEnts);
             await _repository.SaveAsync();
 
-            Guid[] ents = await _repositoryContext.Ents
-                .Where(e => model.Ents.Contains(e.Value) || model.Pictures.Contains(e.Value))
+            Guid[] pictureGuids = pictureEnts.Select(e => e.Id).ToArray();
+
+            Guid[] ents = _repositoryContext.Ents
+                .Where(e => model.Ents.Contains(e.Value))
                 .Select(e => e.Id)
-                .ToArrayAsync();
+                .ToArray();
+
+            ents = pictureGuids.Concat(ents).ToArray();
 
             Guid modelId = Guid.NewGuid();
-            List<Mesh> meshes = new List<Mesh>();
-            foreach (var ent in ents)
-                meshes.Add(new Mesh {
-                   ModelId = modelId, 
-                   EntId = ent
-                });
+
+            Mesh[] mesh = new Mesh[ents.Length];
+            for (int i = 0; i < mesh.Length; i++)
+            {
+                mesh[i] = new Mesh
+                {
+                    ModelId = modelId,
+                    EntId = ents[i]
+                };
+            }
 
             ShopModel shopModel = _mapper.Map<ShopModel>(model);
             _repository.ShopModel.CreateModel(shopModel, modelId, storageId);
-            _repository.Mesh.CreateMeshRange(meshes);
+            _repository.Mesh.CreateMeshRange(mesh);
             await _repository.SaveAsync();
             return CreatedAtAction(nameof(CreateModel), new { id = modelId }, shopModel);
         }
@@ -160,13 +163,15 @@ namespace Store.Controllers
                 .Select(e => e.Id)
                 .ToArrayAsync();
 
-            List<Mesh> meshesToAdd = new List<Mesh>();
-            foreach (var ent in entsToAdd)
-                meshesToAdd.Add(new Mesh
+            Mesh[] meshToAdd = new Mesh[entsToAdd.Length];
+            for (int i = 0; i < meshToAdd.Length; i++)
+            {
+                meshToAdd[i] = new Mesh
                 {
                     ModelId = id,
-                    EntId = ent
-                });
+                    EntId = entsToAdd[i]
+                };
+            }
 
             Guid[] entsToRemove = await _repositoryContext.Ents
                 .Where(e => model.EntsToRemove.Contains(e.Value))
@@ -174,13 +179,15 @@ namespace Store.Controllers
                 .Select(e => e.Id)
                 .ToArrayAsync();
 
-            List<Mesh> meshesToRemove = new List<Mesh>();
-            foreach (var ent in entsToRemove)
-                meshesToRemove.Add(new Mesh
+            Mesh[] meshesToRemove = new Mesh[entsToRemove.Length];
+            for (int i = 0; i < meshesToRemove.Length; i++)
+            {
+                meshesToRemove[i] = new Mesh
                 {
                     ModelId = id,
-                    EntId = ent
-                });
+                    EntId = entsToRemove[i]
+                };
+            }
 
             foreach (Mesh mesh in meshesToRemove)
             {
@@ -189,7 +196,7 @@ namespace Store.Controllers
                     modelEntity.Meshes.Remove(meshToRemove);
             }
 
-            foreach (Mesh mesh in meshesToAdd)
+            foreach (Mesh mesh in meshToAdd)
             {
                 modelEntity.Meshes.Add(mesh);
             }
