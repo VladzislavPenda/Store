@@ -16,6 +16,10 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Entities.DataTransferObjects.EntDto;
+using System.Linq.Expressions;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Store.Controllers
 {
@@ -103,15 +107,14 @@ namespace Store.Controllers
 
             Guid[] pictureGuids = pictureEnts.Select(e => e.Id).ToArray();
 
-            Guid[] ents = _repositoryContext.Ents
-                .Where(e => model.Ents.Contains(e.Value))
-                .Select(e => e.Id)
-                .ToArray();
+            //Guid[] ents = _repositoryContext.Ents
+            //    .Where(e => model.EntsString.Contains(e.Value))
+            //    .Select(e => e.Id)
+            //    .ToArray();
 
+            Guid[] ents = await _repository.Ent.GetGuidsForCreatingQueryParams(model);
             ents = pictureGuids.Concat(ents).ToArray();
-
             Guid modelId = Guid.NewGuid();
-
             Mesh[] mesh = new Mesh[ents.Length];
             for (int i = 0; i < mesh.Length; i++)
             {

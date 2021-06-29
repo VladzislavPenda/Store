@@ -1,4 +1,5 @@
-﻿using Entities.Models.Product;
+﻿using Entities.DataTransferObjects.QueryModelDto;
+using Entities.Models.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,6 @@ namespace Contracts.IShopRepository
         IQueryable<Ent> GetEntsByType(EntType entType);
         void DeleteEnt(Ent ent);
         Task<Ent> GetEntById(Guid entId);
-       
+        Task<Guid[]> GetGuidsForCreatingQueryParams(QueryModelForCreating model);
     }
 }

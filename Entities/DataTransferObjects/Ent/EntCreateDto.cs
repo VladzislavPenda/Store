@@ -6,5 +6,7 @@ namespace Entities.DataTransferObjects.EntDto
     {
         public string Value { get; set; }
         public EntType Type { get; set; }
+
+        
     }
 }
