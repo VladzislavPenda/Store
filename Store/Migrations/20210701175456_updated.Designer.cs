@@ -4,14 +4,16 @@ using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Store.Server.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20210701175456_updated")]
+    partial class updated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,13 +126,13 @@ namespace Store.Server.Migrations
                         .HasColumnType("bit")
                         .HasColumnName("is_active");
 
+                    b.Property<int>("MileAge")
+                        .HasColumnType("int")
+                        .HasColumnName("mile_age");
+
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("model");
-
-                    b.Property<int>("NumberOfCar")
-                        .HasColumnType("int")
-                        .HasColumnName("number_of_car");
 
                     b.Property<int>("Price")
                         .HasColumnType("int")
@@ -251,15 +253,29 @@ namespace Store.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "330a1167-3661-4192-88ad-6328b6828593",
-                            ConcurrencyStamp = "cbfd5769-32e2-4a65-bf56-c20a46ebd7bb",
+                            Id = "8c95d302-e763-4791-91a7-4a7c962e23ff",
+                            ConcurrencyStamp = "b4f17021-2652-4634-8eee-689ec9a03cf6",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "52acb4c8-c436-4306-8eaa-399d53d59e0a",
-                            ConcurrencyStamp = "d2481f08-6b8b-4a29-bc27-790f60847ddd",
+                            Id = "2e56e316-67dd-4414-afd3-5881c7c73958",
+                            ConcurrencyStamp = "fb35d227-dbf1-4c74-b9a7-daab3c23700c",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "6d3be244-52ff-4be6-94c9-21886aef3d26",
+                            ConcurrencyStamp = "27719a6e-a734-4b56-92cc-2e1b94567e2c",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "a833beae-d9d6-44c8-bc6b-e0a878698ad3",
+                            ConcurrencyStamp = "edf6f263-0d9e-4703-810f-8e5d8a7ec0c7",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });

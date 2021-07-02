@@ -16,7 +16,8 @@ namespace Repositories
         private IMeshRepository _meshRepository;
         private IUsersRepository _usersRepository;
         private IEntRepository _entRepository;
-        
+        private IOrderRepository _orderRepository;
+        private IStorageRepository _storageRepository;
 
         public RepositoryManager(RepositoryContext repositoryContext)
         {
@@ -75,7 +76,32 @@ namespace Repositories
             }
         }
 
-        
+        public IOrderRepository Order
+        {
+            get
+            {
+                if (_orderRepository == null)
+                {
+                    _orderRepository = new OrderRepository(_repositoryContext);
+                }
+
+                return _orderRepository;
+            }
+        }
+
+        public IStorageRepository Storage
+        {
+            get
+            {
+                if (_storageRepository == null)
+                {
+                    _storageRepository = new StorageRepository(_repositoryContext);
+                }
+
+                return _storageRepository;
+            }
+        }
+
 
         public Task SaveAsync() => _repositoryContext.SaveChangesAsync();
     }

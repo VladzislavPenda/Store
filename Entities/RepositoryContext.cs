@@ -1,4 +1,5 @@
-﻿using Entities.Models;
+﻿using Entities.Configuration;
+using Entities.Models;
 using Entities.Models.Product;
 using Entities.Models.Shop;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -22,8 +23,7 @@ namespace Entities
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(RepositoryContext).Assembly);
 
             base.OnModelCreating(modelBuilder);
-
-            
+            //modelBuilder.ApplyConfiguration(new RoleConfiguration());
         }
 
         public DbSet<ShopModel> ShopModels { get; set; }

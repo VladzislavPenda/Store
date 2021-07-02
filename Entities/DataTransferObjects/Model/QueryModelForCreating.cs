@@ -26,12 +26,13 @@ namespace Entities.DataTransferObjects.QueryModelDto
         [Range(1, int.MaxValue, ErrorMessage = "Please, indicate price correct.")]
         public int Price { get; set; }
 
-        [Required(ErrorMessage = "Please, specify the mileage.")]
-        [Range(1, int.MaxValue, ErrorMessage = "Please, indicate mileage correct.")]
-        public int MileAge { get; set; }
-        public int NumberOfCar { get; set; }
+        //[Required(ErrorMessage = "Please, specify the mileage.")]
+        //[Range(1, int.MaxValue, ErrorMessage = "Please, indicate mileage correct.")]
+        ////public int MileAge { get; set; }
         public string Description { get; set; }
+        public int NumberOfCar { get; set; }
         public string StorageAddress { get; set; }
+        public bool IsActive { get; set; }
         public string[] EntsString { get; set; }
         public string[] Pictures { get; set; }
         public EntCreateDto[] Ents { get; set; }

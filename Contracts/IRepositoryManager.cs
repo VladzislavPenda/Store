@@ -13,7 +13,8 @@ namespace Contracts
         IUsersRepository User { get; }
         IMeshRepository Mesh { get; }
         IEntRepository Ent { get; }
-
+        IOrderRepository Order { get; }
+        IStorageRepository Storage { get; }
         Task SaveAsync();
     }
 

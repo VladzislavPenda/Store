@@ -34,6 +34,7 @@ namespace Store.Controllers
             _appEnvironment = appEnvironment;
             _dataShaper = dataShaper;
         }
+        [HttpGet]
         public async Task<FileResult> Index()
         {
             var requestMessage = new HttpRequestMessage()

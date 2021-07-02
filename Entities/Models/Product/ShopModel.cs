@@ -4,9 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Entities.Models
 {
@@ -18,8 +15,9 @@ namespace Entities.Models
         public int? Year { get; set; }
         public int? HorsePower { get; set; }
         public int Price { get; set; }
-        public int MileAge { get; set; }
+        //public int MileAge { get; set; }
         public string Description { get; set; }
+        public bool IsActive { get; set; }
         public int NumberOfCar { get; set; }
         public Guid StorageId { get; set; }
         public Storage Storage { get; set; }
@@ -32,10 +30,11 @@ namespace Entities.Models
         public void Configure(EntityTypeBuilder<ShopModel> e)
         {
             e.Property(c => c.Id).HasColumnName("model_id");
-            e.Property(c => c.MileAge).HasColumnName("mile_age");
+            //e.Property(c => c.MileAge).HasColumnName("mile_age");
             e.Property(c => c.HorsePower).HasColumnName("horse_power");
             e.Property(c => c.Model).HasColumnName("model");
             e.Property(c => c.NumberOfCar).HasColumnName("number_of_car");
+            e.Property(c => c.IsActive).HasColumnName("is_active");
             e.Property(c => c.StorageId).HasColumnName("storage_id");
             e.Property(c => c.Description).HasColumnName("description");
             e.Property(c => c.Year).HasColumnName("year");

@@ -30,19 +30,16 @@ namespace Store.Controllers
     {
         private readonly IRepositoryManager _repository;
         private readonly IMapper _mapper;
-        private readonly IDataShaper<ModelFullInfo> _dataShaper;
         private readonly RepositoryContext _repositoryContext;
 
-        public ShopModelsController(IRepositoryManager repository, IMapper mapper, IDataShaper<ModelFullInfo> dataShaper, RepositoryContext repositoryContext)
+        public ShopModelsController(IRepositoryManager repository, IMapper mapper, RepositoryContext repositoryContext)
         {
             _repositoryContext = repositoryContext;
             _repository = repository;
             _mapper = mapper;
-            _dataShaper = dataShaper;
         }
 
         [HttpGet]
-        [HttpHead]
         public async Task<IActionResult> GetModelsWithParams([FromQuery] ModelsParameters modelsParameters)
         {
             if (!modelsParameters.ValidRange())
@@ -83,37 +80,34 @@ namespace Store.Controllers
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateModel([FromBody] QueryModelForCreating model)
         {
-            Guid storageId = await _repositoryContext.Storages
-                .Where(e => e.Address == model.StorageAddress)
-                .Select(e => e.Id)
-                .SingleOrDefaultAsync();
+            Guid storageId = await _repository.Storage.GetStorageByAddress(model.StorageAddress);
 
             if (storageId == Guid.Empty)
                 return Conflict();
 
-            Ent[] pictureEnts = new Ent[model.Pictures.Length];
-            for (int i = 0; i < pictureEnts.Length; i++)
-            {
-                pictureEnts[i] = new Ent
-                {
-                    Id = Guid.NewGuid(),
-                    Type = EntType.Picture,
-                    Value = model.Pictures[i]
-                };
-            }
-
-            _repository.Ent.CreateEntRange(pictureEnts);
-            await _repository.SaveAsync();
-
-            Guid[] pictureGuids = pictureEnts.Select(e => e.Id).ToArray();
-
-            //Guid[] ents = _repositoryContext.Ents
-            //    .Where(e => model.EntsString.Contains(e.Value))
-            //    .Select(e => e.Id)
-            //    .ToArray();
-
             Guid[] ents = await _repository.Ent.GetGuidsForCreatingQueryParams(model);
-            ents = pictureGuids.Concat(ents).ToArray();
+
+            if (model.Pictures != null)
+            {
+                Ent[] pictureEnts = new Ent[model.Pictures.Length];
+
+                for (int i = 0; i < pictureEnts.Length; i++)
+                {
+                    pictureEnts[i] = new Ent
+                    {
+                        Id = Guid.NewGuid(),
+                        Type = EntType.Picture,
+                        Value = model.Pictures[i]
+                    };
+                }
+
+                _repository.Ent.CreateEntRange(pictureEnts);
+                await _repository.SaveAsync();
+
+                Guid[] pictureGuids = pictureEnts.Select(e => e.Id).ToArray();
+                ents = pictureGuids.Concat(ents).ToArray();
+            }
+            
             Guid modelId = Guid.NewGuid();
             Mesh[] mesh = new Mesh[ents.Length];
             for (int i = 0; i < mesh.Length; i++)

@@ -27,6 +27,7 @@ namespace Repositories
             ShopModel[] shopModels = await _repositoryContext.ShopModels
                 .Include(e => e.Meshes)
                 .ThenInclude(c => c.Ent)
+                .Where(e => e.IsActive == true)
                 .FilterModels(modelsParametres)
                 .ToArrayAsync();
 

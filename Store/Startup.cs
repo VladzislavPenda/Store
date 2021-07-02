@@ -12,6 +12,7 @@ using Repositories;
 using Repositories.DataShaping;
 using Store.ActionFilters;
 using Store.Extensions;
+using Store.Server.Extensions;
 
 namespace Store
 {
@@ -25,9 +26,10 @@ namespace Store
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IDataShaper<ModelFullInfo>, DataShaper<ModelFullInfo>>();
+            //services.AddScoped<IDataShaper<ModelFullInfo>, DataShaper<ModelFullInfo>>();
             services.ConfigureSqlContext(Configuration);
             services.AddScoped<ValidationFilterAttribute>();
+            services.AddScoped<ShopServices>();
             services.ConfigureCors();
             services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
             services.AddAutoMapper(typeof(Startup), typeof(AutoMapperMarker));
