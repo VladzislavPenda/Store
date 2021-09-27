@@ -26,7 +26,6 @@ namespace Store
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddScoped<IDataShaper<ModelFullInfo>, DataShaper<ModelFullInfo>>();
             services.ConfigureSqlContext(Configuration);
             services.AddScoped<ValidationFilterAttribute>();
             services.AddScoped<ShopServices>();
@@ -70,7 +69,6 @@ namespace Store
             app.UseSwaggerUI(s =>
             {
                 s.SwaggerEndpoint("/swagger/v1/swagger.json", "Code Maze API v1");
-                //s.SwaggerEndpoint("/swagger/v2/swagger.json", "Code Maze API v2");
             });
 
             app.UseEndpoints(endpoints =>

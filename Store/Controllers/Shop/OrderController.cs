@@ -68,7 +68,7 @@ namespace Store.Server.Controllers.Shop
                 return NotFound();
 
             _repository.Order.DeleteOrder(order);
-            _repository.SaveAsync();
+            await _repository.SaveAsync();
             return NoContent();
         }
     }

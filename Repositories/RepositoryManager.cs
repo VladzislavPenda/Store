@@ -103,6 +103,13 @@ namespace Repositories
         }
 
 
-        public Task SaveAsync() => _repositoryContext.SaveChangesAsync();
+        public async Task SaveAsync() 
+        {
+            //if (await _repositoryContext.SaveChangesAsync() > 0)
+            //    Console.WriteLine(1);
+            //    return ;
+            //return;
+            await _repositoryContext.SaveChangesAsync();
+        }
     }
 }
