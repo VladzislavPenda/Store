@@ -1,7 +1,5 @@
 using Contracts;
-using Contracts.DataShape;
 using Entities;
-using Entities.DataTransferObjects.IncludeDTO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Repositories;
-using Repositories.DataShaping;
 using Store.ActionFilters;
 using Store.Extensions;
 using Store.Server.Extensions;
@@ -27,8 +24,6 @@ namespace Store
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureSqlContext(Configuration);
-            services.AddScoped<ValidationFilterAttribute>();
-            services.AddScoped<ShopServices>();
             services.ConfigureCors();
             services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
             services.AddAutoMapper(typeof(Startup), typeof(AutoMapperMarker));
@@ -42,6 +37,8 @@ namespace Store
             services.ConfigureJWT(Configuration);
             services.AddHttpContextAccessor();
             services.ConfigureSwagger();
+            services.AddScoped<ValidationFilterAttribute>();
+            services.AddScoped<ShopServices>();
             services.AddScoped<IAuthenticationManager, AuthenticationManager>();
             services.AddScoped<IRepositoryManager, RepositoryManager>();
         }

@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
 using Contracts;
-using Entities;
-
 using Entities.DataTransferObjects.EntDto;
 using Entities.Models.Product;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Store.Server.Controllers.Product
@@ -52,7 +48,7 @@ namespace Store.Server.Controllers.Product
                 return NotFound();
 
             _repository.Ent.DeleteEnt(ent);
-            _repository.SaveAsync();
+            await _repository.SaveAsync();
             return NoContent();
         }
     }

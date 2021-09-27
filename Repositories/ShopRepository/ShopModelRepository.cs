@@ -40,6 +40,7 @@ namespace Repositories
             return await FindByCondition(e => e.Id.Equals(id), trackChanges)
                 .Include(e => e.Meshes)
                 .ThenInclude(c => c.Ent)
+                .Where(e => e.IsActive == true)
                 .SingleOrDefaultAsync();
         }
 

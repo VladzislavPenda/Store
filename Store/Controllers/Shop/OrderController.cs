@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using Store.Server.Extensions;
 using System;
+using System.Net.Mime;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Store.Server.Controllers.Shop
@@ -30,8 +33,15 @@ namespace Store.Server.Controllers.Shop
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] QueryParams qry)
         {
+            JsonSerializerOptions options = new()
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                WriteIndented = true
+            };
             PagedEntity<Order> orders = await _repository.Order.GetOrders(qry);
-            return Ok(orders);
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(orders.MetaData));
+            string result = JsonSerializer.Serialize(orders.Models, options);
+            return Content(result, MediaTypeNames.Application.Json);
         }
 
         [Authorize]
@@ -41,11 +51,18 @@ namespace Store.Server.Controllers.Shop
             string accessToken = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
             string userEmail = _services.GetUserEmail(accessToken);
             ShopModel shopModel = await _repository.ShopModel.GetModel(modelId, trackChanges: true);
+            //int number = _repository.ShopModel.GetModel(modelId, trackChanges: true).Result.NumberOfCar;
+
 
             if (shopModel == null)
                 return NotFound();
 
-            shopModel.IsActive = false;
+            shopModel.NumberOfCar--;
+            if (shopModel.NumberOfCar == 0)
+            {
+                shopModel.IsActive = false;
+            }
+
             await _repository.SaveAsync();
 
             Order newOrder = new Order
@@ -56,6 +73,7 @@ namespace Store.Server.Controllers.Shop
             };
 
             _repository.Order.CreateOrder(newOrder);
+            await _repository.SaveAsync();
             return CreatedAtAction(nameof(Post), new { id = modelId }, newOrder);
         }
 

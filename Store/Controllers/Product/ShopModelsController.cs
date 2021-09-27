@@ -20,6 +20,7 @@ using Entities.DataTransferObjects.EntDto;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Query;
+using System.Net.Mime;
 
 namespace Store.Controllers
 {
@@ -54,7 +55,7 @@ namespace Store.Controllers
             PagedModels models = await _repository.ShopModel.GetPagedModelsWithParams(modelsParameters, trackChanges: false);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(models.MetaData));
             string result = JsonSerializer.Serialize(models.Models, options);
-            return Ok(result);
+            return Content(result, MediaTypeNames.Application.Json);
         }
 
         [HttpGet("{id}", Name = "ModelById")]

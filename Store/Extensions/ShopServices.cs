@@ -11,7 +11,7 @@ namespace Store.Server.Extensions
             JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
             SecurityToken jsonToken = handler.ReadToken(accessToken);
             JwtSecurityToken tokenS = jsonToken as JwtSecurityToken;
-            string userEmail = tokenS.Claims.ToArray()[2].Value;
+            string userEmail = tokenS.Claims.ToArray()[1].Value;
             return userEmail;
         }
     }
