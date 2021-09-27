@@ -51,6 +51,14 @@ namespace Repositories
             .ToListAsync();
         }
 
+        public async Task<IEnumerable<ShopModel>> GetStatistic()
+        {
+            IEnumerable<ShopModel> models = FindAll(false);
+
+            
+            return models;
+        }
+
         //public async Task<ModelFullInfo> GetModelFullInfo(int id, bool trackChanges)
         //{
         //    return await FindByCondition(c => c.Id.Equals(id), trackChanges)
