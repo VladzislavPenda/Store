@@ -12,7 +12,7 @@ namespace Contracts.IShopRepository
         Task<Order> GetOrder(Guid orderId);
         void CreateOrder(Order order);
         void DeleteOrder(Order order);
-        void GetOrdersStatistic(TimePeriod timePeriod);
+        Task<OrderStatisticDto> GetOrdersStatistic(TimePeriod timePeriod);
         
     }
 }

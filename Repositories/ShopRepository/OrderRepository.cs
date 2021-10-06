@@ -2,9 +2,7 @@
 using Entities;
 using Entities.DataTransferObjects.Order;
 using Entities.Models;
-using Entities.Models.Product;
 using Entities.RequestFeatures;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -21,8 +19,8 @@ namespace Repositories.ShopRepository
         }
         public async Task<PagedEntity<Order>> GetOrders(QueryParams queryParams)
         {
-            Order[] orders = FindAll(trackChanges: false)
-                .ToArray();
+            Order[] orders = await FindAll(trackChanges: false)
+                .ToArrayAsync();
 
             return PagedEntity<Order>.ToPagedModels(orders, queryParams.PageNumber, queryParams.PageSize);
 
@@ -35,7 +33,7 @@ namespace Repositories.ShopRepository
 
         public async Task<Order> GetOrder(Guid orderId)
         {
-            return FindByCondition(e => e.Id == orderId, trackChanges: true).SingleOrDefault();
+            return await FindByCondition(e => e.Id == orderId, trackChanges: true).SingleOrDefaultAsync();
         }
 
         public void DeleteOrder(Order order)
@@ -43,28 +41,27 @@ namespace Repositories.ShopRepository
             Delete(order);
         }
 
-        public void GetOrdersStatistic(TimePeriod timePeriod)
+        public async Task<OrderStatisticDto> GetOrdersStatistic(TimePeriod timePeriod)
         {
-            Order[] orders = FindAll(false)
+            Order[] orders = await FindAll(false)
                 .Include(e => e.ShopModel)
                 .ThenInclude(e => e.Meshes)
                 .ThenInclude(e => e.Ent)
-                .ToArray();
+                .ToArrayAsync();
 
-            var groupByMarks = orders.GroupBy(e => e.ShopModel.Meshes.Where(s => s.Ent.Type == EntType.Mark).Select(t => t.Ent.Value).First())
-                .Select(e => Tuple.Create(e.Key, e.Count()))
-                .ToArray();
-
-            var groupByCarcases = orders.GroupBy(e => e.ShopModel.Meshes.Where(s => s.Ent.Type == EntType.Carcase).Select(t => t.Ent.Value).FirstOrDefault())
-                .Select(e => Tuple.Create(e.Key, e.Count()))
-                .ToArray();
-
-            var priceStatisticsForPeriod = orders
+            int priceStatisticsForPeriod = orders
                 .Where(e => e.OrderDateTime > DateTime.Now.AddDays(-(double)timePeriod))
                 .Select(e => e.ShopModel.Price)
                 .Sum();
 
-            return;
+            var res = await _repository.OrderStatisticViews.ToArrayAsync();
+            OrderStatisticDto stats = new OrderStatisticDto
+            {
+                Stats = res,
+                Price = priceStatisticsForPeriod,
+            };
+
+            return stats;
         }
     }
 }

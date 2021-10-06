@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Contracts;
+using Entities.DataTransferObjects.Order;
 using Microsoft.AspNetCore.Mvc;
 using Store.Server.Extensions;
 using System.Linq;
@@ -27,10 +28,8 @@ namespace Store.Server.Controllers.Statistic
         [HttpGet("carType")]
         public async Task<IActionResult> GetCarTypeStatistic()
         {
-            //var models = await _repository.ShopModel.GetPagedModelsWithParams(false);
-            _repository.Order.GetOrdersStatistic(Entities.RequestFeatures.TimePeriod.ForThisMounth);
-            
-            return Ok();
+            OrderStatisticDto stats = await _repository.Order.GetOrdersStatistic(Entities.RequestFeatures.TimePeriod.ForThisMounth);   
+            return Ok(stats);
         }
     }
 }
