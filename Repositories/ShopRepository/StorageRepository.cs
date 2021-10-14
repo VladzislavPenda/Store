@@ -17,6 +17,7 @@ namespace Repositories.ShopRepository
         public async Task<Storage[]> GetStoragesAsync()
         {
             return await FindAll(trackChanges: false)
+                .Include(e => e.ShopModels)
                 .ToArrayAsync();
         }
 
@@ -30,10 +31,11 @@ namespace Repositories.ShopRepository
         public async Task<Storage> GetStorageById(Guid id)
         {
             return await FindByCondition(e => e.Id == id, trackChanges: false)
+                .Include(e => e.ShopModels)
                 .SingleOrDefaultAsync();
         }
 
-        public async void DeleteStorage(Storage storage)
+        public void DeleteStorage(Storage storage)
         {
             Delete(storage);
         }

@@ -1,19 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Contracts;
-using AutoMapper;
-using Contracts.DataShape;
-using Entities.DataTransferObjects.IncludeDTO;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Hosting; // для IWebHostEnvironment
-using System.IO;
-using Entities.RequestFeatures;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-using System.Collections;
+﻿using Contracts;
 using Entities.Models;
-using System.Collections.Generic;
-using System.Net.Http;
+using Entities.RequestFeatures;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using System;
+using System.IO;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Store.Controllers
 {
@@ -23,34 +18,33 @@ namespace Store.Controllers
     {
         private readonly IWebHostEnvironment _appEnvironment;
         private readonly IRepositoryManager _repository;
-        private readonly IMapper _mapper;
-        private readonly IDataShaper<ModelFullInfo> _dataShaper;
         HttpClient http = new HttpClient();
 
-        public FileController(IWebHostEnvironment appEnvironment, IRepositoryManager repository, IMapper mapper, IDataShaper<ModelFullInfo> dataShaper)
+        public FileController(IWebHostEnvironment appEnvironment, IRepositoryManager repository)
         {
-            _repository = repository;
-            _mapper = mapper;
             _appEnvironment = appEnvironment;
-            _dataShaper = dataShaper;
+            _repository = repository;
         }
         [HttpGet]
         public async Task<FileResult> Index()
         {
-            var requestMessage = new HttpRequestMessage()
+            ShopModel[] allModels = await _repository.ShopModel.GetAllShopModelsAsync(false);
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"Общее количество авто: {allModels.Length}\n");
+            foreach(ShopModel model in allModels)
             {
-                Method = new HttpMethod("GET"),
-                RequestUri = new Uri("https://localhost:44320/api/shopModels?pageSize=60")
-            };
-            requestMessage.Headers.Add("Accept", "text/xml");
-            var response = await http.SendAsync(requestMessage);
-            var responseBody = await response.Content.ReadAsStringAsync();
+                string modelInfo = $"{model.Model}\n" +
+                    $"  Стоимость: {model.Price}\n" +
+                    $"  Год производства: {model.Year}\n" +
+                    $"  Местонахождение: {model.Storage.Address}\n";
+                sb.Append(modelInfo);
+            }
+
             string file_path = Path.Combine(_appEnvironment.ContentRootPath, "File/text.txt");
             string writePath = "File/text.txt";
             using (StreamWriter sw = new StreamWriter(writePath, false, System.Text.Encoding.Default))
             {
-                
-                sw.WriteLine(responseBody);
+                sw.WriteLine(sb);
             }
             
             string file_type = "text/plain";

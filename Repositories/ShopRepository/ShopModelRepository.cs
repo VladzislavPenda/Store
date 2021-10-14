@@ -2,12 +2,10 @@
 using Entities;
 //using Entities.DataTransferObjects.IncludeDTO;
 using Entities.Models;
-using Entities.Models.Product;
 using Entities.RequestFeatures;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,7 +20,7 @@ namespace Repositories
             _repositoryContext = repositoryContext;
         }
 
-        public async Task<PagedModels> GetPagedModelsWithParams(ModelsParameters modelsParametres, bool trackChanges)
+        public async Task<PagedModels> GetPagedModelsWithParamsAsync(ModelsParameters modelsParametres, bool trackChanges)
         {
             ShopModel[] shopModels = await _repositoryContext.ShopModels
                 .Include(e => e.Meshes)
@@ -35,29 +33,31 @@ namespace Repositories
                 .ToPagedModels(shopModels, modelsParametres.PageNumber, modelsParametres.PageSize);
         }
 
-        public async Task<ShopModel> GetModel(Guid id, bool trackChanges)
+        public async Task<ShopModel> GetModelAsync(Guid id, bool trackChanges)
         {
             return await FindByCondition(e => e.Id.Equals(id), trackChanges)
                 .Include(e => e.Meshes)
                 .ThenInclude(c => c.Ent)
+                .Include(e => e.Storage)
                 .Where(e => e.IsActive == true)
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<ShopModel>> GetAllShopModels(bool trackChanges)
+        public async Task<ShopModel[]> GetAllShopModelsAsync(bool trackChanges)
         {
             return await FindAll(trackChanges)
+            .Include(e => e.Storage)
             .OrderBy(c => c.Year)
-            .ToListAsync();
+            .ToArrayAsync();
         }
 
-        public async Task<IEnumerable<ShopModel>> GetStatistic()
-        {
-            IEnumerable<ShopModel> models = FindAll(false);
+        //public async Task<IEnumerable<ShopModel>> GetStatistic()
+        //{
+        //    IEnumerable<ShopModel> models = await FindAll(false).ToArrayAsync();
 
             
-            return models;
-        }
+        //    return models;
+        //}
 
         //public async Task<ModelFullInfo> GetModelFullInfo(int id, bool trackChanges)
         //{

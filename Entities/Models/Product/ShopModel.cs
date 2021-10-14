@@ -15,7 +15,6 @@ namespace Entities.Models
         public int? Year { get; set; }
         public int? HorsePower { get; set; }
         public int Price { get; set; }
-        //public int MileAge { get; set; }
         public string Description { get; set; }
         public bool IsActive { get; set; }
         public int NumberOfCar { get; set; }
@@ -30,7 +29,6 @@ namespace Entities.Models
         public void Configure(EntityTypeBuilder<ShopModel> e)
         {
             e.Property(c => c.Id).HasColumnName("model_id");
-            //e.Property(c => c.MileAge).HasColumnName("mile_age");
             e.Property(c => c.HorsePower).HasColumnName("horse_power");
             e.Property(c => c.Model).HasColumnName("model");
             e.Property(c => c.NumberOfCar).HasColumnName("number_of_car");

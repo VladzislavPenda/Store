@@ -11,9 +11,9 @@ namespace Contracts
     {
         //Task<List<ShopModel>> GetModelsAsyncAll(bool trackChanges);
         //Task<PagedList<ShopModel>> GetModelsAsync(ModelsParameters modelsParametres, bool trackChanges);
-        Task<IEnumerable<ShopModel>> GetAllShopModels(bool trackChanges);
-        Task<PagedModels> GetPagedModelsWithParams(ModelsParameters modelsParametres, bool trackChanges);
-        Task<ShopModel> GetModel(Guid id, bool trackChanges);
+        Task<ShopModel[]> GetAllShopModelsAsync(bool trackChanges);
+        Task<PagedModels> GetPagedModelsWithParamsAsync(ModelsParameters modelsParametres, bool trackChanges);
+        Task<ShopModel> GetModelAsync(Guid id, bool trackChanges);
         //Task<ModelFullInfo> GetModelFullInfo(int id, bool trackChanges);
         void CreateModel(ShopModel shopModel, Guid modelId, Guid storageId);
         void DeleteModel(ShopModel shopModel);

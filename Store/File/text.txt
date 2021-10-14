@@ -1,1 +1,202 @@
-<ArrayOfModelFullInfo xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/Entities.DataTransferObjects.IncludeDTO"><ModelFullInfo><carcaseType>Седан</carcaseType><country>Япония</country><description>тестовая</description><driveType>Задний</driveType><engineType>Дизель</engineType><horsePower>200</horsePower><markName>Mazda</markName><mileAge>100000</mileAge><model>с5 test</model><modelId>69</modelId><pathToPicture>citroen_c5_2001.jpg</pathToPicture><phoneNumber>+375257591381</phoneNumber><price>1000</price><transmission>Механическая</transmission><year>2000</year></ModelFullInfo><ModelFullInfo><carcaseType>Седан</carcaseType><country>Германия</country><description>Резина зима, лето на дисках. Задняя балка в порядке.</description><driveType>Задний</driveType><engineType>Бензин</engineType><horsePower>178</horsePower><markName>Opel</markName><mileAge>5000</mileAge><model>Opel Omega</model><modelId>50</modelId><pathToPicture>14AAAgJqC-A-960.jpg</pathToPicture><phoneNumber>+375448492144</phoneNumber><price>1800</price><transmission>Автоматическая</transmission><year>1996</year></ModelFullInfo><ModelFullInfo><carcaseType>Седан</carcaseType><country>Германия</country><description>Всё обслужено - сел и поехал. Был подготовлен кузов к зимам. Бережная эксплуатация авто. Ничего не гремит, с подвеской всё в порядке. Всё в отличном состоянии: кузов, ходовая!</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>160</horsePower><markName>Audi</markName><mileAge>300000</mileAge><model>Audi 80 B4</model><modelId>45</modelId><pathToPicture>audi_80_b4.jpg</pathToPicture><phoneNumber>+375448432523</phoneNumber><price>1900</price><transmission>Автоматическая</transmission><year>1992</year></ModelFullInfo><ModelFullInfo><carcaseType>Хетчбек</carcaseType><country>Германия</country><description>Хорошее состояние.</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>180</horsePower><markName>Opel</markName><mileAge>304500</mileAge><model>Opel Astra F Рестайлинг</model><modelId>21</modelId><pathToPicture>Opel Astra F Рестайлинг.jpg</pathToPicture><phoneNumber>+375293161531</phoneNumber><price>2100</price><transmission>Механическая</transmission><year>1997</year></ModelFullInfo><ModelFullInfo><carcaseType>Седан</carcaseType><country>Швеция</country><description>Хорошее состояние.</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>240</horsePower><markName>Volvo</markName><mileAge>250000</mileAge><model>Volvo 850 I Рестайлинг</model><modelId>47</modelId><pathToPicture>pEAAAgOhuOA-960.jpg</pathToPicture><phoneNumber>+375448492523</phoneNumber><price>2400</price><transmission>Автоматическая</transmission><year>1996</year></ModelFullInfo><ModelFullInfo><carcaseType>Седан</carcaseType><country>Япония</country><description>Автомобиль в идеальном состоянии. На гарантии. Покупал новым в Минске. Я один хозяин. Максимальная комплектация Drive+ c ESP. Выпуск 2019, из салона выехал 01.03.2020</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>257</horsePower><markName>Honda</markName><mileAge>500000</mileAge><model>Honda Accord VI</model><modelId>40</modelId><pathToPicture>Honda Accord VI.jpg</pathToPicture><phoneNumber>+375448124111</phoneNumber><price>2800</price><transmission>Механическая</transmission><year>1999</year></ModelFullInfo><ModelFullInfo><carcaseType>Минивен</carcaseType><country>Франция</country><description>Автомобиль в идеальном состоянии. На гарантии. Покупал новым в Минске. Я один хозяин. Максимальная комплектация Drive+ c ESP. Выпуск 2019, из салона выехал 01.03.2020</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>170</horsePower><markName>Renault</markName><mileAge>311329</mileAge><model>Renault Scenic I</model><modelId>48</modelId><pathToPicture>Renault_Megane_Scenic_I_Phase_I.jpg</pathToPicture><phoneNumber>+375448453252</phoneNumber><price>3000</price><transmission>Механическая</transmission><year>1997</year></ModelFullInfo><ModelFullInfo><carcaseType>Минивен</carcaseType><country>Италия</country><description>Резина зима, лето на дисках. Задняя балка в порядке.</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>167</horsePower><markName>Fiat</markName><mileAge>280000</mileAge><model>Fiat Multipla I bipower</model><modelId>49</modelId><pathToPicture>3fbf91u-960.jpg</pathToPicture><phoneNumber>+375448421321</phoneNumber><price>3000</price><transmission>Автоматическая</transmission><year>2003</year></ModelFullInfo><ModelFullInfo><carcaseType>Минивен</carcaseType><country>Франция</country><description>Всё обслужено - сел и поехал. Был подготовлен кузов к зимам. Бережная эксплуатация авто. Ничего не гремит, с подвеской всё в порядке. Всё в отличном состоянии: кузов, ходовая!</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>140</horsePower><markName>Citroen</markName><mileAge>320000</mileAge><model>Citroen Evasion I Рестайлинг</model><modelId>57</modelId><pathToPicture>citroen_evasion_572985.jpg</pathToPicture><phoneNumber>+375448452355</phoneNumber><price>3270</price><transmission>Автоматическая</transmission><year>2000</year></ModelFullInfo><ModelFullInfo><carcaseType>Седан</carcaseType><country>Франция</country><description>Хорошее состояние. Замена расходников 100км назад.</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>190</horsePower><markName>Citroen</markName><mileAge>26700</mileAge><model>Citroen C5 I</model><modelId>52</modelId><pathToPicture>citroen_c5_2001.jpg</pathToPicture><phoneNumber>+375448352532</phoneNumber><price>3300</price><transmission>Автоматическая</transmission><year>2002</year></ModelFullInfo><ModelFullInfo><carcaseType>Минивен</carcaseType><country>Италия</country><description>Всё обслужено - сел и поехал. Был подготовлен кузов к зимам. Бережная эксплуатация авто. Ничего не гремит, с подвеской всё в порядке. Всё в отличном состоянии: кузов, ходовая!</description><driveType>Передний</driveType><engineType>Дизель</engineType><horsePower>189</horsePower><markName>Fiat</markName><mileAge>430000</mileAge><model>Fiat Scudo I</model><modelId>51</modelId><pathToPicture>Fiat_Scudo_I.jpg</pathToPicture><phoneNumber>+375448493252</phoneNumber><price>3500</price><transmission>Автоматическая</transmission><year>2000</year></ModelFullInfo><ModelFullInfo><carcaseType>Хетчбек</carcaseType><country>Япония</country><description>Хорошее состояние. Замена расходников 100км назад.</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>189</horsePower><markName>Mazda</markName><mileAge>300947</mileAge><model>Mazda 6 I</model><modelId>23</modelId><pathToPicture>Mazda 6 I.jpg</pathToPicture><phoneNumber>+375293554498</phoneNumber><price>3500</price><transmission>Автоматическая</transmission><year>2004</year></ModelFullInfo><ModelFullInfo><carcaseType>Внедорожник</carcaseType><country>Япония</country><description>Продажа по счет справке, авто снято с учета. Авто в достойном состоянии смотрите от 5 тыс. Цена стоит с учетом всех нюансов, но торг есть(по телефону не торгуюсь)! Осмотр авто только по выходным.</description><driveType>Полный</driveType><engineType>Бензин</engineType><horsePower>300</horsePower><markName>Lexus</markName><mileAge>563000</mileAge><model>RX I</model><modelId>8</modelId><pathToPicture>Lexus_RxI_1999.jpg</pathToPicture><phoneNumber>+375254682353</phoneNumber><price>3700</price><transmission>Автоматическая</transmission><year>1999</year></ModelFullInfo><ModelFullInfo><carcaseType>Седан</carcaseType><country>Германия</country><description>Проведена комплексная диагностика у официального дилера "Атлант-М Британия".</description><driveType>Задний</driveType><engineType>Бензин</engineType><horsePower>130</horsePower><markName>BMW</markName><mileAge>331000</mileAge><model>BMW 7 серия III (E38) Рестайлинг</model><modelId>35</modelId><pathToPicture>BMW 7 серия III (E38) Рестайлинг.jpg</pathToPicture><phoneNumber>+375293235325</phoneNumber><price>3850</price><transmission>Механическая</transmission><year>1999</year></ModelFullInfo><ModelFullInfo><carcaseType>Седан</carcaseType><country>Южная Корея</country><description>Резина зима, лето на дисках. Задняя балка в порядке.</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>145</horsePower><markName>Hyundai</markName><mileAge>298698</mileAge><model>Volkswagen Passat B5.5 Рестайлинг</model><modelId>34</modelId><pathToPicture>Volkswagen Passat B5.5 Рестайлинг.jpg</pathToPicture><phoneNumber>+375293124244</phoneNumber><price>3900</price><transmission>Механическая</transmission><year>2001</year></ModelFullInfo><ModelFullInfo><carcaseType>Хетчбек</carcaseType><country>Франция</country><description>2т.км. назад в Германии сделано большое техническое обслуживание( Новый сажевый фильтр, ГРМ,помпа, тормозные диски колодки , масло в АКПП и моторе т.д...) Бриф+сервисная книга; Автосалонам не беспокоить!</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>204</horsePower><markName>Citroen</markName><mileAge>160000</mileAge><model>Citroen C1 I Рестайлинг</model><modelId>19</modelId><pathToPicture>Citroen C1 I Рестайлинг.jpg</pathToPicture><phoneNumber>+375293554141</phoneNumber><price>4000</price><transmission>Механическая</transmission><year>2009</year></ModelFullInfo><ModelFullInfo><carcaseType>Универсал</carcaseType><country>Германия</country><description>Всё обслужено - сел и поехал. Был подготовлен кузов к зимам. Бережная эксплуатация авто. Ничего не гремит, с подвеской всё в порядке. Всё в отличном состоянии: кузов, ходовая!</description><driveType>Задний</driveType><engineType>Бензин</engineType><horsePower>201</horsePower><markName>BMW</markName><mileAge>420000</mileAge><model>BMW 3 серия III (E36)</model><modelId>42</modelId><pathToPicture>3110888.jpg</pathToPicture><phoneNumber>+375448123212</phoneNumber><price>4200</price><transmission>Автоматическая</transmission><year>1998</year></ModelFullInfo><ModelFullInfo><carcaseType>Хетчбек</carcaseType><country>Россия</country><description>Всё обслужено - сел и поехал. Был подготовлен кузов к зимам. Бережная эксплуатация авто. Ничего не гремит, с подвеской всё в порядке. Всё в отличном состоянии: кузов, ходовая!</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>200</horsePower><markName>LADA</markName><mileAge>151556</mileAge><model>Hyundai i30 I</model><modelId>9</modelId><pathToPicture>Hyundai i30 I.jpg</pathToPicture><phoneNumber>+375254684161</phoneNumber><price>5369</price><transmission>Автоматическая</transmission><year>2009</year></ModelFullInfo><ModelFullInfo><carcaseType>Седан</carcaseType><country>США</country><description>Комплектация: круиз-контроль, 4-х зонный климат-контроль, полный э/пакет, электропривод боковых зеркал, электроскладывание боковых зеркал, обогрев зеркал, подогрев руля, подогрев передних и задних сидений, светодиодные ходовые огни, омыватели передних фар, вентиляция передних и задних сидений, доводчик дверей, датчик света, зеркало с автоматическим затемнением, люк с электроприводом.</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>250</horsePower><markName>Ford</markName><mileAge>167000</mileAge><model>Ford Focus II Рестайлинг SES</model><modelId>14</modelId><pathToPicture>Ford Focus II Рестайлинг SES.jpg</pathToPicture><phoneNumber>+375254684236</phoneNumber><price>5555</price><transmission>Механическая</transmission><year>2008</year></ModelFullInfo><ModelFullInfo><carcaseType>Седан</carcaseType><country>Германия</country><description>Автомобиль в идеальном состоянии. На гарантии. Покупал новым в Минске. Я один хозяин. Максимальная комплектация Drive+ c ESP. Выпуск 2019, из салона выехал 01.03.2020</description><driveType>Полный</driveType><engineType>Дизель</engineType><horsePower>150</horsePower><markName>Audi</markName><mileAge>346303</mileAge><model>Audi A6 C5</model><modelId>55</modelId><pathToPicture>e265f8as-960.jpg</pathToPicture><phoneNumber>+375448235235</phoneNumber><price>5800</price><transmission>Автоматическая</transmission><year>2001</year></ModelFullInfo><ModelFullInfo><carcaseType>Седан</carcaseType><country>Япония</country><description>Хорошее состояние. Замена расходников 100км назад.</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>205</horsePower><markName>Mitsubishi</markName><mileAge>126000</mileAge><model>Mitsubishi Lancer X</model><modelId>43</modelId><pathToPicture>Mitsubishi+Lancer+Evolution+0.jpg</pathToPicture><phoneNumber>+375448124122</phoneNumber><price>5990</price><transmission>Механическая</transmission><year>2008</year></ModelFullInfo><ModelFullInfo><carcaseType>Минивен</carcaseType><country>Южная Корея</country><description>2т.км. назад в Германии сделано большое техническое обслуживание( Новый сажевый фильтр, ГРМ,помпа, тормозные диски колодки , масло в АКПП и моторе т.д...) Бриф+сервисная книга; Автосалонам не беспокоить!</description><driveType>Передний</driveType><engineType>Дизель</engineType><horsePower>167</horsePower><markName>Hyundai</markName><mileAge>315000</mileAge><model>Volkswagen Touran I</model><modelId>37</modelId><pathToPicture>Volkswagen Touran I.jpg</pathToPicture><phoneNumber>+375448412421</phoneNumber><price>6000</price><transmission>Автоматическая</transmission><year>2005</year></ModelFullInfo><ModelFullInfo><carcaseType>Внедорожник</carcaseType><country>Япония</country><description>Автомобиль в идеальном состоянии. На гарантии. Покупал новым в Минске. Я один хозяин. Максимальная комплектация Drive+ c ESP. Выпуск 2019, из салона выехал 01.03.2020</description><driveType>Полный</driveType><engineType>Бензин</engineType><horsePower>123</horsePower><markName>Mazda</markName><mileAge>273588</mileAge><model>Mazda CX-7 I Awd</model><modelId>28</modelId><pathToPicture>Mazda CX-7 I Awd.jpg</pathToPicture><phoneNumber>+375293512412</phoneNumber><price>6000</price><transmission>Механическая</transmission><year>2006</year></ModelFullInfo><ModelFullInfo><carcaseType>Седан</carcaseType><country>Корея</country><description>2т.км. назад в Германии сделано большое техническое обслуживание( Новый сажевый фильтр, ГРМ,помпа, тормозные диски колодки , масло в АКПП и моторе т.д...) Бриф+сервисная книга; Автосалонам не беспокоить!</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>206</horsePower><markName>Kia</markName><mileAge>92000</mileAge><model>Kia Cerato II</model><modelId>44</modelId><pathToPicture>unnamed.jpg</pathToPicture><phoneNumber>+375448213123</phoneNumber><price>6500</price><transmission>Автоматическая</transmission><year>2013</year></ModelFullInfo><ModelFullInfo><carcaseType>Хетчбек</carcaseType><country>Италия</country><description>2т.км. назад в Германии сделано большое техническое обслуживание( Новый сажевый фильтр, ГРМ,помпа, тормозные диски колодки , масло в АКПП и моторе т.д...) Бриф+сервисная книга; Автосалонам не беспокоить!</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>190</horsePower><markName>Fiat</markName><mileAge>126000</mileAge><model>Fiat 500 II</model><modelId>12</modelId><pathToPicture>Fiat 500 II.jpg</pathToPicture><phoneNumber>+375254684135</phoneNumber><price>6700</price><transmission>Автоматическая</transmission><year>2010</year></ModelFullInfo><ModelFullInfo><carcaseType>Хетчбек</carcaseType><country>Франция</country><description>Проведена комплексная диагностика у официального дилера "Атлант-М Британия".</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>193</horsePower><markName>Peugeot</markName><mileAge>135000</mileAge><model>Peugeot 208 I</model><modelId>26</modelId><pathToPicture>Peugeot 208 I.jpg</pathToPicture><phoneNumber>+375293554493</phoneNumber><price>7250</price><transmission>Механическая</transmission><year>2013</year></ModelFullInfo><ModelFullInfo><carcaseType>Хетчбек</carcaseType><country>Япония</country><description>Всё обслужено - сел и поехал. Был подготовлен кузов к зимам. Бережная эксплуатация авто. Ничего не гремит, с подвеской всё в порядке. Всё в отличном состоянии: кузов, ходовая!</description><driveType>Передний</driveType><engineType>Электро</engineType><horsePower>150</horsePower><markName>Nissan</markName><mileAge>76000</mileAge><model>Nissan Leaf I</model><modelId>22</modelId><pathToPicture>Nissan Leaf I.jpg</pathToPicture><phoneNumber>+375293554443</phoneNumber><price>7390</price><transmission>Механическая</transmission><year>2011</year></ModelFullInfo><ModelFullInfo><carcaseType>Внедорожник</carcaseType><country>Германия</country><description>Резина зима, лето на дисках. Задняя балка в порядке.</description><driveType>Полный</driveType><engineType>Бензин</engineType><horsePower>260</horsePower><markName>BMW</markName><mileAge>345000</mileAge><model>BMW X5 I (E53) GT</model><modelId>46</modelId><pathToPicture>BMW X5 I (E53) GT.jpg</pathToPicture><phoneNumber>+375448495232</phoneNumber><price>7500</price><transmission>Механическая</transmission><year>2002</year></ModelFullInfo><ModelFullInfo><carcaseType>Седан</carcaseType><country>Франция</country><description>новая тачка</description><driveType>Задний</driveType><engineType>Бензин</engineType><horsePower>300</horsePower><markName>Renault</markName><mileAge>5000</mileAge><model>new</model><modelId>67</modelId><pathToPicture>auto.png</pathToPicture><phoneNumber>+372257591380</phoneNumber><price>8000</price><transmission>Механическая</transmission><year>2000</year></ModelFullInfo><ModelFullInfo><carcaseType>Седан</carcaseType><country>Германия</country><description>Хорошее состояние. Замена расходников 100км назад.</description><driveType>Задний</driveType><engineType>Бензин</engineType><horsePower>185</horsePower><markName>Mercedes-Benz</markName><mileAge>285000</mileAge><model>Mercedes-Benz CL-klasse AMG I (C215)</model><modelId>32</modelId><pathToPicture>Mercedes-Benz CL-klasse AMG I (C215).jpg</pathToPicture><phoneNumber>+375293235233</phoneNumber><price>8200</price><transmission>Механическая</transmission><year>2001</year></ModelFullInfo><ModelFullInfo><carcaseType>Седан</carcaseType><country>Южная Корея</country><description>Всё обслужено - сел и поехал. Был подготовлен кузов к зимам. Бережная эксплуатация авто. Ничего не гремит, с подвеской всё в порядке. Всё в отличном состоянии: кузов, ходовая!</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>180</horsePower><markName>Hyundai</markName><mileAge>185000</mileAge><model>Volkswagen Passat CC I</model><modelId>54</modelId><pathToPicture>VW_CC_(Facelift)_–_Frontansicht,_1._April_2012,_Essen.jpg</pathToPicture><phoneNumber>+375448423523</phoneNumber><price>8900</price><transmission>Механическая</transmission><year>2010</year></ModelFullInfo><ModelFullInfo><carcaseType>Пикап</carcaseType><country>Южная Корея</country><description>Резина зима, лето на дисках. Задняя балка в порядке.</description><driveType>Передний</driveType><engineType>Дизель</engineType><horsePower>201</horsePower><markName>Hyundai</markName><mileAge>281606</mileAge><model>Volkswagen Crafter I</model><modelId>18</modelId><pathToPicture>Volkswagen Crafter I.jpg</pathToPicture><phoneNumber>+375293554498</phoneNumber><price>9850</price><transmission>Автоматическая</transmission><year>2008</year></ModelFullInfo><ModelFullInfo><carcaseType>Седан</carcaseType><country>Германия</country><description>Комплектация: круиз-контроль, 4-х зонный климат-контроль, полный э/пакет, электропривод боковых зеркал, электроскладывание боковых зеркал, обогрев зеркал, подогрев руля, подогрев передних и задних сидений, светодиодные ходовые огни, омыватели передних фар, вентиляция передних и задних сидений, доводчик дверей, датчик света, зеркало с автоматическим затемнением, люк с электроприводом.</description><driveType>Полный</driveType><engineType>Бензин</engineType><horsePower>234</horsePower><markName>Mercedes-Benz</markName><mileAge>151000</mileAge><model>Mercedes-Benz E-Класс III (W211/S211) Рестайлинг</model><modelId>15</modelId><pathToPicture>Mercedes-Benz E-Класс III .jpg</pathToPicture><phoneNumber>+375254235232</phoneNumber><price>9999</price><transmission>Механическая</transmission><year>2007</year></ModelFullInfo><ModelFullInfo><carcaseType>Универсал</carcaseType><country>Испания</country><description>Всё обслужено - сел и поехал. Был подготовлен кузов к зимам. Бережная эксплуатация авто. Ничего не гремит, с подвеской всё в порядке. Всё в отличном состоянии: кузов, ходовая!</description><driveType>Передний</driveType><engineType>Дизель</engineType><horsePower>208</horsePower><markName>Seat</markName><mileAge>199000</mileAge><model>Seat Leon III</model><modelId>20</modelId><pathToPicture>Seat Leon III.jpg</pathToPicture><phoneNumber>+375293516164</phoneNumber><price>10200</price><transmission>Автоматическая</transmission><year>2014</year></ModelFullInfo><ModelFullInfo><carcaseType>Универсал</carcaseType><country>Франция</country><description>Хорошее состояние. Замена расходников 100км назад.</description><driveType>Передний</driveType><engineType>Дизель</engineType><horsePower>198</horsePower><markName>Renault</markName><mileAge>157000</mileAge><model>Renault Megane III Рестайлинг 2 LIMITED</model><modelId>25</modelId><pathToPicture>Renault Megane III Рестайлинг 2 LIMITED.jpg</pathToPicture><phoneNumber>+375293554493</phoneNumber><price>10200</price><transmission>Механическая</transmission><year>2015</year></ModelFullInfo><ModelFullInfo><carcaseType>Купе</carcaseType><country>Япония</country><description>Всё обслужено - сел и поехал. Был подготовлен кузов к зимам. Бережная эксплуатация авто. Ничего не гремит, с подвеской всё в порядке. Всё в отличном состоянии: кузов, ходовая!</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>179</horsePower><markName>Honda</markName><mileAge>96000</mileAge><model>Honda Accord VIII Рестайлинг LX-S</model><modelId>30</modelId><pathToPicture>Honda Accord VIII Рестайлинг LX-S.jpg</pathToPicture><phoneNumber>+375291241221</phoneNumber><price>10480</price><transmission>Механическая</transmission><year>2011</year></ModelFullInfo><ModelFullInfo><carcaseType>Седан</carcaseType><country>Южная Корея</country><description>Проведена комплексная диагностика у официального дилера "Атлант-М Британия".</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>190</horsePower><markName>Hyundai</markName><mileAge>71000</mileAge><model>Volkswagen Polo V Рестайлинг</model><modelId>41</modelId><pathToPicture>2cfd47as-960 (1).jpg</pathToPicture><phoneNumber>+375442352355</phoneNumber><price>10500</price><transmission>Автоматическая</transmission><year>2017</year></ModelFullInfo><ModelFullInfo><carcaseType>Хетчбек</carcaseType><country>Корея</country><description>Автомобиль в идеальном состоянии. На гарантии. Покупал новым в Минске. Я один хозяин. Максимальная комплектация Drive+ c ESP. Выпуск 2019, из салона выехал 01.03.2020</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>198</horsePower><markName>Kia</markName><mileAge>78000</mileAge><model>Kia Soul II</model><modelId>17</modelId><pathToPicture>Kia Soul II.jpg</pathToPicture><phoneNumber>+375293531411</phoneNumber><price>11000</price><transmission>Механическая</transmission><year>2016</year></ModelFullInfo><ModelFullInfo><carcaseType>Универсал</carcaseType><country>США</country><description>Автомобиль находится на торговой площадке по адресу ул. Притыцкого, 60В. Дополнительная выгода при обмене своего автомобиля на наш. Проведена комплексная диагностика.</description><driveType>Гибридный синергетический</driveType><engineType>Бензин</engineType><horsePower>178</horsePower><markName>Ford</markName><mileAge>55671</mileAge><model>Fusion USA II</model><modelId>1</modelId><pathToPicture>Ford_Fusion_2016.jpg</pathToPicture><phoneNumber>+375257591381</phoneNumber><price>14450</price><transmission>Автоматическая</transmission><year>2016</year></ModelFullInfo><ModelFullInfo><carcaseType>Пикап</carcaseType><country>США</country><description>Всё обслужено - сел и поехал. Был подготовлен кузов к зимам. Бережная эксплуатация авто. Ничего не гремит, с подвеской всё в порядке. Всё в отличном состоянии: кузов, ходовая!</description><driveType>Задний</driveType><engineType>Дизель</engineType><horsePower>256</horsePower><markName>Ford</markName><mileAge>221000</mileAge><model>Ford Ranger III</model><modelId>16</modelId><pathToPicture>Ford Ranger III.jpg</pathToPicture><phoneNumber>+375293554498</phoneNumber><price>14500</price><transmission>Автоматическая</transmission><year>2013</year></ModelFullInfo><ModelFullInfo><carcaseType>Седан</carcaseType><country>Германия</country><description>Хорошее состояние. Замена расходников 100км назад.</description><driveType>Задний</driveType><engineType>Бензин</engineType><horsePower>2007</horsePower><markName>Mercedes-Benz</markName><mileAge>161600</mileAge><model>Mercedes-Benz S-Класс V (W221)</model><modelId>39</modelId><pathToPicture>Mercedes-Benz S-Класс V (W221).jpg</pathToPicture><phoneNumber>+375448414121</phoneNumber><price>14800</price><transmission>Механическая</transmission><year>243</year></ModelFullInfo><ModelFullInfo><carcaseType>Седан</carcaseType><country>США</country><description>Всё обслужено - сел и поехал. Был подготовлен кузов к зимам. Бережная эксплуатация авто. Ничего не гремит, с подвеской всё в порядке. Всё в отличном состоянии: кузов, ходовая!</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>175</horsePower><markName>Chevrolet</markName><mileAge>80500</mileAge><model>Chevrolet Malibu IX Hybrid</model><modelId>31</modelId><pathToPicture>Chevrolet Malibu IX Hybrid.jpg</pathToPicture><phoneNumber>+375212412421</phoneNumber><price>14900</price><transmission>Механическая</transmission><year>2016</year></ModelFullInfo><ModelFullInfo><carcaseType>Универсал</carcaseType><country>Южная Корея</country><description>Причина продажи - покупка еще одного буса для работы. Бываю в Минске.</description><driveType>Передний</driveType><engineType>Дизель</engineType><horsePower>180</horsePower><markName>Hyundai</markName><mileAge>231000</mileAge><model>Volkswagen Passat B8 1.6TDI</model><modelId>11</modelId><pathToPicture>Volkswagen Passat B8 1.6TDI.jpg</pathToPicture><phoneNumber>+375254626326</phoneNumber><price>14999</price><transmission>Автоматическая</transmission><year>2016</year></ModelFullInfo><ModelFullInfo><carcaseType>Седан</carcaseType><country>Германия</country><description>Хорошее состояние. Замена расходников 100км назад.</description><driveType>Задний</driveType><engineType>Бензин</engineType><horsePower>245</horsePower><markName>BMW</markName><mileAge>120000</mileAge><model>BMW 3 серия VI (F30/F31) 328! 245 л.с.!!!</model><modelId>29</modelId><pathToPicture>BMW 3 серия VI F30-F31.jpg</pathToPicture><phoneNumber>+375291232132</phoneNumber><price>15300</price><transmission>Механическая</transmission><year>2014</year></ModelFullInfo><ModelFullInfo><carcaseType>Универсал</carcaseType><country>Германия</country><description>BMW f31 LCI (рестайлинг). Автомобиль из Европы. Дата изготовления: 2017-02. Надежный и экономичный мотор B47. Отличное техническое состояние.</description><driveType>Задний</driveType><engineType>Дизель</engineType><horsePower>180</horsePower><markName>BMW</markName><mileAge>170000</mileAge><model>3 серия</model><modelId>3</modelId><pathToPicture>BMW_3_2017.jpg</pathToPicture><phoneNumber>+375254684311</phoneNumber><price>15490</price><transmission>Автоматическая</transmission><year>2017</year></ModelFullInfo><ModelFullInfo><carcaseType>Внедорожник</carcaseType><country>Корея</country><description>2т.км. назад в Германии сделано большое техническое обслуживание( Новый сажевый фильтр, ГРМ,помпа, тормозные диски колодки , масло в АКПП и моторе т.д...) Бриф+сервисная книга; Автосалонам не беспокоить!</description><driveType>Передний</driveType><engineType>Бензин</engineType><horsePower>210</horsePower><markName>Kia</markName><mileAge>67123</mileAge><model>Kia Sportage IV Рестайлинг</model><modelId>56</modelId><pathToPicture>unnamed (1).jpg</pathToPicture><phoneNumber>+375448235253</phoneNumber><price>18300</price><transmission>Автоматическая</transmission><year>2019</year></ModelFullInfo><ModelFullInfo><carcaseType>Седан</carcaseType><country>Япония</country><description>Автомобиль в отличном состоянии, богатая комплектация.</description><driveType>Гибридный синергетический</driveType><engineType>Бензин</engineType><horsePower>150</horsePower><markName>Lexus</markName><mileAge>150000</mileAge><model>ES VI</model><modelId>7</modelId><pathToPicture>Lexus_EsV6_2012.jpg</pathToPicture><phoneNumber>+375254621321</phoneNumber><price>18500</price><transmission>Автоматическая</transmission><year>2012</year></ModelFullInfo><ModelFullInfo><carcaseType>Седан</carcaseType><country>Германия</country><description>Хорошее состояние.</description><driveType>Полный</driveType><engineType>Бензин</engineType><horsePower>200</horsePower><markName>Mercedes-Benz</markName><mileAge>240000</mileAge><model>Mercedes-Benz S-Класс V (W221) Рестайлинг</model><modelId>33</modelId><pathToPicture>Mercedes-Benz S-Класс V (W221) Рестайлинг.jpg</pathToPicture><phoneNumber>+375293124214</phoneNumber><price>18500</price><transmission>Механическая</transmission><year>2010</year></ModelFullInfo><ModelFullInfo><carcaseType>Пикап</carcaseType><country>Германия</country><description>Проведена комплексная диагностика у официального дилера "Атлант-М Британия".</description><driveType>Полный</driveType><engineType>Дизель</engineType><horsePower>200</horsePower><markName>BMW</markName><mileAge>137600</mileAge><model>BMW 3 серия VI (F34) Gran Turismo XDrive</model><modelId>53</modelId><pathToPicture>aa74e6s-960.jpg</pathToPicture><phoneNumber>+375448414214</phoneNumber><price>20900</price><transmission>Механическая</transmission><year>2016</year></ModelFullInfo><ModelFullInfo><carcaseType>Внедорожник</carcaseType><country>Германия</country><description>Автомобиль находится на торговой площадке по адресу ул. Притыцкого, 60В. Дополнительная выгода при обмене своего автомобиля на наш.</description><driveType>Полный</driveType><engineType>Дизель</engineType><horsePower>200</horsePower><markName>BMW</markName><mileAge>190000</mileAge><model>BMW X5 II (E70) Рестайлинг N</model><modelId>13</modelId><pathToPicture>BMW X5 II (E70) Рестайлинг N.jpg</pathToPicture><phoneNumber>+375254686232</phoneNumber><price>21000</price><transmission>Механическая</transmission><year>2010</year></ModelFullInfo></ArrayOfModelFullInfo>
+Общее количество авто: 50
+Jeep Grand Cherokee IV (WK2) Рестайлинг LIMITED
+  Стоимость: 56500
+  Год производства: 2019
+  Местонахождение: пр. Независимости 16, Минск
+Fiat Ducato (290/295) Combi 9 мест
+  Стоимость: 34000
+  Год производства: 2019
+  Местонахождение: пр. Независимости 16, Минск
+LADA Vesta I Comfort CNG
+  Стоимость: 12990
+  Год производства: 2020
+  Местонахождение: пр. Независимости 16, Минск
+Mercedes-Benz GLB-Класс (X247) 250 4MATIC Progressive
+  Стоимость: 46500
+  Год производства: 2020
+  Местонахождение: пр. Независимости 16, Минск
+Mercedes-Benz A-Класс IV (W177/V177) 200 Sport
+  Стоимость: 30900
+  Год производства: 2020
+  Местонахождение: пр. Независимости 16, Минск
+LADA XRAY I
+  Стоимость: 30200
+  Год производства: 2020
+  Местонахождение: пр. Независимости 16, Минск
+BMW X7 I (G07)
+  Стоимость: 113950
+  Год производства: 2020
+  Местонахождение: пр. Независимости 16, Минск
+Mercedes-Benz GLS-Класс II (X167) 400 d 4MATIC Luxury
+  Стоимость: 112900
+  Год производства: 2020
+  Местонахождение: пр. Независимости 16, Минск
+Mercedes-Benz GLE Coupe II (C167) 350 d 4MATIC Coupe
+  Стоимость: 88900
+  Год производства: 2020
+  Местонахождение: пр. Независимости 16, Минск
+Mercedes-Benz CLA-Класс II (C118) 200 Sport
+  Стоимость: 39550
+  Год производства: 2020
+  Местонахождение: пр. Независимости 16, Минск
+BMW X6 M III (F96) Competition
+  Стоимость: 150000
+  Год производства: 2020
+  Местонахождение: пр. Независимости 16, Минск
+Audi Q3 Sportback I (F3)
+  Стоимость: 45000
+  Год производства: 2020
+  Местонахождение: пр. Независимости 16, Минск
+Mercedes-Benz E-Класс V (213/238) Рестайлинг E220d Sport
+  Стоимость: 58990
+  Год производства: 2020
+  Местонахождение: пр. Независимости 16, Минск
+Fiat Doblo II Рестайлинг Combi Maxi
+  Стоимость: 20568
+  Год производства: 2020
+  Местонахождение: пр. Независимости 16, Минск
+LADA 4x4 NIVA 2121
+  Стоимость: 7550
+  Год производства: 2020
+  Местонахождение: пр. Независимости 16, Минск
+Mercedes-Benz GLB-Класс (X247) 200 Style
+  Стоимость: 41900
+  Год производства: 2020
+  Местонахождение: пр. Независимости 16, Минск
+BMW 2 серия II (F44) Gran Coupe 218i MSport
+  Стоимость: 39900
+  Год производства: 2020
+  Местонахождение: пр. Независимости 16, Минск
+BMW 5 серия VII (G30/G31) 530d MSport
+  Стоимость: 65500
+  Год производства: 2020
+  Местонахождение: пр. Независимости 16, Минск
+BMW X6 III (G06) xDrive30d M Sport Pro
+  Стоимость: 100900
+  Год производства: 2020
+  Местонахождение: пр. Независимости 16, Минск
+BMW X4 II (G02) 20d xDrive MSport
+  Стоимость: 63990
+  Год производства: 2020
+  Местонахождение: пр. Независимости 16, Минск
+Kia Sorento IV Premium
+  Стоимость: 3600000
+  Год производства: 2020
+  Местонахождение: пр. Независимости 16, Минск
+Fiat Doblo II Рестайлинг XL
+  Стоимость: 19400
+  Год производства: 2020
+  Местонахождение: пр. Независимости 16, Минск
+Fiat Doblo II Рестайлинг Maxi
+  Стоимость: 17700
+  Год производства: 2020
+  Местонахождение: пр. Независимости 16, Минск
+Volkswagen Polo VI
+  Стоимость: 37990
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Mercedes-Benz E-Класс V (213/238) Рестайлинг 200 4MATIC Sport
+  Стоимость: 48900
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+LADA Granta I Рестайлинг
+  Стоимость: 21500
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Kia K5 III Classic
+  Стоимость: 25300
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Volkswagen Polo VI
+  Стоимость: 37560
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Volkswagen e-Lavida I
+  Стоимость: 21730
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Volkswagen Polo VI
+  Стоимость: 34700
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Hyundai Palisade I 2.2D
+  Стоимость: 4400000
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Volkswagen Polo VI
+  Стоимость: 39040
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+LADA Vesta I
+  Стоимость: 32200
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Volkswagen Polo VI
+  Стоимость: 39690
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Fiat Ducato (290/295)
+  Стоимость: 94750
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Hyundai Santa Fe IV (TM) 2.2d
+  Стоимость: 3470000
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Volkswagen Polo VI
+  Стоимость: 46590
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Kia Carnival (KA4) 2.2D
+  Стоимость: 3500000
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Jeep Wrangler IV (JL)
+  Стоимость: 78800
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Mercedes-Benz GLA-Класс II (H247) 200 Progressive
+  Стоимость: 38900
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Audi Q7 II (4M) Рестайлинг 45 TDI quattro tiptronic
+  Стоимость: 81900
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Kia K5 III Prestige
+  Стоимость: 33290
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Renault Zoe I Рестайлинг K-ZE
+  Стоимость: 16550
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Volkswagen Polo VI
+  Стоимость: 45350
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Volkswagen Tiguan II Рестайлинг PA
+  Стоимость: 64950
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Volkswagen Polo VI
+  Стоимость: 42950
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Hyundai Santa Fe IV (TM) 2.2 Hi-Tech
+  Стоимость: 3850000
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Volkswagen Tiguan II Рестайлинг
+  Стоимость: 75620
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+Toyota Yaris IV (XP210) GR
+  Стоимость: 51000
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+LADA Vesta I CNG
+  Стоимость: 12990
+  Год производства: 2021
+  Местонахождение: пр. Независимости 16, Минск
+

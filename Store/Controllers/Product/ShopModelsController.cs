@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
-using Contracts.DataShape;
 using Entities;
 using Entities.DataTransferObjects;
-using Entities.DataTransferObjects.IncludeDTO;
 using Entities.DataTransferObjects.QueryModelDto;
 using Entities.Models;
 using Entities.Models.Product;
@@ -13,14 +11,10 @@ using Microsoft.EntityFrameworkCore;
 using Store.ActionFilters;
 using System;
 using System.Linq;
+using System.Net.Mime;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Entities.DataTransferObjects.EntDto;
-using System.Linq.Expressions;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore.Query;
-using System.Net.Mime;
 
 namespace Store.Controllers
 {
@@ -52,7 +46,7 @@ namespace Store.Controllers
                 WriteIndented = true
             };
 
-            PagedModels models = await _repository.ShopModel.GetPagedModelsWithParams(modelsParameters, trackChanges: false);
+            PagedModels models = await _repository.ShopModel.GetPagedModelsWithParamsAsync(modelsParameters, trackChanges: false);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(models.MetaData));
             string result = JsonSerializer.Serialize(models.Models, options);
             return Content(result, MediaTypeNames.Application.Json);
@@ -61,7 +55,7 @@ namespace Store.Controllers
         [HttpGet("{id}", Name = "ModelById")]
         public async Task<IActionResult> GetModel(Guid id)
         {
-            ShopModel model = await _repository.ShopModel.GetModel(id, trackChanges: false);
+            ShopModel model = await _repository.ShopModel.GetModelAsync(id, trackChanges: false);
             if (model == null)
             {
                 return NotFound();
@@ -74,7 +68,7 @@ namespace Store.Controllers
             };
 
             string modelForResponse = JsonSerializer.Serialize(model, options);
-            return Ok(modelForResponse);
+            return Content(modelForResponse, MediaTypeNames.Application.Json);
         }
 
         [HttpPost]
@@ -130,7 +124,7 @@ namespace Store.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteModel(Guid id)
         {
-            ShopModel model = await _repository.ShopModel.GetModel(id, trackChanges: true);
+            ShopModel model = await _repository.ShopModel.GetModelAsync(id, trackChanges: true);
             if (model == null)
             {
                 return NotFound();
@@ -149,7 +143,7 @@ namespace Store.Controllers
         //[ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> UpdateModel(Guid id, [FromBody]QueryModelForUpdating model)
         {
-            ShopModel modelEntity = await _repository.ShopModel.GetModel(id, trackChanges: true);
+            ShopModel modelEntity = await _repository.ShopModel.GetModelAsync(id, trackChanges: true);
             if (modelEntity == null)
             {
                 return NotFound();

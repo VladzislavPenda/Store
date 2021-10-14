@@ -50,7 +50,7 @@ namespace Store.Server.Controllers.Shop
         {
             string accessToken = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
             string userEmail = _services.GetUserEmail(accessToken);
-            ShopModel shopModel = await _repository.ShopModel.GetModel(modelId, trackChanges: true);
+            ShopModel shopModel = await _repository.ShopModel.GetModelAsync(modelId, trackChanges: true);
 
             if (shopModel == null)
                 return NotFound();

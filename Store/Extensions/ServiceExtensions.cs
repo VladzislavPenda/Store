@@ -57,7 +57,7 @@ namespace Store.Extensions
 
         public static void ConfigureRateLimitingOptions(this IServiceCollection services)
         {
-            var rateLimitRules = new List<RateLimitRule>
+            List<RateLimitRule> rateLimitRules = new List<RateLimitRule>
             {
                 new RateLimitRule
                 {
@@ -78,7 +78,7 @@ namespace Store.Extensions
 
         public static void ConfigureIdentity(this IServiceCollection services)
         {
-            var builder = services.AddIdentityCore<User>(o =>
+            IdentityBuilder builder = services.AddIdentityCore<User>(o =>
             {
                 o.Password.RequireDigit = true;
                 o.Password.RequireLowercase = false;
@@ -87,16 +87,16 @@ namespace Store.Extensions
                 o.Password.RequiredLength = 10;
                 o.User.RequireUniqueEmail = true;
             });
-            builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole),
-           builder.Services);
+
+            builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
             builder.AddEntityFrameworkStores<RepositoryContext>()
-            .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders();
         }
 
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
         {
-            var jwtSettings = configuration.GetSection("JwtSettings");
-            var secretKey = Environment.GetEnvironmentVariable("SECRET");
+            IConfigurationSection jwtSettings = configuration.GetSection("JwtSettings");
+            string secretKey = Environment.GetEnvironmentVariable("SECRET");
             services.AddAuthentication(opt => {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;

@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.Models.Shop;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Store.Server.Controllers.Shop
@@ -40,7 +42,30 @@ namespace Store.Server.Controllers.Shop
             if (storage == null)
                 return NotFound();
 
-            return Ok();
+            return Ok(storage);
+        }
+
+        [HttpPost()]
+        public async Task<IActionResult> CreateStorage([FromBody] Storage storage) 
+        {
+            _repository.Storage.CreateStorage(storage);
+            await _repository.SaveAsync();
+            return CreatedAtAction(nameof(CreateStorage), new { id = storage.Id }, storage);
+        }
+
+        [HttpDelete("{storageId}")]
+        public async Task<IActionResult> DeleteStorage(Guid storageId)
+        {
+            Storage storage = await _repository.Storage.GetStorageById(storageId);
+            if (storage == null)
+                return NotFound();
+
+            if (storage.ShopModels.Count > 0)
+               return Problem("There are cars in storage", statusCode: StatusCodes.Status405MethodNotAllowed);
+
+            _repository.Storage.DeleteStorage(storage);
+            await _repository.SaveAsync();
+            return NoContent();
         }
     }
 }

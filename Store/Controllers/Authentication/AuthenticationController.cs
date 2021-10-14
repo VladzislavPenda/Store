@@ -32,8 +32,8 @@ namespace Store.Controllers
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDto userForRegistrationDto)
         {
-            var user = _mapper.Map<User>(userForRegistrationDto);
-            var result = await _userManager.CreateAsync(user, userForRegistrationDto.Password);
+            User user = _mapper.Map<User>(userForRegistrationDto);
+            IdentityResult result = await _userManager.CreateAsync(user, userForRegistrationDto.Password);
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
@@ -46,16 +46,10 @@ namespace Store.Controllers
             else
             {
                 EmailService emailService = new EmailService();
-                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                // создаем ссылку для подтверждения
-                var callbackUrl = Url.Action("authentication", "api", new { userId = user.Id, code = code },
-                           protocol: Request.Scheme);
-
-                
-                // отправка письма
-                await emailService.SendEmailAsync(user.Email, "Подтверждение электронной почты",
-                           "Для завершения регистрации перейдите по ссылке:: <a href=\""
-                                                           + callbackUrl + "\">завершить регистрацию</a>");
+                string code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                string callbackUrl = Url.Action("authentication", "api", new { userId = user.Id, code = code }, protocol: Request.Scheme);
+                await emailService.SendEmailAsync(user.Email, "Подтверждение электронной почты", 
+                    "Для завершения регистрации перейдите по ссылке:: <a href=\"" + callbackUrl + "\">завершить регистрацию</a>");
             }
 
             await _userManager.AddToRolesAsync(user, userForRegistrationDto.Roles);
@@ -76,10 +70,9 @@ namespace Store.Controllers
         [HttpGet]
         public async Task<IActionResult> ConfirmEmail(string userId, string code)
         {
-            var user = await _repository.User.GetUser(userId, trackChanges: true);
-            
+            User user = await _repository.User.GetUser(userId, trackChanges: true);
             user.EmailConfirmed = true;
-            _repository.SaveAsync();
+            await _repository.SaveAsync();
             return View();
         }
     }
