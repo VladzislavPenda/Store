@@ -6,10 +6,12 @@ using Entities.DataTransferObjects.QueryModelDto;
 using Entities.Models;
 using Entities.Models.Product;
 using Entities.RequestFeatures;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Store.ActionFilters;
 using System;
+using System.IO;
 using System.Linq;
 using System.Net.Mime;
 using System.Text.Json;
@@ -102,7 +104,7 @@ namespace Store.Controllers
                 Guid[] pictureGuids = pictureEnts.Select(e => e.Id).ToArray();
                 ents = pictureGuids.Concat(ents).ToArray();
             }
-            
+
             Guid modelId = Guid.NewGuid();
             Mesh[] mesh = new Mesh[ents.Length];
             for (int i = 0; i < mesh.Length; i++)
@@ -131,7 +133,7 @@ namespace Store.Controllers
             }
 
             Mesh[] meshes = await _repository.Mesh.GetMeshesForModel(model.Id, trackChanges: true);
-            if(meshes != null)
+            if (meshes != null)
                 _repository.Mesh.DeleteMeshRange(meshes);
 
             _repository.ShopModel.DeleteModel(model);
@@ -141,7 +143,7 @@ namespace Store.Controllers
 
         [HttpPut("{id}")]
         //[ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> UpdateModel(Guid id, [FromBody]QueryModelForUpdating model)
+        public async Task<IActionResult> UpdateModel(Guid id, [FromBody] QueryModelForUpdating model)
         {
             ShopModel modelEntity = await _repository.ShopModel.GetModelAsync(id, trackChanges: true);
             if (modelEntity == null)
