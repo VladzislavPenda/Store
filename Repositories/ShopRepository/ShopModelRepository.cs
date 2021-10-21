@@ -1,7 +1,9 @@
 ﻿using Contracts;
 using Entities;
+using Entities.DataTransferObjects.Model;
 //using Entities.DataTransferObjects.IncludeDTO;
 using Entities.Models;
+using Entities.Models.Product;
 using Entities.RequestFeatures;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Extensions;
@@ -28,6 +30,8 @@ namespace Repositories
                 .Where(e => e.IsActive == true)
                 .FilterModels(modelsParametres)
                 .ToArrayAsync();
+
+            //ModelShortDto[] valuers = shopModels.Select(e => new { e.Id, e.Model, e.Price, photos = e.Meshes.Where(c => c.Ent.Type == EntType.Picture).Select(e => e.Ent.Id).ToArray()}).ToArray();
 
             return PagedModels
                 .ToPagedModels(shopModels, modelsParametres.PageNumber, modelsParametres.PageSize);

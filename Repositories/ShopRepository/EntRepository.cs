@@ -37,7 +37,7 @@ namespace Repositories.ShopRepository
 
         public async Task<Ent> GetEntById(Guid entId)
         {
-            return await FindByCondition(e => e.Id == entId, trackChanges: false).SingleOrDefaultAsync();
+            return FindByCondition(e => e.Id == entId, trackChanges: false).SingleOrDefault();
         }
 
         public void DeleteEnt(Ent ent)

@@ -67,11 +67,17 @@ namespace Store.Controllers
 
             if (file != null)
             {
-                if (!(file.ContentType == "image/jpeg" || file.ContentType == "image/png"))
-                    return Problem("Unsupported file format (supported formats: PNG, JPG)");
+                string fileType;
+
+                switch(file.ContentType)
+                {
+                    case "image/jpeg": fileType = ".jpg"; break;
+                    case "image/png": fileType = ".png"; break;
+                    default: return Problem("Unsupported file format (supported formats: PNG, JPG)");
+                }
 
                 Guid newFileId = Guid.NewGuid();
-                string path = "File/images/" + newFileId + ".jpg";
+                string path = "File/images/" + newFileId + fileType;
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
                     await file.CopyToAsync(fileStream);
@@ -101,31 +107,23 @@ namespace Store.Controllers
             }
         }
 
-        [HttpGet("model/{modelId}/image")]
-        public async Task<IActionResult> downloadImage(Guid modelId)
+        [HttpGet("model/image/{imageId}")]
+        public async Task<IActionResult> downloadImage(Guid imageId)
         {
-            ShopModel model = await _repository.ShopModel.GetModelAsync(modelId, true);
+            Ent ent = await _repository.Ent.GetEntById(imageId);
 
-            if (model == null)
+            if (ent == null)
                 return NotFound();
 
-            string[] ents = model.Meshes.Where(e => e.Ent.Type == EntType.Picture).Select(e => e.Ent.Value).ToArray();
-
-            var files = Directory.GetFiles("File/images/");
-            //Directory.Move(_appEnvironment.ContentRootPath, "File/Images");
-            //Directory.
-            var file = Directory.Exists(ents[0]);
-            //List<PhysicalFile> physicalFiles = new List<PhysicalFile>;
-            foreach(string imageName in ents)
+            string filePath = Path.Combine(_appEnvironment.ContentRootPath, "File", "images", ent.Value);
+            filePath = Path.GetFullPath(filePath);
+            if (System.IO.File.Exists(filePath))
             {
-                if (Directory.Exists("File/images/" + imageName))
-                {
-                    return PhysicalFile("File/images/", "image/jpeg", imageName);
-                }
+                return PhysicalFile(filePath, "image/jpeg", ent.Value);
             }
 
-
-            return Ok();
+            return NotFound();
+            
         }
     }
 }

@@ -2,6 +2,7 @@
 using Contracts;
 using Entities;
 using Entities.DataTransferObjects;
+using Entities.DataTransferObjects.Model;
 using Entities.DataTransferObjects.QueryModelDto;
 using Entities.Models;
 using Entities.Models.Product;
@@ -42,16 +43,20 @@ namespace Store.Controllers
             if (!modelsParameters.ValidRange())
                 return BadRequest("Max price can't be less than min price.");
 
+
+            //todo configure SerializerOptions Globally
             JsonSerializerOptions options = new()
             {
                 ReferenceHandler = ReferenceHandler.Preserve,
-                WriteIndented = true
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true,
             };
 
             PagedModels models = await _repository.ShopModel.GetPagedModelsWithParamsAsync(modelsParameters, trackChanges: false);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(models.MetaData));
-            string result = JsonSerializer.Serialize(models.Models, options);
-            return Content(result, MediaTypeNames.Application.Json);
+            ModelShortDto[] modelsDto = _mapper.Map<ShopModel[], ModelShortDto[]>(models.Models);
+            string content = JsonSerializer.Serialize(modelsDto, options);
+            return Content(content, MediaTypeNames.Application.Json);
         }
 
         [HttpGet("{id}", Name = "ModelById")]
