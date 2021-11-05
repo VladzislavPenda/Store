@@ -2,6 +2,7 @@
 using Entities;
 using Entities.DataTransferObjects.Order;
 using Entities.Models;
+using Entities.Models.Views;
 using Entities.RequestFeatures;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -54,7 +55,7 @@ namespace Repositories.ShopRepository
                 .Select(e => e.ShopModel.Price)
                 .Sum();
 
-            var res = await _repository.OrderStatisticViews.ToArrayAsync();
+            OrderStatistic[] res = await _repository.OrderStatisticViews.ToArrayAsync();
             OrderStatisticDto stats = new OrderStatisticDto
             {
                 Stats = res,

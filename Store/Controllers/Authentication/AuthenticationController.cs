@@ -2,18 +2,20 @@
 using Contracts;
 using Entities.DataTransferObjects.UserDto;
 using Entities.DataTransferObjects.UserDTO;
+using Entities.DataTransferObjects.UserInfo;
 using Entities.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Store.ActionFilters;
 using Store.Server.Extensions;
+using System;
 using System.Threading.Tasks;
 
 namespace Store.Controllers
 {
     [Route("api/authentication")]
     [ApiController]
-    
+
     public class AuthenticationController : Controller
     {
         private readonly IRepositoryManager _repository;
@@ -26,6 +28,15 @@ namespace Store.Controllers
             _userManager = userManager;
             _authManager = authManager;
             _repository = repositoryManager;
+        }
+
+        [HttpGet("{id}")]
+        //[ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> GetUserInfo(string id)
+        {
+            User user = await _repository.User.GetUser(id, false);
+            UserInfoDto dto = _mapper.Map<UserInfoDto>(user);
+            return Ok(dto);
         }
 
         [HttpPost]
@@ -65,7 +76,9 @@ namespace Store.Controllers
                 return Unauthorized();
             }
 
-            return Ok(new { Token = await _authManager.CreateToken() });
+            string token = await _authManager.CreateToken();
+
+            return Ok(new { token });
         }
         [HttpGet]
         public async Task<IActionResult> ConfirmEmail(string userId, string code)

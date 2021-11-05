@@ -48,17 +48,18 @@ namespace Repositories
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, _user.UserName)
+                new Claim("username", _user.UserName)
             };
 
             var roles = await _userManager.GetRolesAsync(_user);
             foreach (var role in roles)
             {
-                claims.Add(new Claim(ClaimTypes.Role, role));
+                claims.Add(new Claim("permission", role));
             }
 
-            claims.Add(new Claim(ClaimTypes.Email, _user.Email));
-            claims.Add(new Claim(ClaimTypes.MobilePhone, _user.PhoneNumber));
+            claims.Add(new Claim("email", _user.Email));
+            claims.Add(new Claim("phone", _user.PhoneNumber));
+            claims.Add(new Claim("userId", _user.Id));
             return claims;
         }
         private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
