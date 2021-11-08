@@ -18,10 +18,17 @@ namespace Store.Server.Controllers.Statistic
             _repository = repository;
         }
 
-        [HttpGet("carType")]
-        public async Task<IActionResult> GetCarTypeStatistic()
+        [HttpGet("storage")]
+        public async Task<IActionResult> GetStorageStatistic()
         {
-            OrderStatisticDto stats = await _repository.Order.GetOrdersStatistic(Entities.RequestFeatures.TimePeriod.ForThisMounth);   
+            StorageStatisticDto stats = await _repository.Order.GetStorageStatistic();   
+            return Ok(stats);
+        }
+
+        [HttpGet("income")]
+        public async Task<IActionResult> GetTimeStatistic()
+        {
+            IncomeStatisticDto stats = await _repository.Order.GetIncomeStatistic(Entities.RequestFeatures.TimePeriod.ForYear);
             return Ok(stats);
         }
     }
