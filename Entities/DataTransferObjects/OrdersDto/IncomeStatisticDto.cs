@@ -1,11 +1,12 @@
-﻿using Entities.Models.Product;
+﻿using Entities.DataTransferObjects.Order;
+using Entities.Models.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.DataTransferObjects.Order
+namespace Entities.DataTransferObjects.OrdersDto
 {
     public class IncomeStatisticDto
     {

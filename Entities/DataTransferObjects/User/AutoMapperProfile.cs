@@ -2,7 +2,7 @@
 using Entities.DataTransferObjects.UserInfo;
 using Entities.Models;
 
-namespace Entities.DataTransferObjects
+namespace Entities.DataTransferObjects.Users
 {
     public class AutoMapperProfile: AutoMapper.Profile
     {

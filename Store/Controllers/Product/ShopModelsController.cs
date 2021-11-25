@@ -54,7 +54,7 @@ namespace Store.Controllers
 
             PagedModels models = await _repository.ShopModel.GetPagedModelsWithParamsAsync(modelsParameters, trackChanges: false);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(models.MetaData));
-            ModelShortDto[] modelsDto = _mapper.Map<ShopModel[], ModelShortDto[]>(models.Models);
+            FullModelInfo[] modelsDto = _mapper.Map<ShopModel[], FullModelInfo[]>(models.Models);
             string content = JsonSerializer.Serialize(modelsDto, options);
             return Content(content, MediaTypeNames.Application.Json);
         }
@@ -68,13 +68,16 @@ namespace Store.Controllers
                 return NotFound();
             }
 
+            FullModelInfo result = _mapper.Map<ShopModel, FullModelInfo>(model);
+
             JsonSerializerOptions options = new()
             {
                 ReferenceHandler = ReferenceHandler.Preserve,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 WriteIndented = true
             };
 
-            string modelForResponse = JsonSerializer.Serialize(model, options);
+            string modelForResponse = JsonSerializer.Serialize(result, options);
             return Content(modelForResponse, MediaTypeNames.Application.Json);
         }
 

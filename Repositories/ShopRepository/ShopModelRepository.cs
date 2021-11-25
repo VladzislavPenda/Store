@@ -39,6 +39,15 @@ namespace Repositories
 
         public async Task<ShopModel> GetModelAsync(Guid id, bool trackChanges)
         {
+
+            var data = await FindByCondition(e => e.Id.Equals(id), trackChanges)
+                .Include(e => e.Meshes)
+                .ThenInclude(c => c.Ent)
+                .Include(e => e.Storage)
+                .Where(e => e.IsActive == true)
+                .SingleOrDefaultAsync();
+
+            //Characterstic[] newData = data.Meshes.Select(c => new Characterstic {Name = c.Ent.Type.ToString(),Value = c.Ent.Value }).ToArray();
             return await FindByCondition(e => e.Id.Equals(id), trackChanges)
                 .Include(e => e.Meshes)
                 .ThenInclude(c => c.Ent)

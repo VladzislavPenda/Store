@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Entities.DataTransferObjects.Order
+namespace Entities.DataTransferObjects.OrderDto
 {
     public class QueryParams
     {

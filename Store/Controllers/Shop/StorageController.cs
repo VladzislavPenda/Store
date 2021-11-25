@@ -1,10 +1,14 @@
 ﻿using AutoMapper;
 using Contracts;
+using Entities.DataTransferObjects.Storages;
 using Entities.Models.Shop;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
+using System.Net.Mime;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Store.Server.Controllers.Shop
@@ -31,7 +35,18 @@ namespace Store.Server.Controllers.Shop
             if (storages == null)
                 return NotFound();
 
-            return Ok(storages);
+            StorageDto[] result = _mapper.Map<Storage[], StorageDto[]>(storages);
+
+            JsonSerializerOptions options = new()
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            };
+
+            string response = JsonSerializer.Serialize(result, options);
+
+            return Content(response, MediaTypeNames.Application.Json);
         }
 
         [HttpGet("{storageId}")]

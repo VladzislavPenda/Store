@@ -1,6 +1,8 @@
 ﻿using Contracts.IShopRepository;
 using Entities;
 using Entities.DataTransferObjects.Order;
+using Entities.DataTransferObjects.OrderDto;
+using Entities.DataTransferObjects.OrdersDto;
 using Entities.Models;
 using Entities.Models.Product;
 using Entities.Models.Views;
@@ -23,6 +25,7 @@ namespace Repositories.ShopRepository
         public async Task<PagedEntity<Order>> GetOrders(QueryParams queryParams)
         {
             Order[] orders = await FindAll(trackChanges: false)
+                .Include(e => e.ShopModel)
                 .ToArrayAsync();
 
             return PagedEntity<Order>.ToPagedModels(orders, queryParams.PageNumber, queryParams.PageSize);
@@ -47,9 +50,7 @@ namespace Repositories.ShopRepository
         public async Task<StorageStatisticDto> GetStorageStatistic()
         {
             var res = _repository.OrderStatisticViews.AsEnumerable().GroupBy(e => e.EntType);
-
-            Dictionary<EntType, List<Stats>> data = new Dictionary<EntType, List<Stats>>();
-
+            Dictionary<string, Stats[]> data = new Dictionary<string, Stats[]>();
             foreach (var item in res)
             {
                 List<Stats> elem = new List<Stats>();
@@ -58,18 +59,34 @@ namespace Repositories.ShopRepository
                     elem.Add(new Stats { Value = value.Value, Count = value.Count});
                 }
 
-                switch(item.Key)
+                Stats[] statsArr = elem.ToArray();
+                switch (item.Key)
                 {
-                    case 1: data.Add(EntType.Carcase, elem); break;
-                    case 2: data.Add(EntType.Engine, elem); break;
-                    case 3: data.Add(EntType.Drive, elem); break;
-                    case 4: data.Add(EntType.Transmission, elem); break;
-                    case 5: data.Add(EntType.Mark, elem); break;
+                    case 1: data.Add("carcase", statsArr); break;
+                    case 2: data.Add("engine", statsArr); break;
+                    case 3: data.Add("drive", statsArr); break;
+                    case 4: data.Add("transmission", statsArr); break;
+                    case 5: data.Add("mark", statsArr); break;
                 }
+
             }
+
+            IQueryable<Order> qry = FindAll(false)
+                .Include(e => e.ShopModel)
+                .ThenInclude(e => e.Meshes)
+                .ThenInclude(e => e.Ent);
+
+            int price = qry
+                .Select(e => e.ShopModel.Price)
+                .Sum();
+
+            Order[] orders = await qry.ToArrayAsync();
+            int orderCount = orders.Length;
 
             StorageStatisticDto stats = new StorageStatisticDto
             {
+                OrdersCount = orderCount,
+                TotalIncome = price,
                 Stats = data,
             };
 

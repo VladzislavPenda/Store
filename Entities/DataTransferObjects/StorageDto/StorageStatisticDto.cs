@@ -8,7 +8,9 @@ namespace Entities.DataTransferObjects.Order
 {
     public class StorageStatisticDto
     {
-        public Dictionary<EntType, List<Stats>> Stats { get; set; }
+        public int OrdersCount { get; set; }
+        public int TotalIncome { get; set; }
+        public Dictionary<string, Stats[]> Stats { get; set; }
         //public int Price { get; set; }
     }
 

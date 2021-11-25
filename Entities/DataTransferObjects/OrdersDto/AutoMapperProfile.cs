@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entities.Models;
 
-namespace Entities.DataTransferObjects.Storage
+namespace Entities.DataTransferObjects.Fd
 {
     public class AutoMapperProfile : AutoMapper.Profile
     {
         public AutoMapperProfile()
         {
         }
+
+        //CreateMap<StorageDto, ModelDto>();
+    
     }
 }

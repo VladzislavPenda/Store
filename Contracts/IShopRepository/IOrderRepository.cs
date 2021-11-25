@@ -1,4 +1,6 @@
 ﻿using Entities.DataTransferObjects.Order;
+using Entities.DataTransferObjects.OrderDto;
+using Entities.DataTransferObjects.OrdersDto;
 using Entities.Models;
 using Entities.RequestFeatures;
 using System;

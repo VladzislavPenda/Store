@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.DataTransferObjects.Order;
+using Entities.DataTransferObjects.OrderDto;
 using Entities.Models;
 using Entities.RequestFeatures;
 using Microsoft.AspNetCore.Authorization;
@@ -36,7 +37,8 @@ namespace Store.Server.Controllers.Shop
             JsonSerializerOptions options = new()
             {
                 ReferenceHandler = ReferenceHandler.Preserve,
-                WriteIndented = true
+                WriteIndented = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             };
             PagedEntity<Order> orders = await _repository.Order.GetOrders(qry);
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(orders.MetaData));
