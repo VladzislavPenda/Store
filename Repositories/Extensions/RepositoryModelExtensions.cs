@@ -17,6 +17,8 @@ namespace Repositories.Extensions
     {
         public static IQueryable<ShopModel> FilterModels(this IQueryable<ShopModel> model, ModelsParameters modelsParametres)
         {
+            if (modelsParametres.Ids != null)
+                model = model.Where(e => modelsParametres.Ids.Contains(e.Id));
             if (!string.IsNullOrWhiteSpace(modelsParametres.CarcaseType))
                 model = model.Where(e => e.Meshes.Where(c => c.Ent.Value == modelsParametres.CarcaseType && c.Ent.Type == EntType.Carcase).Any());
             if (!string.IsNullOrWhiteSpace(modelsParametres.MarkName))

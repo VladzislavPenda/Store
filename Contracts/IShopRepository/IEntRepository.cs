@@ -13,6 +13,7 @@ namespace Contracts.IShopRepository
         void CreateEnt(Ent ent);
         void CreateEntRange(IEnumerable<Ent> ents);
         IQueryable<Ent> GetEntsByType(EntType entType);
+        Dictionary<string, Ent[]> GetEnts();
         void DeleteEnt(Ent ent);
         Task<Ent> GetEntById(Guid entId);
         Task<Guid[]> GetGuidsForCreatingQueryParams(QueryModelForCreating model);

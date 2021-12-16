@@ -5,6 +5,10 @@ using Entities.Models.Product;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Net.Mime;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Store.Server.Controllers.Product
@@ -21,6 +25,22 @@ namespace Store.Server.Controllers.Product
         {
             _mapper = mapper;
             _repository = repository;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllEnts()
+        {
+            Dictionary<string, Ent[]> ents = _repository.Ent.GetEnts();
+
+            JsonSerializerOptions options = new()
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            };
+            string entsForResponse = JsonSerializer.Serialize(ents, options);
+            //EntResponseDto[] dtos = _mapper.Map<EntResponseDto[]>(ents);
+            return Content(entsForResponse, MediaTypeNames.Application.Json);
         }
 
         [HttpGet("{entType}")]

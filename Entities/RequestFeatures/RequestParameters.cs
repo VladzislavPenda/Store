@@ -1,4 +1,6 @@
-﻿namespace Entities.RequestFeatures
+﻿using System;
+
+namespace Entities.RequestFeatures
 {
     public abstract class RequestParameters
     {
@@ -50,6 +52,7 @@
         public string DriveType { get; set; }
         public string CarcaseType { get; set; }
         public string TransmissionType { get; set; }
+        public Guid[] Ids { get; set; }
 
     }
 }

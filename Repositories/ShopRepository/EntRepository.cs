@@ -1,4 +1,5 @@
-﻿using Contracts.IShopRepository;
+﻿using AutoMapper;
+using Contracts.IShopRepository;
 using Entities;
 using Entities.DataTransferObjects.EntDto;
 using Entities.DataTransferObjects.QueryModelDto;
@@ -16,8 +17,10 @@ namespace Repositories.ShopRepository
 {
     public class EntRepository : RepositoryBase<Ent>, IEntRepository
     {
+        private readonly RepositoryContext _repository;
         public EntRepository(RepositoryContext repositoryContext) : base(repositoryContext)
         {
+            _repository = repositoryContext;
         }
 
         public void CreateEnt(Ent ent)
@@ -29,6 +32,33 @@ namespace Repositories.ShopRepository
         {
             CreateRange(ents);
         }
+
+        public Dictionary<string, Ent[]> GetEnts()
+        {
+            //Ent[] ents = _repository.Ents.Where(e => e.Type != EntType.Picture).ToArray();
+            Ent[] ents = FindAll(false).Where(e => e.Type != EntType.Picture).ToArray();
+            //EntResponseDto[] resDto = _mapper.Map<EntResponseDto[]>(ents); 
+            Dictionary<string, Ent[]> data = new Dictionary<string, Ent[]>();
+            data.Add("carcase", ents.Where(e => e.Type == EntType.Carcase).ToArray());
+            data.Add("drive", ents.Where(e => e.Type == EntType.Drive).ToArray());
+            data.Add("engine", ents.Where(e => e.Type == EntType.Engine).ToArray());
+            data.Add("transmission", ents.Where(e => e.Type == EntType.Transmission).ToArray());
+            data.Add("mark", ents.Where(e => e.Type == EntType.Mark).ToArray());
+            foreach (Ent ent in ents)
+            {
+                //switch(ent.Type)
+                //{
+                //    case EntType.Carcase: data.Add("carcase", ent.Value); break;
+                //    case EntType.Engine: data.Add(EntType.Engine.ToString(), ent.Value); break;
+                //    case EntType.Drive: data.Add(EntType.Drive.ToString(), ent.Value); break;
+                //    case EntType.Transmission: data.Add(EntType.Transmission.ToString(), ent.Value); break;
+                //    case EntType.Mark: data.Add(EntType.Mark.ToString(), ent.Value); break;
+                //}
+            }
+            return data;
+        }
+
+
 
         public IQueryable<Ent> GetEntsByType(EntType entType)
         {

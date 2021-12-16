@@ -13,7 +13,7 @@ namespace Entities.DataTransferObjects.Model
             CreateMap<ShopModel, ModelDto>();
             CreateMap<ModelForCreationDto, ShopModel>();
             CreateMap<QueryModelForUpdating, ShopModel>();
-            CreateMap<QueryModelForCreating, ShopModel>();
+            CreateMap<QueryModelForCreating, ShopModel>().ForMember(e => e.IsActive, e => e.MapFrom(e => true));
             CreateMap<ShopModel, ModelShortDto>()
                 .ForMember(e => e.Photos, e => e.MapFrom(e => e.Meshes.Where(c => c.Ent.Type == EntType.Picture).Select(e => e.Ent.Id)));
 
